@@ -14,6 +14,7 @@
 
 @dynamic summary;
 @dynamic uniqueID;
+@dynamic selected;
 @dynamic places;
 
 @end

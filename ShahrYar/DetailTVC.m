@@ -79,15 +79,18 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
         NSData *imageData = [NSData dataWithContentsOfFile:self.place.imageLocalPath];
         UIImage *image = [UIImage imageWithData:imageData];
         
-        self.placeImageView.image = image;
-        self.placeImageView.alpha = 0;
-        self.placeImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, MIN(image.size.height * self.view.frame.size.width / image.size.width, 210));
+        if (imageData) {
+            self.placeImageView.image = image;
+            self.placeImageView.alpha = 0;
+            self.placeImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, MIN(image.size.height * self.view.frame.size.width / image.size.width, 210));
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.placeImageView.alpha = 1;
+            }];
+            
+            [self.tableView reloadData];
+        }
         
-        [UIView animateWithDuration:0.3 animations:^{
-            self.placeImageView.alpha = 1;
-        }];
-        
-        [self.tableView reloadData];
     } else {
         self.placeImageView.frame = CGRectZero;
     }
@@ -128,6 +131,8 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     
     RMMapView *mapView = self.footerMapView.subviews[0];
     mapView.centerCoordinate = CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue);
+    
+    [mapView removeAllAnnotations];
     [mapView addAnnotation:[RMAnnotation annotationWithMapView:mapView coordinate:mapView.centerCoordinate andTitle:self.place.title]];
 }
 
@@ -271,7 +276,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 
         switch (indexPath.row) {
             case 0:
-                cell.textLabel.text = @"گزارش خطا";
+                cell.textLabel.text = @"ارتباط با ما";
             break;
             default:
                 break;

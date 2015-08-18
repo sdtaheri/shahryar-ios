@@ -21,5 +21,5 @@ typedef void (^ErrorHandler)(NSError *error);
 
 - (void)loadPOIsWithSuccesHandler:(SuccessHandler)handler errorHandler:(ErrorHandler)errorHandler;
 
-- (NSArray *)allPlacesInDatabase: (NSManagedObjectContext *)context;
+- (void)placesInDatabase: (NSManagedObjectContext *)context completion:(void (^)(NSArray *output, NSError *error))completion;
 @end

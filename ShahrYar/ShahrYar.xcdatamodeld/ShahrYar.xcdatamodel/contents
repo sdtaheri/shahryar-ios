@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Category" representedClassName="Type" syncable="YES">
+        <attribute name="selected" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uniqueID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="places" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Place" inverseName="category" inverseEntity="Place" syncable="YES"/>
@@ -24,7 +25,7 @@
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="places" inverseEntity="Category" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Category" positionX="-7875" positionY="-4984" width="128" height="88"/>
+        <element name="Category" positionX="-7875" positionY="-4984" width="128" height="103"/>
         <element name="Place" positionX="-8064" positionY="-5062" width="128" height="283"/>
     </elements>
 </model>

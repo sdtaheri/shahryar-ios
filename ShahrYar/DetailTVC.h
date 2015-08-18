@@ -12,6 +12,6 @@
 
 @interface DetailTVC : UITableViewController
 
-@property (nonatomic, strong) Place *place;
+@property (nonatomic, weak) Place *place;
 
 @end

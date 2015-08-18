@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSString * uniqueID;
+@property (nonatomic, retain) NSNumber * selected;
 @property (nonatomic, retain) NSSet *places;
 @end
 

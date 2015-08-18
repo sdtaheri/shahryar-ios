@@ -15,12 +15,13 @@
 #import "DetailTVC.h"
 #import "CameraVC.h"
 #import "SearchTVC.h"
+#import "FilterTVC.h"
+#import "MorePlacesTVC.h"
 
 #import "Mapbox.h"
 #import "PlacesLoader.h"
-#import "PlaceAnnotation.h"
 
-@interface MainVC () <CLLocationManagerDelegate, RMMapViewDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+@interface MainVC () <CLLocationManagerDelegate, RMMapViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UIPopoverPresentationControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (weak, nonatomic) IBOutlet MKButton *launchCameraButton;
 @property (weak, nonatomic) IBOutlet MKButton *showCurrentLocationButton;
@@ -38,6 +39,9 @@
 
 @property (strong, nonatomic) RMMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+
+@property (strong, nonatomic) BubbleTransition *transition;
+@property (nonatomic) CGRect selectedClusterAnnotationRect;
 
 @property (nonatomic) BOOL shouldToggleStatusBarOnTap;
 
@@ -59,13 +63,21 @@ CLLocationDegrees const Longitude_Default = 51.3;
 - (void)setLocations:(NSArray *)locations {
     _locations = locations;
     
-    [self.mapView removeAllAnnotations];
-    
-    for (Place *place in _locations) {
-        PlaceAnnotation *annotation = [[PlaceAnnotation alloc] initWithMapView:self.mapView coordinate:CLLocationCoordinate2DMake(place.latitude.doubleValue, place.longitude.doubleValue) andTitle:place.title];
-        annotation.place = place;
-        [self.mapView addAnnotation:annotation];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.mapView removeAllAnnotations];
+        for (Place *place in _locations) {
+            RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapView coordinate:CLLocationCoordinate2DMake(place.latitude.doubleValue, place.longitude.doubleValue) andTitle:place.title];
+            annotation.userInfo = place;
+            [self.mapView addAnnotation:annotation];
+        }
+    });
+}
+
+- (BubbleTransition *)transition {
+    if (!_transition) {
+        _transition = [[BubbleTransition alloc] init];
     }
+    return _transition;
 }
 
 - (NSUserDefaults *)userDefaults {
@@ -117,8 +129,8 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 #pragma mark Lifecycle
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
     self.managedObjectContext = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
@@ -141,7 +153,10 @@ CLLocationDegrees const Longitude_Default = 51.3;
                         NSLog(@"Saving Database Successful");
                     }
                     
-                    weakSelf.locations = [[PlacesLoader sharedInstance] allPlacesInDatabase:weakSelf.managedObjectContext];
+                    [[PlacesLoader sharedInstance] placesInDatabase:weakSelf.managedObjectContext completion:^(NSArray *output, NSError *error) {
+                        weakSelf.locations = output;
+                    }];
+                    
                     [weakSelf.userDefaults setObject:version forKey:Saved_Version];
                     [weakSelf.userDefaults synchronize];
                 }];
@@ -152,19 +167,19 @@ CLLocationDegrees const Longitude_Default = 51.3;
             
         } else {
             NSLog(@"No Change in Database");
-            self.locations = [[PlacesLoader sharedInstance] allPlacesInDatabase:self.managedObjectContext];
+            [[PlacesLoader sharedInstance] placesInDatabase:self.managedObjectContext completion:^(NSArray *output, NSError *error) {
+                self.locations = output;
+            }];
         }
-
+        
     } errorHandler:^(NSError *error) {
         NSLog(@"Error In Checking Latest Version Number: %@", error);
         
-        self.locations = [[PlacesLoader sharedInstance] allPlacesInDatabase:self.managedObjectContext];
+        [[PlacesLoader sharedInstance] placesInDatabase:self.managedObjectContext completion:^(NSArray *output, NSError *error) {
+            self.locations = output;
+        }];
     }];
-    
-}
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
     
     [self initializeSearchBar];
     
@@ -179,6 +194,8 @@ CLLocationDegrees const Longitude_Default = 51.3;
     self.mapView.minZoom = 11;
     self.mapView.maxZoom = 18;
     self.mapView.adjustTilesForRetinaDisplay = YES;
+    self.mapView.clusteringEnabled = YES;
+    self.mapView.clusterAreaSize = CGSizeMake(50, 50);
     
     [self.mapView setConstraintsSouthWest:CLLocationCoordinate2DMake(35.472219, 51.065355)
                                 northEast:CLLocationCoordinate2DMake(35.905874, 51.606794)];
@@ -214,9 +231,19 @@ CLLocationDegrees const Longitude_Default = 51.3;
         
     } else if ([segue.identifier isEqualToString:@"Detail Segue"]) {
         DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
-        dtvc.place = [(PlaceAnnotation *)self.mapView.selectedAnnotation place];
+        dtvc.place = [self.mapView.selectedAnnotation userInfo];
         
         [(UINavigationController *)segue.destinationViewController popoverPresentationController].sourceRect = CGRectMake(self.mapView.selectedAnnotation.absolutePosition.x, self.mapView.selectedAnnotation.absolutePosition.y, 1, 1);
+    } else if ([segue.identifier isEqualToString:@"Filter Segue"]) {
+        FilterTVC *ftvc = segue.destinationViewController;
+        ftvc.context = self.managedObjectContext;
+        ftvc.popoverPresentationController.delegate = self;
+        ftvc.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
+    } else if ([segue.identifier isEqualToString:@"More Places List"]) {
+        MorePlacesTVC *tvvc = [segue.destinationViewController childViewControllers][0];
+        tvvc.annotations = sender;
+        [segue.destinationViewController setTransitioningDelegate: self];
+        [segue.destinationViewController setModalPresentationStyle: UIModalPresentationCustom];
     }
 }
 
@@ -227,6 +254,72 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationSlide;
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationOverFullScreen; // required, otherwise delegate method below is never called.
+}
+
+- (UIViewController *)presentationController:(UIPresentationController *)controller viewControllerForAdaptivePresentationStyle:(UIModalPresentationStyle)style {
+
+    UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissFilterPopover:)];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:controller.presentedViewController];
+    
+    UIVisualEffectView *vev = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
+    vev.translatesAutoresizingMaskIntoConstraints = NO;
+    [nc.view insertSubview:vev atIndex:0];
+
+    [nc.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[vev]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(vev)]];
+    [nc.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[vev]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(vev)]];
+    
+    nc.topViewController.navigationItem.leftBarButtonItem = bbi;
+    nc.topViewController.navigationItem.title = @"دسته‌بندی‌ها";
+    return nc;
+}
+
+- (void)popoverPresentationController:(UIPopoverPresentationController *)popoverPresentationController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView *__autoreleasing *)view {
+    if ([popoverPresentationController.presentedViewController isKindOfClass:[FilterTVC class]]) {
+        *rect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
+    }
+}
+
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
+    
+    if ([popoverPresentationController.presentedViewController isKindOfClass:[FilterTVC class]]) {
+        [[PlacesLoader sharedInstance] placesInDatabase:self.managedObjectContext completion:^(NSArray *output, NSError *error) {
+            self.locations = output;
+        }];
+    }
+}
+
+- (void)dismissFilterPopover: (UIBarButtonItem *)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[PlacesLoader sharedInstance] placesInDatabase:self.managedObjectContext completion:^(NSArray *output, NSError *error) {
+            self.locations = output;
+        }];
+    }];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+
+    self.transition.transitionMode = BubbleTransitionModePresent;
+    
+    CGPoint midPoint = CGPointMake(self.selectedClusterAnnotationRect.origin.x + (self.selectedClusterAnnotationRect.size.width / 2), self.selectedClusterAnnotationRect.origin.y + (self.selectedClusterAnnotationRect.size.height / 2));
+
+    self.transition.startingPoint = midPoint;
+    self.transition.bubbleColor = [UIColor whiteColor];
+    
+    return self.transition;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    self.transition.transitionMode = BubbleTransitionModeDismiss;
+    CGPoint midPoint = CGPointMake(self.selectedClusterAnnotationRect.origin.x + (self.selectedClusterAnnotationRect.size.width / 2), self.selectedClusterAnnotationRect.origin.y + (self.selectedClusterAnnotationRect.size.height / 2));
+    
+    self.transition.startingPoint = midPoint;
+    self.transition.bubbleColor = [UIColor whiteColor];
+    
+    return self.transition;
 }
 
 #pragma mark Helper Methods
@@ -267,9 +360,13 @@ CLLocationDegrees const Longitude_Default = 51.3;
     self.navigationItem.titleView = self.searchController.searchBar;
     
     self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.showsSearchResultsButton = YES;
     [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.placeholder = @"جستجو";
+    
+    self.searchController.searchBar.showsBookmarkButton = YES;
+    [self.searchController.searchBar setImage:[UIImage imageNamed:@"filter"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
+    [self.searchController.searchBar setImage:[UIImage imageNamed:@"filter_selected"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateHighlighted];
+
     
     self.shouldToggleStatusBarOnTap = YES;
 }
@@ -343,21 +440,113 @@ CLLocationDegrees const Longitude_Default = 51.3;
         return nil;
     }
     
-    RMMarker *pin = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"pin"] anchorPoint:CGPointMake(0.25, 0.897)];
-    pin.canShowCallout = YES;
+    RMMapLayer *layer;
     
-    PlaceAnnotation *placeAnnotation = (PlaceAnnotation *)annotation;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
     
-    if (placeAnnotation.place.logoID.length > 0) {
-        [pin setLeftCalloutAccessoryView:imageView];
-    } else if (placeAnnotation.place.imageID.length > 0) {
-        [pin setLeftCalloutAccessoryView:imageView];
+    if (!annotation.isClusterAnnotation) {
+
+        RMMarker *pin = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"pin"] anchorPoint:CGPointMake(0.25, 0.897)];
+        pin.canShowCallout = YES;
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
+        
+        if ([annotation.userInfo logoID].length > 0) {
+            [pin setLeftCalloutAccessoryView:imageView];
+        } else if ([annotation.userInfo imageID].length > 0) {
+            [pin setLeftCalloutAccessoryView:imageView];
+        }
+        
+        [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+        
+        layer = pin;
+    } else {
+        // set the circle image for the cluster
+        layer = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"circle.png"]];
+        
+        layer.opacity = 0.75;
+        
+        // set the size of the circle
+        layer.bounds = CGRectMake(0, 0, 50, 50);
+        
+        // change the size of the circle depending on the cluster's size
+        if ([annotation.clusteredAnnotations count] > 5) {
+            layer.bounds = CGRectMake(0, 0, 70, 70);
+        } else if ([annotation.clusteredAnnotations count] > 10) {
+            layer.bounds = CGRectMake(0, 0, 100, 100);
+        } else if ([annotation.clusteredAnnotations count] > 15) {
+            layer.bounds = CGRectMake(0, 0, 120, 120);
+        }
+        
+        // define label content
+        NSString *clusterLabelContent = [NSString stringWithFormat:@"%lu",
+                                         (unsigned long)[annotation.clusteredAnnotations count]];
+        
+        // calculate its size
+        CGRect labelSize = [clusterLabelContent boundingRectWithSize:
+                            ((RMMarker *)layer).label.frame.size
+                                                             options:NSStringDrawingUsesLineFragmentOrigin attributes:@{
+                                                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:15] }
+                                                             context:nil];
+        
+        UIFont *labelFont = [UIFont systemFontOfSize:15];
+        
+        [(RMMarker *)layer setTextForegroundColor:[UIColor whiteColor]];
+        
+        // get the layer's size
+        CGSize layerSize = layer.frame.size;
+        
+        // calculate its position
+        CGPoint position = CGPointMake((layerSize.width - (labelSize.size.width + 4)) / 2,
+                                       (layerSize.height - (labelSize.size.height + 4)) / 2);
+        
+        // set it all at once
+        [(RMMarker *)layer changeLabelUsingText:clusterLabelContent position:position
+                                           font:labelFont foregroundColor:[UIColor whiteColor]
+                                backgroundColor:[UIColor clearColor]];
     }
     
-    [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
-    
-    return pin;
+    return layer;
+}
+
+- (void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {
+    if (annotation.isClusterAnnotation) {
+        
+        self.selectedClusterAnnotationRect = annotation.layer.frame;
+        [self performSegueWithIdentifier:@"More Places List" sender:annotation.clusteredAnnotations];
+        
+//        // 1. Start with a maximum (world-wide) bounding box
+//        CLLocationCoordinate2D topRight = CLLocationCoordinate2DMake(180, -90);
+//        CLLocationCoordinate2D bottomLeft = CLLocationCoordinate2DMake(-180, 90);
+//        
+//        // 2. Derive the minimum bounding box coordinates that contains all cluster points, by "squeezing in" on their coordinates
+//        for (RMAnnotation *a in annotation.clusteredAnnotations) {
+//            
+//            if (a.coordinate.latitude < topRight.latitude) {
+//                topRight.latitude = a.coordinate.latitude;
+//            }
+//            if (a.coordinate.longitude > topRight.longitude) {
+//                topRight.longitude = a.coordinate.longitude;
+//            }
+//            
+//            if (a.coordinate.latitude > bottomLeft.latitude) {
+//                bottomLeft.latitude = a.coordinate.latitude;
+//            }
+//            if (a.coordinate.longitude < bottomLeft.longitude) {
+//                bottomLeft.longitude = a.coordinate.longitude;
+//            }
+//        }
+//        
+//        CLLocation *sw = [[CLLocation alloc] initWithLatitude:topRight.latitude longitude:topRight.longitude];
+//        CLLocation *ne = [[CLLocation alloc] initWithLatitude:bottomLeft.latitude longitude:bottomLeft.longitude];
+//        
+//        // 3. Calculate the distance in meters across the calculated bounding box
+//        CLLocationDistance distanceInMeters = [ne distanceFromLocation:sw];
+//        // 4. Adjust the map view's meters per pixel setting so that the bounding box fits nicely within the map views bounds (which is equivalent to zooming)
+//        [self.mapView setMetersPerPixel:(distanceInMeters / (self.mapView.frame.size.width * 0.7)) animated:YES];
+//        // 5. Center on the midpoint of the bounding box
+//        CLLocationCoordinate2D midPoint = CLLocationCoordinate2DMake(0.5 * (topRight.latitude + bottomLeft.latitude), 0.5 * (topRight.longitude + bottomLeft.longitude));
+//        [self.mapView setCenterCoordinate:midPoint animated:YES];
+        
+    }
 }
 
 - (void)singleTapOnMap:(RMMapView *)map at:(CGPoint)point {
@@ -402,36 +591,37 @@ CLLocationDegrees const Longitude_Default = 51.3;
     NSString *baseURL;
     NSString *imageId;
 
-    PlaceAnnotation *placeAnnotation = (PlaceAnnotation *)annotation;
     RMMarker *pin = (RMMarker *)annotation.layer;
 
-    if ([(UIImageView *)pin.leftCalloutAccessoryView image] == nil) {
-        if (placeAnnotation.place.logoID.length > 0) {
-            baseURL = @"http://31.24.237.18:2243/images/DBLogos";
-            imageId = placeAnnotation.place.logoID;
-        } else if (placeAnnotation.place.imageID.length > 0) {
-            baseURL = @"http://31.24.237.18:2243/images/DBPictures";
-            imageId = placeAnnotation.place.imageID;
-        }
-        
-        if (baseURL != nil) {
-            NSString *imageURLString = [NSString stringWithFormat:@"%@%@/%@.jpg",baseURL,screenScale == 3 ? @"45" : @"35",imageId];
+    if (!annotation.isClusterAnnotation) {
+        if ([(UIImageView *)pin.leftCalloutAccessoryView image] == nil) {
+            if ([annotation.userInfo logoID].length > 0) {
+                baseURL = @"http://31.24.237.18:2243/images/DBLogos";
+                imageId = [annotation.userInfo logoID];
+            } else if ([annotation.userInfo imageID].length > 0) {
+                baseURL = @"http://31.24.237.18:2243/images/DBPictures";
+                imageId = [annotation.userInfo imageID];
+            }
             
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-            
-            NSURLSession *session = [NSURLSession sharedSession];
-            NSURLSessionDownloadTask *task = [session downloadTaskWithURL:[NSURL URLWithString:imageURLString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                if (!error) {
-                    NSData *imageData = [NSData dataWithContentsOfURL:location];
-                    
-                    UIImage *image = [UIImage imageWithData:imageData];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [(UIImageView *)pin.leftCalloutAccessoryView setImage:image];
-                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                    });
-                }
-            }];
-            [task resume];
+            if (baseURL != nil) {
+                NSString *imageURLString = [NSString stringWithFormat:@"%@%@/%@.jpg",baseURL,screenScale == 3 ? @"45" : @"35",imageId];
+                
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                
+                NSURLSession *session = [NSURLSession sharedSession];
+                NSURLSessionDownloadTask *task = [session downloadTaskWithURL:[NSURL URLWithString:imageURLString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                    if (!error) {
+                        NSData *imageData = [NSData dataWithContentsOfURL:location];
+                        
+                        UIImage *image = [UIImage imageWithData:imageData];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [(UIImageView *)pin.leftCalloutAccessoryView setImage:image];
+                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        });
+                    }
+                }];
+                [task resume];
+            }
         }
     }
     
@@ -446,6 +636,10 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     
+}
+
+- (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar {
+    [self performSegueWithIdentifier:@"Filter Segue" sender:nil];
 }
 
 @end

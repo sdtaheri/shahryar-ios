@@ -10,6 +10,8 @@
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -202,6 +204,10 @@
                         <segue destination="LY1-Ed-xua" kind="popoverPresentation" identifier="Detail Segue" popoverAnchorView="kh9-bI-dsS" id="7S5-qM-Gyh">
                             <popoverArrowDirection key="popoverArrowDirection" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="nJv-3Y-KCi" kind="popoverPresentation" identifier="Filter Segue" popoverAnchorView="kh9-bI-dsS" id="WjJ-pN-Lab">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                        <segue destination="D6m-34-KtO" kind="presentation" identifier="More Places List" id="pJd-YV-q2j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -225,6 +231,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sU3-DW-Azq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1867" y="327"/>
+        </scene>
+        <!--FilterTVC-->
+        <scene sceneID="yQy-cp-DM6">
+            <objects>
+                <tableViewController id="nJv-3Y-KCi" customClass="FilterTVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8Bs-qS-9cq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Category Cell" textLabel="xKG-ai-eSS" style="IBUITableViewCellStyleDefault" id="Rvr-qy-Lji">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rvr-qy-Lji" id="yTc-6q-pJR">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="صوتی و تصویری" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xKG-ai-eSS">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nJv-3Y-KCi" id="Up8-Ga-FFx"/>
+                            <outlet property="delegate" destination="nJv-3Y-KCi" id="waE-tH-3CQ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="nQt-i7-3JA"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="35P-yq-bLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1867" y="1042"/>
+        </scene>
+        <!--More PlacesTVC-->
+        <scene sceneID="BkJ-dE-2Ym">
+            <objects>
+                <tableViewController id="sAY-Oy-Cbj" customClass="MorePlacesTVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uvJ-iC-NER">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Place Cell" textLabel="fVT-9t-rQw" style="IBUITableViewCellStyleDefault" id="WMt-9x-8KZ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WMt-9x-8KZ" id="u1i-D6-XMt">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fVT-9t-rQw">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="hcu-ln-Kcw" kind="show" identifier="Show Detail From List" id="Rfx-dU-USy"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="sAY-Oy-Cbj" id="VAf-Jd-Ea3"/>
+                            <outlet property="delegate" destination="sAY-Oy-Cbj" id="AGT-yR-iMo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="G3A-bu-JnE">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="TfI-gk-SDu">
+                            <connections>
+                                <action selector="dismiss:" destination="sAY-Oy-Cbj" id="UJQ-sP-XrR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l7E-5p-uNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2679" y="1724"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QMy-J9-DkP">
@@ -262,9 +351,30 @@
             </objects>
             <point key="canvasLocation" x="1127" y="-436"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Q3s-ie-j77">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D6m-34-KtO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="enq-v7-egS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="sAY-Oy-Cbj" kind="relationship" relationship="rootViewController" id="wBQ-u8-q3t"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ECM-HY-AAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1867" y="1724"/>
+        </scene>
     </scenes>
     <resources>
         <image name="camera" width="28" height="22"/>
         <image name="currentLocation" width="22" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Rfx-dU-USy"/>
+    </inferredMetricsTieBreakers>
 </document>

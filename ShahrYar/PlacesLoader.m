@@ -7,7 +7,7 @@
 //
 
 #import "PlacesLoader.h"
-#import <CoreData/CoreData.h>
+#import "NSManagedObjectContext+AsyncFetch.h"
 
 NSString* const baseURL = @"http://31.24.237.18:2243/api/";
 NSString* const checkversionMethod = @"GetVersion";
@@ -127,14 +127,15 @@ NSString* const APIKey = @"3234D74E-661E";
     
 }
 
-- (NSArray *)allPlacesInDatabase: (NSManagedObjectContext *)context {
+- (void)placesInDatabase: (NSManagedObjectContext *)context completion:(void (^)(NSArray *output, NSError *error))completion {
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.selected.boolValue = YES"];
+    request.predicate = predicate;
     
-    NSError *error;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
-    
-    return matches;
+    [context executeFetchRequestAsync:request completion:^(NSArray *objects, NSError *error) {
+        completion(objects, error);
+    }];
 }
 
 
