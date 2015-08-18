@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E46" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Place" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="elevation" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="imageID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" syncable="YES"/>
-        <attribute name="logoData" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="logoID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" syncable="YES"/>
-        <attribute name="manager" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Category" representedClassName="Type" syncable="YES">
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="places" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Place" inverseName="category" inverseEntity="Place" syncable="YES"/>
+    </entity>
+    <entity name="Place" representedClassName="Place" syncable="YES">
+        <attribute name="activities" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="elevation" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="faxes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageLocalPath" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="lastVersion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" syncable="YES"/>
+        <attribute name="logoID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="logoLocalPath" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" syncable="YES"/>
+        <attribute name="phones" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uniqueID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="webSite" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="places" inverseEntity="Category" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Place" positionX="-2934" positionY="-5265" width="128" height="253"/>
+        <element name="Category" positionX="-7875" positionY="-4984" width="128" height="88"/>
+        <element name="Place" positionX="-8064" positionY="-5062" width="128" height="283"/>
     </elements>
 </model>

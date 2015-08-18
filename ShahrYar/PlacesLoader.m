@@ -7,9 +7,12 @@
 //
 
 #import "PlacesLoader.h"
+#import <CoreData/CoreData.h>
 
-NSString* const apiURL = @"http://www.yahoo.com";
-NSString* const apiKey = @"";
+NSString* const baseURL = @"http://31.24.237.18:2243/api/";
+NSString* const checkversionMethod = @"GetVersion";
+NSString* const readDataMethod = @"ReadData";
+NSString* const APIKey = @"3234D74E-661E";
 
 @interface PlacesLoader()
 
@@ -32,13 +35,65 @@ NSString* const apiKey = @"";
     return instance;
 }
 
+- (void)checkLatestVersionWithSuccessHandler:(SuccessHandler)handler errorHandler:(ErrorHandler)errorHandler {
+
+    [self setSuccessHandler:handler];
+    [self setErrorHandler:errorHandler];
+
+    NSDictionary *methodArguments = @{
+                                      @"ApiKey" : APIKey,
+                                      };
+    
+    NSString *stringURL = [NSString stringWithFormat:@"%@%@%@", baseURL, checkversionMethod, [self escapedParameters:methodArguments]];
+    NSURL *url = [NSURL URLWithString:stringURL];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPShouldHandleCookies:YES];
+    [request setHTTPMethod:@"GET"];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            if (self.errorHandler) {
+                self.errorHandler(error);
+            }
+        } else {
+            
+            id object = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+            if (self.successHandler) {
+                self.successHandler(object);
+            }
+        }
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }];
+    
+    [task resume];
+    
+}
+
 - (void)loadPOIsWithSuccesHandler:(SuccessHandler)handler errorHandler:(ErrorHandler)errorHandler {
     
     self.responseData = nil;
     [self setSuccessHandler:handler];
     [self setErrorHandler:errorHandler];
     
-    NSURL *url = [NSURL URLWithString:apiURL];
+    NSString *myVersion = [[NSUserDefaults standardUserDefaults] objectForKey: Saved_Version];
+    if (myVersion == nil) {
+        myVersion = @"0";
+    }
+    
+    NSDictionary *methodArguments = @{
+                                      @"ApiKey" : APIKey,
+                                      @"myVersion" : myVersion
+                                      };
+    
+    NSString *stringURL = [NSString stringWithFormat:@"%@%@%@", baseURL, readDataMethod, [self escapedParameters:methodArguments]];
+    NSURL *url = [NSURL URLWithString:stringURL];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPShouldHandleCookies:YES];
     [request setHTTPMethod:@"GET"];
@@ -71,5 +126,37 @@ NSString* const apiKey = @"";
     [task resume];
     
 }
+
+- (NSArray *)allPlacesInDatabase: (NSManagedObjectContext *)context {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Place"];
+    
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+    
+    return matches;
+}
+
+
+/* Helper function: Given a dictionary of parameters, convert to a string for a url */
+- (NSString *)escapedParameters: (NSDictionary *)parameters {
+    NSMutableArray *urlVars = [NSMutableArray array];
+    
+    for (NSString *key in parameters) {
+
+        /* Make sure that it is a string value */
+        NSString *stringValue = [NSString stringWithFormat:@"%@",parameters[key]];
+        
+        /* Escape it */
+        NSString *escapedValue = [stringValue stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        
+        /* Append it */
+        [urlVars addObject:[NSString stringWithFormat:@"%@=%@",key,escapedValue]];
+    }
+    
+    return [NSString stringWithFormat:@"%@%@",(urlVars.count > 0 ? @"?" : @""), [urlVars componentsJoinedByString:@"&"]];
+}
+
+
 
 @end

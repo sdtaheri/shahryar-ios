@@ -8,13 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString* const Saved_Version = @"Current Version";
+
 @interface PlacesLoader : NSObject
 
-typedef void (^SuccessHandler)(NSDictionary *responseDict);
+typedef void (^SuccessHandler)(id response);
 typedef void (^ErrorHandler)(NSError *error);
 
 + (PlacesLoader *)sharedInstance;
 
+- (void)checkLatestVersionWithSuccessHandler:(SuccessHandler)handler errorHandler:(ErrorHandler)errorHandler;
+
 - (void)loadPOIsWithSuccesHandler:(SuccessHandler)handler errorHandler:(ErrorHandler)errorHandler;
 
+- (NSArray *)allPlacesInDatabase: (NSManagedObjectContext *)context;
 @end

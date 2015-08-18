@@ -1,9 +1,123 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MEu-yt-Aa1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MEu-yt-Aa1">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="IRAN Sans Light.ttf">
+            <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
+        <!--DetailTVC-->
+        <scene sceneID="uq5-BP-IGD">
+            <objects>
+                <tableViewController id="hcu-ln-Kcw" customClass="DetailTVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="am1-1a-1o7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
+                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="m1B-xK-n62">
+                            <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="CN1-dw-lRv">
+                            <rect key="frame" x="0.0" y="174" width="600" height="210"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell Detail" id="3nx-0q-XJK" customClass="DDetailCell">
+                                <rect key="frame" x="0.0" y="86" width="600" height="94"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3nx-0q-XJK" id="HEa-Mc-Jhx">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="93.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bi-eX-Daf">
+                                            <rect key="frame" x="16" y="1" width="42" height="42"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="42" id="Soh-nP-ujE"/>
+                                                <constraint firstAttribute="width" secondItem="1bi-eX-Daf" secondAttribute="height" multiplier="1:1" id="cXF-5J-DxC"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
+                                            <rect key="frame" x="16" y="8" width="568" height="19.5"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="خیابان شریعتی، نرسیده به پل سیدخندان، دانشگاه صنعتی خواجه نصیرالدین طوسی، دانشکده مهندسی برق و کامپیوتر" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBE-e7-Dla">
+                                            <rect key="frame" x="16" y="35.5" width="568.5" height="0.0"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="hBE-e7-Dla" firstAttribute="top" secondItem="HDJ-te-GUA" secondAttribute="bottom" constant="8" symbolic="YES" id="1Pw-lb-SQL"/>
+                                        <constraint firstAttribute="rightMargin" secondItem="HDJ-te-GUA" secondAttribute="right" constant="8" id="6mK-DL-XYc"/>
+                                        <constraint firstItem="HDJ-te-GUA" firstAttribute="top" secondItem="HEa-Mc-Jhx" secondAttribute="topMargin" id="JBt-eL-lG0"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hBE-e7-Dla" secondAttribute="bottom" id="OIa-4Z-wZ2"/>
+                                        <constraint firstItem="1bi-eX-Daf" firstAttribute="left" secondItem="HEa-Mc-Jhx" secondAttribute="leftMargin" constant="8" id="WBW-mk-hM2"/>
+                                        <constraint firstItem="HDJ-te-GUA" firstAttribute="right" secondItem="hBE-e7-Dla" secondAttribute="right" id="Y09-rm-ukL"/>
+                                        <constraint firstAttribute="centerY" secondItem="1bi-eX-Daf" secondAttribute="centerY" id="kT8-CT-A65"/>
+                                        <constraint firstItem="hBE-e7-Dla" firstAttribute="left" secondItem="HEa-Mc-Jhx" secondAttribute="leftMargin" constant="8" id="mao-Rh-McN"/>
+                                        <constraint firstItem="hBE-e7-Dla" firstAttribute="left" secondItem="HDJ-te-GUA" secondAttribute="left" id="sdO-uJ-6QY"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="HDJ-te-GUA" id="qRJ-Is-jSz"/>
+                                    <outlet property="labelButton" destination="1bi-eX-Daf" id="IZm-8T-12z"/>
+                                    <outlet property="labelDetail" destination="hBE-e7-Dla" id="EhS-AC-Hog"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell Normal" textLabel="nwv-vy-syd" style="IBUITableViewCellStyleDefault" id="CE2-eE-2NI">
+                                <rect key="frame" x="0.0" y="180" width="600" height="94"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CE2-eE-2NI" id="eMf-n9-cCg">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="93.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="گزارش خطا" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nwv-vy-syd">
+                                            <rect key="frame" x="15" y="0.0" width="570" height="93.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hcu-ln-Kcw" id="UL4-dd-BsY"/>
+                            <outlet property="delegate" destination="hcu-ln-Kcw" id="Dpj-M3-ABw"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="2qz-Jm-IqZ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="uPq-6e-hnI">
+                            <connections>
+                                <action selector="dismiss:" destination="hcu-ln-Kcw" id="7W4-pg-4oc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="footerMapView" destination="CN1-dw-lRv" id="BwW-xz-Qay"/>
+                        <outlet property="placeImageView" destination="m1B-xK-n62" id="hC3-4t-x1L"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AS9-ca-Cbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1908" y="-421"/>
+        </scene>
         <!--MainVC-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -15,37 +129,107 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmH-cx-bvI" userLabel="camera" customClass="MKButton" customModule="ShahrYar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="516" width="60" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cmH-cx-bvI" secondAttribute="height" multiplier="1:1" id="RU1-ls-Jyz"/>
+                                    <constraint firstAttribute="height" constant="60" id="nb1-3g-GCq"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="camera"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rippleAniDuration">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ripplePercent">
+                                        <real key="value" value="1.75"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="maskEnabled" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="backgroundLayerCornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="pHN-KF-z5Q" kind="presentation" identifier="Launch Camera" modalTransitionStyle="flipHorizontal" id="yti-M8-So4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJr-zg-9GD" userLabel="currentLocation" customClass="MKButton" customModule="ShahrYar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="440" width="60" height="60"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" image="currentLocation"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rippleAniDuration">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ripplePercent">
+                                        <real key="value" value="1.75"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="maskEnabled" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="backgroundLayerCornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="showCurrentLocation:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1kF-wN-4N8"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RJr-zg-9GD" firstAttribute="leading" secondItem="cmH-cx-bvI" secondAttribute="leading" id="8BG-kU-hKz"/>
+                            <constraint firstItem="cmH-cx-bvI" firstAttribute="left" secondItem="kh9-bI-dsS" secondAttribute="leftMargin" id="B7F-rR-G3E"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cmH-cx-bvI" secondAttribute="bottom" constant="24" id="FRv-BN-vOq"/>
+                            <constraint firstItem="RJr-zg-9GD" firstAttribute="trailing" secondItem="cmH-cx-bvI" secondAttribute="trailing" id="IWn-pO-aC3"/>
+                            <constraint firstItem="RJr-zg-9GD" firstAttribute="height" secondItem="cmH-cx-bvI" secondAttribute="height" id="iJI-xS-K3A"/>
+                            <constraint firstItem="cmH-cx-bvI" firstAttribute="top" secondItem="RJr-zg-9GD" secondAttribute="bottom" constant="16" id="iRg-HQ-Csj"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JDQ-od-CNx">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="Info" id="Y7e-9J-d9H"/>
-                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="جستجو" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="xM2-Ko-b1n">
-                            <rect key="frame" x="180" y="7" width="240" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
-                            <connections>
-                                <outlet property="delegate" destination="vXZ-lx-hvc" id="NLw-h2-l78"/>
-                            </connections>
-                        </textField>
-                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="d0k-g1-xo6"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="infoButton" destination="Y7e-9J-d9H" id="FsY-ym-VhO"/>
-                        <outlet property="searchField" destination="xM2-Ko-b1n" id="U2A-ff-war"/>
+                        <outlet property="launchCameraButton" destination="cmH-cx-bvI" id="ZFm-Ub-Ixf"/>
+                        <outlet property="showCurrentLocationButton" destination="RJr-zg-9GD" id="GPa-Ld-rm5"/>
+                        <segue destination="LY1-Ed-xua" kind="popoverPresentation" identifier="Detail Segue" popoverAnchorView="kh9-bI-dsS" id="7S5-qM-Gyh">
+                            <popoverArrowDirection key="popoverArrowDirection" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1118" y="288"/>
+            <point key="canvasLocation" x="1135" y="327"/>
+        </scene>
+        <!--CameraVC-->
+        <scene sceneID="1SR-BQ-w14">
+            <objects>
+                <viewController id="pHN-KF-z5Q" customClass="CameraVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Co5-2J-faC"/>
+                        <viewControllerLayoutGuide type="bottom" id="Aut-4M-UA5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="C1O-3h-avs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sU3-DW-Azq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1867" y="327"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QMy-J9-DkP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MEu-yt-Aa1" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MEu-yt-Aa1" customClass="NavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qEr-cJ-iJl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -60,5 +244,27 @@
             </objects>
             <point key="canvasLocation" x="371" y="327"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Qzo-Ro-MHg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LY1-Ed-xua" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aAv-se-RRi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hcu-ln-Kcw" kind="relationship" relationship="rootViewController" id="08x-K2-Xag"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yCT-7I-B6X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1127" y="-436"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="camera" width="28" height="22"/>
+        <image name="currentLocation" width="22" height="22"/>
+    </resources>
 </document>

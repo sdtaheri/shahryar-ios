@@ -27,6 +27,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #import "RMFoundation.h"
+#import <UIKit/UIKit.h>
 
 #define kRMTrackingHaloAnnotationTypeName   @"RMTrackingHaloAnnotation"
 #define kRMAccuracyCircleAnnotationTypeName @"RMAccuracyCircleAnnotation"
