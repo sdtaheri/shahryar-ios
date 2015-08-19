@@ -10,6 +10,6 @@
 
 @interface MorePlacesTVC : UITableViewController
 
-@property (nonatomic, weak) NSArray *annotations;
+@property (nonatomic, strong) NSArray *annotations;
 
 @end

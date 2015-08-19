@@ -38,7 +38,7 @@
             }
         }
     }
-    
+        
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentRight;
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{ NSParagraphStyleAttributeName: paragraphStyle}];

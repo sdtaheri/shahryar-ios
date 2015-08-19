@@ -11,6 +11,7 @@
 		3015F3FD1B72354C005A347D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3015F3FC1B72354C005A347D /* AVFoundation.framework */; };
 		3015F4001B724766005A347D /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3015F3FF1B724766005A347D /* ARViewController.m */; };
 		3015F4031B72478F005A347D /* GEOLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 3015F4021B72478F005A347D /* GEOLocations.m */; };
+		30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */; };
 		303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */; };
 		303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */; };
 		3047655D1B822E5B00EAC44B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3047655C1B822E5B00EAC44B /* MessageUI.framework */; };
@@ -80,6 +81,7 @@
 		3015F3FF1B724766005A347D /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewController.m; sourceTree = "<group>"; };
 		3015F4011B72478F005A347D /* GEOLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEOLocations.h; sourceTree = "<group>"; };
 		3015F4021B72478F005A347D /* GEOLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEOLocations.m; sourceTree = "<group>"; };
+		30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
 		303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Light.ttf"; sourceTree = "<group>"; };
 		303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Medium.ttf"; sourceTree = "<group>"; };
 		3047655C1B822E5B00EAC44B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -381,6 +383,7 @@
 			children = (
 				30D0FF001B68A82700F7FD81 /* Frameworks */,
 				3093DD241B83D21A00E46D7D /* BubbleTransition.swift */,
+				30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */,
 				308C4CF31B7E334900B48944 /* GeodeticUTMConverter.h */,
 				308C4CF41B7E334900B48944 /* GeodeticUTMConverter.m */,
 				30D0FEE71B68A75B00F7FD81 /* LaunchScreen.xib */,
@@ -615,6 +618,7 @@
 			files = (
 				3056BE461B6FBB650086416C /* MarkerView.m in Sources */,
 				3093DD251B83D21A00E46D7D /* BubbleTransition.swift in Sources */,
+				30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */,
 				3093DD281B83D72A00E46D7D /* MorePlacesTVC.m in Sources */,
 				3062E5511B6F70FC001A3E63 /* MKColor.swift in Sources */,
 				307C6D911B80B588001D173C /* DetailTVC.m in Sources */,
@@ -722,10 +726,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_MODULE_NAME = ShahrYar;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -760,9 +765,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_MODULE_NAME = ShahrYar;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -773,7 +779,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ShahrYar/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -789,7 +795,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ShahrYar/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

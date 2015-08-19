@@ -60,7 +60,7 @@ public class BubbleTransition: NSObject, UIViewControllerAnimatedTransitioning {
             let presentedControllerView = transitionContext.viewForKey(UITransitionContextToViewKey)!
             let originalCenter = presentedControllerView.center
             let originalSize = presentedControllerView.frame.size
-
+            
             bubble = UIView(frame: frameForBubble(originalCenter, size: originalSize, start: startingPoint))
             bubble?.layer.cornerRadius = bubble!.frame.size.height / 2
             bubble?.center = startingPoint

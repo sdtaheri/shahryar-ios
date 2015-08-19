@@ -22,6 +22,7 @@
     [super viewDidLoad];
     
     self.tableView.estimatedRowHeight = 44.f;
+    self.navigationController.view.layer.masksToBounds = YES;
     
     self.places = [NSMutableArray arrayWithCapacity:self.annotations.count];
     for (RMAnnotation *annotation in self.annotations) {

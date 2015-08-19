@@ -256,6 +256,14 @@ CLLocationDegrees const Longitude_Default = 51.3;
     return UIStatusBarAnimationSlide;
 }
 
+- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
+    if ([[presented childViewControllers][0] isKindOfClass:[MorePlacesTVC class]]) {
+        return [[CustomPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
+    } else {
+        return [[UIPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
+    }
+}
+
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
     return UIModalPresentationOverFullScreen; // required, otherwise delegate method below is never called.
 }
@@ -307,7 +315,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     CGPoint midPoint = CGPointMake(self.selectedClusterAnnotationRect.origin.x + (self.selectedClusterAnnotationRect.size.width / 2), self.selectedClusterAnnotationRect.origin.y + (self.selectedClusterAnnotationRect.size.height / 2));
 
     self.transition.startingPoint = midPoint;
-    self.transition.bubbleColor = [UIColor whiteColor];
+    self.transition.bubbleColor = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? [UIColor clearColor] : [UIColor whiteColor];
     
     return self.transition;
 }
@@ -464,21 +472,23 @@ CLLocationDegrees const Longitude_Default = 51.3;
         
         layer.opacity = 0.75;
         
-        // set the size of the circle
-        layer.bounds = CGRectMake(0, 0, 50, 50);
-        
         // change the size of the circle depending on the cluster's size
-        if ([annotation.clusteredAnnotations count] > 5) {
+        if ([annotation.clusteredAnnotations count] < 20) {
+            layer.bounds = CGRectMake(0, 0, 50, 50);
+        } else if ([annotation.clusteredAnnotations count] < 50) {
+            layer.bounds = CGRectMake(0, 0, 60, 60);
+        } else if ([annotation.clusteredAnnotations count] < 100) {
             layer.bounds = CGRectMake(0, 0, 70, 70);
-        } else if ([annotation.clusteredAnnotations count] > 10) {
-            layer.bounds = CGRectMake(0, 0, 100, 100);
-        } else if ([annotation.clusteredAnnotations count] > 15) {
-            layer.bounds = CGRectMake(0, 0, 120, 120);
+        } else {
+            layer.bounds = CGRectMake(0, 0, 80, 80);
         }
         
         // define label content
-        NSString *clusterLabelContent = [NSString stringWithFormat:@"%lu",
-                                         (unsigned long)[annotation.clusteredAnnotations count]];
+        NSNumber *clusterLabelCount = @([annotation.clusteredAnnotations count]);
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        formatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa_IR"];
+
+        NSString *clusterLabelContent = [formatter stringFromNumber:clusterLabelCount];
         
         // calculate its size
         CGRect labelSize = [clusterLabelContent boundingRectWithSize:
@@ -487,7 +497,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
                                                                                                                         NSFontAttributeName:[UIFont systemFontOfSize:15] }
                                                              context:nil];
         
-        UIFont *labelFont = [UIFont systemFontOfSize:15];
+        UIFont *labelFont = [UIFont fontWithName:@"IRANSans-Medium" size:14];
         
         [(RMMarker *)layer setTextForegroundColor:[UIColor whiteColor]];
         
@@ -499,7 +509,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
                                        (layerSize.height - (labelSize.size.height + 4)) / 2);
         
         // set it all at once
-        [(RMMarker *)layer changeLabelUsingText:clusterLabelContent position:position
+        [(RMMarker *)layer changeLabelUsingText: clusterLabelContent position:position
                                            font:labelFont foregroundColor:[UIColor whiteColor]
                                 backgroundColor:[UIColor clearColor]];
     }
@@ -512,39 +522,6 @@ CLLocationDegrees const Longitude_Default = 51.3;
         
         self.selectedClusterAnnotationRect = annotation.layer.frame;
         [self performSegueWithIdentifier:@"More Places List" sender:annotation.clusteredAnnotations];
-        
-//        // 1. Start with a maximum (world-wide) bounding box
-//        CLLocationCoordinate2D topRight = CLLocationCoordinate2DMake(180, -90);
-//        CLLocationCoordinate2D bottomLeft = CLLocationCoordinate2DMake(-180, 90);
-//        
-//        // 2. Derive the minimum bounding box coordinates that contains all cluster points, by "squeezing in" on their coordinates
-//        for (RMAnnotation *a in annotation.clusteredAnnotations) {
-//            
-//            if (a.coordinate.latitude < topRight.latitude) {
-//                topRight.latitude = a.coordinate.latitude;
-//            }
-//            if (a.coordinate.longitude > topRight.longitude) {
-//                topRight.longitude = a.coordinate.longitude;
-//            }
-//            
-//            if (a.coordinate.latitude > bottomLeft.latitude) {
-//                bottomLeft.latitude = a.coordinate.latitude;
-//            }
-//            if (a.coordinate.longitude < bottomLeft.longitude) {
-//                bottomLeft.longitude = a.coordinate.longitude;
-//            }
-//        }
-//        
-//        CLLocation *sw = [[CLLocation alloc] initWithLatitude:topRight.latitude longitude:topRight.longitude];
-//        CLLocation *ne = [[CLLocation alloc] initWithLatitude:bottomLeft.latitude longitude:bottomLeft.longitude];
-//        
-//        // 3. Calculate the distance in meters across the calculated bounding box
-//        CLLocationDistance distanceInMeters = [ne distanceFromLocation:sw];
-//        // 4. Adjust the map view's meters per pixel setting so that the bounding box fits nicely within the map views bounds (which is equivalent to zooming)
-//        [self.mapView setMetersPerPixel:(distanceInMeters / (self.mapView.frame.size.width * 0.7)) animated:YES];
-//        // 5. Center on the midpoint of the bounding box
-//        CLLocationCoordinate2D midPoint = CLLocationCoordinate2DMake(0.5 * (topRight.latitude + bottomLeft.latitude), 0.5 * (topRight.longitude + bottomLeft.longitude));
-//        [self.mapView setCenterCoordinate:midPoint animated:YES];
         
     }
 }
