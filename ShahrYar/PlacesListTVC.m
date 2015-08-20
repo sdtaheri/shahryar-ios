@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Saeed Taheri. All rights reserved.
 //
 
-#import "MorePlacesTVC.h"
+#import "PlacesListTVC.h"
 #import "DetailTVC.h"
 #import "Mapbox.h"
 
-@interface MorePlacesTVC ()
+@interface PlacesListTVC ()
 
 @property (nonatomic, strong) NSMutableArray *places;
 
 @end
 
-@implementation MorePlacesTVC
+@implementation PlacesListTVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,6 +47,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Place Cell"];
     
     cell.textLabel.text = [self.places[indexPath.row] title];
+    cell.detailTextLabel.text = @"سلام";
     
     return cell;
 }

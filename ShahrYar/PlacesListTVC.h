@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MorePlacesTVC : UITableViewController
+@interface PlacesListTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *annotations;
 

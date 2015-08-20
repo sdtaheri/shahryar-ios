@@ -28,23 +28,24 @@
         self.arController = [[AugmentedRealityController alloc] initWithViewController:self withDelgate:self];
     }
     
-    [self.arController setMinimumScaleFactor:0.5];
+    [self.arController setMinimumScaleFactor:0.3];
     [self.arController setScaleViewsBasedOnDistance:YES];
     [self.arController setRotateViewsBasedOnPerspective:YES];
     [self.arController setDebugMode:NO];
     [self.arController setShowsRadar:YES];
-    [self.arController setRadarRange:24000.0];
+    [self.arController setRadarRange:30000.0];
     [self.arController setOnlyShowItemsWithinRadarRange:NO];
     
     [self geoLocations];
     
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [closeButton setTitle:@"نقشه" forState:UIControlStateNormal];
+    [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    closeButton.tintColor = [UIColor whiteColor];
     [closeButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeButton];
     
     closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeftMargin multiplier:1.0 constant:0.0]];
 
 }

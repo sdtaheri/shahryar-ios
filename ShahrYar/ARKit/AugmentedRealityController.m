@@ -214,11 +214,11 @@
         CGRect displayFrame = displayView.bounds;
         
         int radarSize = 2 * RADIUS + 1;
-        int margin = 4;
-        _radarView       = [[Radar alloc] initWithFrame:CGRectMake(displayFrame.size.width - radarSize - margin, margin, radarSize, radarSize)];
-        _radarViewPort   = [[RadarViewPortView alloc] initWithFrame:CGRectMake(displayFrame.size.width - radarSize - margin, margin, radarSize, radarSize)];
+        int margin = 8;
+        _radarView       = [[Radar alloc] initWithFrame:CGRectMake(displayFrame.size.width - radarSize - 2 * margin, margin, radarSize, radarSize)];
+        _radarViewPort   = [[RadarViewPortView alloc] initWithFrame:CGRectMake(displayFrame.size.width - radarSize - 2 * margin, margin, radarSize, radarSize)];
         
-        radarNorthLabel = [[UILabel alloc] initWithFrame:CGRectMake(displayFrame.size.width - RADIUS - 11, margin + 3, 10, 10)];
+        radarNorthLabel = [[UILabel alloc] initWithFrame:CGRectMake(displayFrame.size.width - RADIUS - 21, margin + 3, 10, 10)];
         radarNorthLabel.backgroundColor = [UIColor clearColor];
         radarNorthLabel.textColor = [UIColor whiteColor];
         radarNorthLabel.font = [UIFont boldSystemFontOfSize:10.0];
@@ -620,10 +620,10 @@
     if(_radarViewPort && _radarView)
     {
         int radarSize = 2 * RADIUS + 1;
-        int margin = 4;
-        [radarNorthLabel setFrame:CGRectMake(newFrame.size.width - RADIUS - 11, margin + 3, 10, 10)];
-        [_radarView setFrame:CGRectMake(newFrame.size.width - radarSize - margin, margin, radarSize, radarSize)];
-        [_radarViewPort setFrame:CGRectMake(newFrame.size.width - radarSize - margin, margin, radarSize, radarSize)];
+        int margin = 8;
+        [radarNorthLabel setFrame:CGRectMake(newFrame.size.width - RADIUS - 21, margin + 3, 10, 10)];
+        [_radarView setFrame:CGRectMake(newFrame.size.width - radarSize - 2 * margin, margin, radarSize, radarSize)];
+        [_radarViewPort setFrame:CGRectMake(newFrame.size.width - radarSize - 2 * margin, margin, radarSize, radarSize)];
     }
 }
 

@@ -16,7 +16,7 @@
 #import "CameraVC.h"
 #import "SearchTVC.h"
 #import "FilterTVC.h"
-#import "MorePlacesTVC.h"
+#import "PlacesListTVC.h"
 
 #import "Mapbox.h"
 #import "PlacesLoader.h"
@@ -240,7 +240,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
         ftvc.popoverPresentationController.delegate = self;
         ftvc.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
     } else if ([segue.identifier isEqualToString:@"More Places List"]) {
-        MorePlacesTVC *tvvc = [segue.destinationViewController childViewControllers][0];
+        PlacesListTVC *tvvc = [segue.destinationViewController childViewControllers][0];
         tvvc.annotations = sender;
         [segue.destinationViewController setTransitioningDelegate: self];
         [segue.destinationViewController setModalPresentationStyle: UIModalPresentationCustom];
@@ -257,7 +257,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
 }
 
 - (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
-    if ([[presented childViewControllers][0] isKindOfClass:[MorePlacesTVC class]]) {
+    if ([[presented childViewControllers][0] isKindOfClass:[PlacesListTVC class]]) {
         return [[CustomPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
     } else {
         return [[UIPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];

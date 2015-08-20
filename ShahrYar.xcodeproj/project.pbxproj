@@ -12,6 +12,7 @@
 		3015F4001B724766005A347D /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3015F3FF1B724766005A347D /* ARViewController.m */; };
 		3015F4031B72478F005A347D /* GEOLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 3015F4021B72478F005A347D /* GEOLocations.m */; };
 		30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */; };
+		30194F201B851F2E00B884F9 /* bgCalloutDisclosure@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30194F1F1B851F2E00B884F9 /* bgCalloutDisclosure@3x.png */; };
 		303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */; };
 		303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */; };
 		3047655D1B822E5B00EAC44B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3047655C1B822E5B00EAC44B /* MessageUI.framework */; };
@@ -46,7 +47,7 @@
 		308C4CF51B7E334900B48944 /* GeodeticUTMConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 308C4CF41B7E334900B48944 /* GeodeticUTMConverter.m */; };
 		3093DD231B83864E00E46D7D /* NSManagedObjectContext+AsyncFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3093DD221B83864E00E46D7D /* NSManagedObjectContext+AsyncFetch.m */; };
 		3093DD251B83D21A00E46D7D /* BubbleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3093DD241B83D21A00E46D7D /* BubbleTransition.swift */; };
-		3093DD281B83D72A00E46D7D /* MorePlacesTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3093DD271B83D72A00E46D7D /* MorePlacesTVC.m */; };
+		3093DD281B83D72A00E46D7D /* PlacesListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3093DD271B83D72A00E46D7D /* PlacesListTVC.m */; };
 		30B4BAB81B6CD19400057851 /* Place+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B4BAB71B6CD19400057851 /* Place+Create.m */; };
 		30D0FEDB1B68A75B00F7FD81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEDA1B68A75B00F7FD81 /* main.m */; };
 		30D0FEDE1B68A75B00F7FD81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEDD1B68A75B00F7FD81 /* AppDelegate.m */; };
@@ -82,6 +83,7 @@
 		3015F4011B72478F005A347D /* GEOLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEOLocations.h; sourceTree = "<group>"; };
 		3015F4021B72478F005A347D /* GEOLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEOLocations.m; sourceTree = "<group>"; };
 		30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
+		30194F1F1B851F2E00B884F9 /* bgCalloutDisclosure@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgCalloutDisclosure@3x.png"; sourceTree = "<group>"; };
 		303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Light.ttf"; sourceTree = "<group>"; };
 		303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Medium.ttf"; sourceTree = "<group>"; };
 		3047655C1B822E5B00EAC44B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -136,8 +138,8 @@
 		3093DD211B83864E00E46D7D /* NSManagedObjectContext+AsyncFetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+AsyncFetch.h"; sourceTree = "<group>"; };
 		3093DD221B83864E00E46D7D /* NSManagedObjectContext+AsyncFetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+AsyncFetch.m"; sourceTree = "<group>"; };
 		3093DD241B83D21A00E46D7D /* BubbleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTransition.swift; sourceTree = "<group>"; };
-		3093DD261B83D72A00E46D7D /* MorePlacesTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MorePlacesTVC.h; sourceTree = "<group>"; };
-		3093DD271B83D72A00E46D7D /* MorePlacesTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MorePlacesTVC.m; sourceTree = "<group>"; };
+		3093DD261B83D72A00E46D7D /* PlacesListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesListTVC.h; sourceTree = "<group>"; };
+		3093DD271B83D72A00E46D7D /* PlacesListTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesListTVC.m; sourceTree = "<group>"; };
 		30B4BAB61B6CD19400057851 /* Place+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Place+Create.h"; sourceTree = "<group>"; };
 		30B4BAB71B6CD19400057851 /* Place+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Place+Create.m"; sourceTree = "<group>"; };
 		30D0FED51B68A75B00F7FD81 /* ShahrYar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShahrYar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -293,6 +295,7 @@
 				3056BE331B6FBB650086416C /* bgCallout@2x.png */,
 				3056BE341B6FBB650086416C /* bgCalloutDisclosure.png */,
 				3056BE351B6FBB650086416C /* bgCalloutDisclosure@2x.png */,
+				30194F1F1B851F2E00B884F9 /* bgCalloutDisclosure@3x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -368,8 +371,8 @@
 				3056BE491B6FBC8C0086416C /* CameraVC.h */,
 				3056BE4A1B6FBC8C0086416C /* CameraVC.m */,
 				304765641B8249F700EAC44B /* Images.xcassets */,
-				3093DD261B83D72A00E46D7D /* MorePlacesTVC.h */,
-				3093DD271B83D72A00E46D7D /* MorePlacesTVC.m */,
+				3093DD261B83D72A00E46D7D /* PlacesListTVC.h */,
+				3093DD271B83D72A00E46D7D /* PlacesListTVC.m */,
 				304765791B832D2000EAC44B /* Search */,
 				307C6D951B80C431001D173C /* Detail VC */,
 				308C4CF21B7E2E8E00B48944 /* Database */,
@@ -598,6 +601,7 @@
 				3056BE441B6FBB650086416C /* bgCalloutDisclosure.png in Resources */,
 				3056BE421B6FBB650086416C /* bgCallout.png in Resources */,
 				30D946111B69428E00DC19E3 /* Mapbox.bundle in Resources */,
+				30194F201B851F2E00B884F9 /* bgCalloutDisclosure@3x.png in Resources */,
 				30D0FEE91B68A75B00F7FD81 /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,7 +623,7 @@
 				3056BE461B6FBB650086416C /* MarkerView.m in Sources */,
 				3093DD251B83D21A00E46D7D /* BubbleTransition.swift in Sources */,
 				30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */,
-				3093DD281B83D72A00E46D7D /* MorePlacesTVC.m in Sources */,
+				3093DD281B83D72A00E46D7D /* PlacesListTVC.m in Sources */,
 				3062E5511B6F70FC001A3E63 /* MKColor.swift in Sources */,
 				307C6D911B80B588001D173C /* DetailTVC.m in Sources */,
 				307C6D9B1B80C636001D173C /* DDetailCell.m in Sources */,

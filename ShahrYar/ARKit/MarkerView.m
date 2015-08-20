@@ -57,7 +57,7 @@
         
         UILabel *titleLabel	= [[UILabel alloc] initWithFrame:CGRectMake(LABEL_MARGIN, LABEL_MARGIN, labelSize.width, labelSize.height)];
 		[titleLabel setBackgroundColor: [UIColor clearColor]];
-		[titleLabel setTextColor:		[UIColor whiteColor]];
+		[titleLabel setTextColor:		[UIColor blackColor]];
 		[titleLabel setTextAlignment:	NSTextAlignmentCenter];
         [titleLabel setFont:            [UIFont fontWithName:@"Helvetica-Bold" size:17.0]];
 		[titleLabel setText:			[coordinate title]];
@@ -70,7 +70,7 @@
         
         _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(0, LABEL_HEIGHT + LABEL_MARGIN, labelSize.width, labelSize.height)];
 		[_lblDistance setBackgroundColor:    [UIColor clearColor]];
-		[_lblDistance setTextColor:          [UIColor whiteColor]];
+		[_lblDistance setTextColor:          [UIColor blackColor]];
 		[_lblDistance setTextAlignment:      NSTextAlignmentCenter];
         [_lblDistance setFont:               [UIFont fontWithName:@"Helvetica" size:13.0]];
 		if(_usesMetric == YES){
