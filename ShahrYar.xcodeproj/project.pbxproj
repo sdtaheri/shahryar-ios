@@ -9,30 +9,29 @@
 /* Begin PBXBuildFile section */
 		3015F3FB1B723544005A347D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3015F3FA1B723544005A347D /* MapKit.framework */; };
 		3015F3FD1B72354C005A347D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3015F3FC1B72354C005A347D /* AVFoundation.framework */; };
-		3015F4001B724766005A347D /* ARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3015F3FF1B724766005A347D /* ARViewController.m */; };
-		3015F4031B72478F005A347D /* GEOLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 3015F4021B72478F005A347D /* GEOLocations.m */; };
 		30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */; };
-		30194F201B851F2E00B884F9 /* bgCalloutDisclosure@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30194F1F1B851F2E00B884F9 /* bgCalloutDisclosure@3x.png */; };
+		3025AC001B864D1A00B7E14A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3025ABFF1B864D1A00B7E14A /* CoreGraphics.framework */; };
+		3025AC021B864D2600B7E14A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3025AC011B864D2600B7E14A /* CoreMotion.framework */; };
+		3025AC041B864D3900B7E14A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3025AC031B864D3800B7E14A /* MobileCoreServices.framework */; };
+		3025AC061B864D4300B7E14A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3025AC051B864D4300B7E14A /* SystemConfiguration.framework */; };
+		3025AC3E1B871EE000B7E14A /* ARController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC2C1B871EE000B7E14A /* ARController.m */; };
+		3025AC3F1B871EE000B7E14A /* AROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC2E1B871EE000B7E14A /* AROverlayView.m */; };
+		3025AC401B871EE000B7E14A /* ar_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC311B871EE000B7E14A /* ar_icon.png */; };
+		3025AC411B871EE000B7E14A /* ar_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC321B871EE000B7E14A /* ar_overlay.png */; };
+		3025AC421B871EE000B7E14A /* ar_overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC331B871EE000B7E14A /* ar_overlay@2x.png */; };
+		3025AC431B871EE000B7E14A /* Radar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC341B871EE000B7E14A /* Radar.png */; };
+		3025AC441B871EE000B7E14A /* RadarMV.png in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC351B871EE000B7E14A /* RadarMV.png */; };
+		3025AC451B871EE000B7E14A /* ARRadar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC381B871EE000B7E14A /* ARRadar.m */; };
+		3025AC461B871EE000B7E14A /* ARRadar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC391B871EE000B7E14A /* ARRadar.xib */; };
+		3025AC471B871EE000B7E14A /* LocationMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3B1B871EE000B7E14A /* LocationMath.m */; };
+		3025AC481B871EE000B7E14A /* PRARManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3D1B871EE000B7E14A /* PRARManager.m */; };
 		303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */; };
 		303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */; };
 		3047655D1B822E5B00EAC44B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3047655C1B822E5B00EAC44B /* MessageUI.framework */; };
 		304765651B8249F700EAC44B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304765641B8249F700EAC44B /* Images.xcassets */; };
-		304765681B826FA800EAC44B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304765661B826FA800EAC44B /* AddressBook.framework */; };
-		304765691B826FA800EAC44B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304765671B826FA800EAC44B /* AddressBookUI.framework */; };
 		304765781B832D1900EAC44B /* FilterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304765771B832D1900EAC44B /* FilterTVC.m */; };
 		3047657C1B8344A500EAC44B /* Type.m in Sources */ = {isa = PBXBuildFile; fileRef = 3047657B1B8344A500EAC44B /* Type.m */; };
 		3047657F1B8344A600EAC44B /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 3047657E1B8344A600EAC44B /* Place.m */; };
-		3056BE3C1B6FBB650086416C /* ARCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE241B6FBB650086416C /* ARCoordinate.m */; };
-		3056BE3D1B6FBB650086416C /* ARGeoCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE261B6FBB650086416C /* ARGeoCoordinate.m */; };
-		3056BE3E1B6FBB650086416C /* ARKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE281B6FBB650086416C /* ARKit.m */; };
-		3056BE401B6FBB650086416C /* AugmentedRealityController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE2E1B6FBB650086416C /* AugmentedRealityController.m */; };
-		3056BE421B6FBB650086416C /* bgCallout.png in Resources */ = {isa = PBXBuildFile; fileRef = 3056BE321B6FBB650086416C /* bgCallout.png */; };
-		3056BE431B6FBB650086416C /* bgCallout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3056BE331B6FBB650086416C /* bgCallout@2x.png */; };
-		3056BE441B6FBB650086416C /* bgCalloutDisclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 3056BE341B6FBB650086416C /* bgCalloutDisclosure.png */; };
-		3056BE451B6FBB650086416C /* bgCalloutDisclosure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3056BE351B6FBB650086416C /* bgCalloutDisclosure@2x.png */; };
-		3056BE461B6FBB650086416C /* MarkerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE371B6FBB650086416C /* MarkerView.m */; };
-		3056BE471B6FBB650086416C /* Radar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE391B6FBB650086416C /* Radar.m */; };
-		3056BE481B6FBB650086416C /* RadarViewPortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE3B1B6FBB650086416C /* RadarViewPortView.m */; };
 		3056BE4B1B6FBC8C0086416C /* CameraVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3056BE4A1B6FBC8C0086416C /* CameraVC.m */; };
 		3062E5441B6E4143001A3E63 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3062E5431B6E4143001A3E63 /* NavigationController.m */; };
 		3062E5471B6E513A001A3E63 /* SearchTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3062E5461B6E513A001A3E63 /* SearchTVC.m */; };
@@ -78,12 +77,28 @@
 /* Begin PBXFileReference section */
 		3015F3FA1B723544005A347D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3015F3FC1B72354C005A347D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		3015F3FE1B724766005A347D /* ARViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewController.h; sourceTree = "<group>"; };
-		3015F3FF1B724766005A347D /* ARViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewController.m; sourceTree = "<group>"; };
-		3015F4011B72478F005A347D /* GEOLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GEOLocations.h; sourceTree = "<group>"; };
-		3015F4021B72478F005A347D /* GEOLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GEOLocations.m; sourceTree = "<group>"; };
 		30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
-		30194F1F1B851F2E00B884F9 /* bgCalloutDisclosure@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgCalloutDisclosure@3x.png"; sourceTree = "<group>"; };
+		3025ABFF1B864D1A00B7E14A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3025AC011B864D2600B7E14A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		3025AC031B864D3800B7E14A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3025AC051B864D4300B7E14A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3025AC2B1B871EE000B7E14A /* ARController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARController.h; sourceTree = "<group>"; };
+		3025AC2C1B871EE000B7E14A /* ARController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARController.m; sourceTree = "<group>"; };
+		3025AC2D1B871EE000B7E14A /* AROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayView.h; sourceTree = "<group>"; };
+		3025AC2E1B871EE000B7E14A /* AROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayView.m; sourceTree = "<group>"; };
+		3025AC2F1B871EE000B7E14A /* ARSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSettings.h; sourceTree = "<group>"; };
+		3025AC311B871EE000B7E14A /* ar_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ar_icon.png; sourceTree = "<group>"; };
+		3025AC321B871EE000B7E14A /* ar_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ar_overlay.png; sourceTree = "<group>"; };
+		3025AC331B871EE000B7E14A /* ar_overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ar_overlay@2x.png"; sourceTree = "<group>"; };
+		3025AC341B871EE000B7E14A /* Radar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Radar.png; sourceTree = "<group>"; };
+		3025AC351B871EE000B7E14A /* RadarMV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadarMV.png; sourceTree = "<group>"; };
+		3025AC371B871EE000B7E14A /* ARRadar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARRadar.h; sourceTree = "<group>"; };
+		3025AC381B871EE000B7E14A /* ARRadar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARRadar.m; sourceTree = "<group>"; };
+		3025AC391B871EE000B7E14A /* ARRadar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARRadar.xib; sourceTree = "<group>"; };
+		3025AC3A1B871EE000B7E14A /* LocationMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMath.h; sourceTree = "<group>"; };
+		3025AC3B1B871EE000B7E14A /* LocationMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMath.m; sourceTree = "<group>"; };
+		3025AC3C1B871EE000B7E14A /* PRARManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRARManager.h; sourceTree = "<group>"; };
+		3025AC3D1B871EE000B7E14A /* PRARManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRARManager.m; sourceTree = "<group>"; };
 		303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Light.ttf"; sourceTree = "<group>"; };
 		303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Medium.ttf"; sourceTree = "<group>"; };
 		3047655C1B822E5B00EAC44B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -96,26 +111,6 @@
 		3047657B1B8344A500EAC44B /* Type.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Type.m; sourceTree = "<group>"; };
 		3047657D1B8344A600EAC44B /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		3047657E1B8344A600EAC44B /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
-		3056BE231B6FBB650086416C /* ARCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCoordinate.h; sourceTree = "<group>"; };
-		3056BE241B6FBB650086416C /* ARCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCoordinate.m; sourceTree = "<group>"; };
-		3056BE251B6FBB650086416C /* ARGeoCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARGeoCoordinate.h; sourceTree = "<group>"; };
-		3056BE261B6FBB650086416C /* ARGeoCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARGeoCoordinate.m; sourceTree = "<group>"; };
-		3056BE271B6FBB650086416C /* ARKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKit.h; sourceTree = "<group>"; };
-		3056BE281B6FBB650086416C /* ARKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARKit.m; sourceTree = "<group>"; };
-		3056BE291B6FBB650086416C /* ARLocationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLocationDelegate.h; sourceTree = "<group>"; };
-		3056BE2C1B6FBB650086416C /* ARViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewProtocol.h; sourceTree = "<group>"; };
-		3056BE2D1B6FBB650086416C /* AugmentedRealityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentedRealityController.h; sourceTree = "<group>"; };
-		3056BE2E1B6FBB650086416C /* AugmentedRealityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AugmentedRealityController.m; sourceTree = "<group>"; };
-		3056BE321B6FBB650086416C /* bgCallout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgCallout.png; sourceTree = "<group>"; };
-		3056BE331B6FBB650086416C /* bgCallout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgCallout@2x.png"; sourceTree = "<group>"; };
-		3056BE341B6FBB650086416C /* bgCalloutDisclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgCalloutDisclosure.png; sourceTree = "<group>"; };
-		3056BE351B6FBB650086416C /* bgCalloutDisclosure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bgCalloutDisclosure@2x.png"; sourceTree = "<group>"; };
-		3056BE361B6FBB650086416C /* MarkerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerView.h; sourceTree = "<group>"; };
-		3056BE371B6FBB650086416C /* MarkerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerView.m; sourceTree = "<group>"; };
-		3056BE381B6FBB650086416C /* Radar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Radar.h; sourceTree = "<group>"; };
-		3056BE391B6FBB650086416C /* Radar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Radar.m; sourceTree = "<group>"; };
-		3056BE3A1B6FBB650086416C /* RadarViewPortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadarViewPortView.h; sourceTree = "<group>"; };
-		3056BE3B1B6FBB650086416C /* RadarViewPortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadarViewPortView.m; sourceTree = "<group>"; };
 		3056BE491B6FBC8C0086416C /* CameraVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraVC.h; sourceTree = "<group>"; };
 		3056BE4A1B6FBC8C0086416C /* CameraVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraVC.m; sourceTree = "<group>"; };
 		3062E5421B6E4143001A3E63 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
@@ -226,8 +221,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				304765681B826FA800EAC44B /* AddressBook.framework in Frameworks */,
-				304765691B826FA800EAC44B /* AddressBookUI.framework in Frameworks */,
+				3025AC061B864D4300B7E14A /* SystemConfiguration.framework in Frameworks */,
+				3025AC041B864D3900B7E14A /* MobileCoreServices.framework in Frameworks */,
+				3025AC021B864D2600B7E14A /* CoreMotion.framework in Frameworks */,
+				3025AC001B864D1A00B7E14A /* CoreGraphics.framework in Frameworks */,
 				30D0FF441B68AAA700F7FD81 /* libz.dylib in Frameworks */,
 				30D0FF421B68AA9800F7FD81 /* libsqlite3.dylib in Frameworks */,
 				3015F3FD1B72354C005A347D /* AVFoundation.framework in Frameworks */,
@@ -249,6 +246,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3025AC291B871EE000B7E14A /* ARKit */ = {
+			isa = PBXGroup;
+			children = (
+				3025AC2A1B871EE000B7E14A /* AR */,
+				3025AC2F1B871EE000B7E14A /* ARSettings.h */,
+				3025AC301B871EE000B7E14A /* Graphics */,
+				3025AC361B871EE000B7E14A /* Location */,
+				3025AC3C1B871EE000B7E14A /* PRARManager.h */,
+				3025AC3D1B871EE000B7E14A /* PRARManager.m */,
+			);
+			path = ARKit;
+			sourceTree = "<group>";
+		};
+		3025AC2A1B871EE000B7E14A /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				3025AC2B1B871EE000B7E14A /* ARController.h */,
+				3025AC2C1B871EE000B7E14A /* ARController.m */,
+				3025AC2D1B871EE000B7E14A /* AROverlayView.h */,
+				3025AC2E1B871EE000B7E14A /* AROverlayView.m */,
+			);
+			path = AR;
+			sourceTree = "<group>";
+		};
+		3025AC301B871EE000B7E14A /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				3025AC311B871EE000B7E14A /* ar_icon.png */,
+				3025AC321B871EE000B7E14A /* ar_overlay.png */,
+				3025AC331B871EE000B7E14A /* ar_overlay@2x.png */,
+				3025AC341B871EE000B7E14A /* Radar.png */,
+				3025AC351B871EE000B7E14A /* RadarMV.png */,
+			);
+			path = Graphics;
+			sourceTree = "<group>";
+		};
+		3025AC361B871EE000B7E14A /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				3025AC371B871EE000B7E14A /* ARRadar.h */,
+				3025AC381B871EE000B7E14A /* ARRadar.m */,
+				3025AC391B871EE000B7E14A /* ARRadar.xib */,
+				3025AC3A1B871EE000B7E14A /* LocationMath.h */,
+				3025AC3B1B871EE000B7E14A /* LocationMath.m */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		304765791B832D2000EAC44B /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,46 +303,6 @@
 				3062E5461B6E513A001A3E63 /* SearchTVC.m */,
 			);
 			name = Search;
-			sourceTree = "<group>";
-		};
-		3056BE221B6FBB650086416C /* ARKit */ = {
-			isa = PBXGroup;
-			children = (
-				3015F4011B72478F005A347D /* GEOLocations.h */,
-				3015F4021B72478F005A347D /* GEOLocations.m */,
-				3056BE231B6FBB650086416C /* ARCoordinate.h */,
-				3056BE241B6FBB650086416C /* ARCoordinate.m */,
-				3056BE251B6FBB650086416C /* ARGeoCoordinate.h */,
-				3056BE261B6FBB650086416C /* ARGeoCoordinate.m */,
-				3056BE271B6FBB650086416C /* ARKit.h */,
-				3056BE281B6FBB650086416C /* ARKit.m */,
-				3056BE291B6FBB650086416C /* ARLocationDelegate.h */,
-				3056BE2C1B6FBB650086416C /* ARViewProtocol.h */,
-				3015F3FE1B724766005A347D /* ARViewController.h */,
-				3015F3FF1B724766005A347D /* ARViewController.m */,
-				3056BE2D1B6FBB650086416C /* AugmentedRealityController.h */,
-				3056BE2E1B6FBB650086416C /* AugmentedRealityController.m */,
-				3056BE311B6FBB650086416C /* Images */,
-				3056BE361B6FBB650086416C /* MarkerView.h */,
-				3056BE371B6FBB650086416C /* MarkerView.m */,
-				3056BE381B6FBB650086416C /* Radar.h */,
-				3056BE391B6FBB650086416C /* Radar.m */,
-				3056BE3A1B6FBB650086416C /* RadarViewPortView.h */,
-				3056BE3B1B6FBB650086416C /* RadarViewPortView.m */,
-			);
-			path = ARKit;
-			sourceTree = "<group>";
-		};
-		3056BE311B6FBB650086416C /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				3056BE321B6FBB650086416C /* bgCallout.png */,
-				3056BE331B6FBB650086416C /* bgCallout@2x.png */,
-				3056BE341B6FBB650086416C /* bgCalloutDisclosure.png */,
-				3056BE351B6FBB650086416C /* bgCalloutDisclosure@2x.png */,
-				30194F1F1B851F2E00B884F9 /* bgCalloutDisclosure@3x.png */,
-			);
-			path = Images;
 			sourceTree = "<group>";
 		};
 		3062E5481B6F70FC001A3E63 /* MaterialKit */ = {
@@ -421,9 +426,13 @@
 		30D0FF001B68A82700F7FD81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3056BE221B6FBB650086416C /* ARKit */,
+				3025AC291B871EE000B7E14A /* ARKit */,
 				3062E5481B6F70FC001A3E63 /* MaterialKit */,
 				30D945D41B69428E00DC19E3 /* Mapbox_SDK */,
+				3025AC051B864D4300B7E14A /* SystemConfiguration.framework */,
+				3025AC031B864D3800B7E14A /* MobileCoreServices.framework */,
+				3025AC011B864D2600B7E14A /* CoreMotion.framework */,
+				3025ABFF1B864D1A00B7E14A /* CoreGraphics.framework */,
 				304765661B826FA800EAC44B /* AddressBook.framework */,
 				304765671B826FA800EAC44B /* AddressBookUI.framework */,
 				3047655C1B822E5B00EAC44B /* MessageUI.framework */,
@@ -592,17 +601,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				30D0FEE41B68A75B00F7FD81 /* Main.storyboard in Resources */,
+				3025AC461B871EE000B7E14A /* ARRadar.xib in Resources */,
+				3025AC401B871EE000B7E14A /* ar_icon.png in Resources */,
+				3025AC431B871EE000B7E14A /* Radar.png in Resources */,
+				3025AC441B871EE000B7E14A /* RadarMV.png in Resources */,
 				303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */,
-				3056BE451B6FBB650086416C /* bgCalloutDisclosure@2x.png in Resources */,
 				30D0FF461B68BC6E00F7FD81 /* tehran.mbtiles in Resources */,
 				304765651B8249F700EAC44B /* Images.xcassets in Resources */,
 				303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */,
-				3056BE431B6FBB650086416C /* bgCallout@2x.png in Resources */,
-				3056BE441B6FBB650086416C /* bgCalloutDisclosure.png in Resources */,
-				3056BE421B6FBB650086416C /* bgCallout.png in Resources */,
 				30D946111B69428E00DC19E3 /* Mapbox.bundle in Resources */,
-				30194F201B851F2E00B884F9 /* bgCalloutDisclosure@3x.png in Resources */,
 				30D0FEE91B68A75B00F7FD81 /* LaunchScreen.xib in Resources */,
+				3025AC421B871EE000B7E14A /* ar_overlay@2x.png in Resources */,
+				3025AC411B871EE000B7E14A /* ar_overlay.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,36 +630,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3056BE461B6FBB650086416C /* MarkerView.m in Sources */,
 				3093DD251B83D21A00E46D7D /* BubbleTransition.swift in Sources */,
+				3025AC481B871EE000B7E14A /* PRARManager.m in Sources */,
 				30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */,
 				3093DD281B83D72A00E46D7D /* PlacesListTVC.m in Sources */,
+				3025AC3E1B871EE000B7E14A /* ARController.m in Sources */,
 				3062E5511B6F70FC001A3E63 /* MKColor.swift in Sources */,
 				307C6D911B80B588001D173C /* DetailTVC.m in Sources */,
 				307C6D9B1B80C636001D173C /* DDetailCell.m in Sources */,
 				30D0FF4C1B68C61600F7FD81 /* PlacesLoader.m in Sources */,
 				3062E5541B6F70FC001A3E63 /* MKLayer.swift in Sources */,
+				3025AC451B871EE000B7E14A /* ARRadar.m in Sources */,
 				30D0FEE11B68A75B00F7FD81 /* MainVC.m in Sources */,
 				307C594B1B6A94A00001EC4C /* ShahrYar.xcdatamodeld in Sources */,
 				30D0FEDE1B68A75B00F7FD81 /* AppDelegate.m in Sources */,
-				3056BE401B6FBB650086416C /* AugmentedRealityController.m in Sources */,
 				3062E5531B6F70FC001A3E63 /* MKLabel.swift in Sources */,
 				3093DD231B83864E00E46D7D /* NSManagedObjectContext+AsyncFetch.m in Sources */,
+				3025AC3F1B871EE000B7E14A /* AROverlayView.m in Sources */,
 				3062E5441B6E4143001A3E63 /* NavigationController.m in Sources */,
-				3056BE3D1B6FBB650086416C /* ARGeoCoordinate.m in Sources */,
-				3056BE471B6FBB650086416C /* Radar.m in Sources */,
-				3056BE481B6FBB650086416C /* RadarViewPortView.m in Sources */,
 				3047657F1B8344A600EAC44B /* Place.m in Sources */,
 				30B4BAB81B6CD19400057851 /* Place+Create.m in Sources */,
 				3062E5501B6F70FC001A3E63 /* MKButton.swift in Sources */,
+				3025AC471B871EE000B7E14A /* LocationMath.m in Sources */,
 				308C4CF11B7E2E8600B48944 /* Type+Create.m in Sources */,
 				30D0FEDB1B68A75B00F7FD81 /* main.m in Sources */,
-				3015F4001B724766005A347D /* ARViewController.m in Sources */,
 				304765781B832D1900EAC44B /* FilterTVC.m in Sources */,
-				3056BE3E1B6FBB650086416C /* ARKit.m in Sources */,
-				3015F4031B72478F005A347D /* GEOLocations.m in Sources */,
 				3047657C1B8344A500EAC44B /* Type.m in Sources */,
-				3056BE3C1B6FBB650086416C /* ARCoordinate.m in Sources */,
 				3062E5471B6E513A001A3E63 /* SearchTVC.m in Sources */,
 				3056BE4B1B6FBC8C0086416C /* CameraVC.m in Sources */,
 				308C4CF51B7E334900B48944 /* GeodeticUTMConverter.m in Sources */,

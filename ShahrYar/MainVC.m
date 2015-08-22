@@ -119,7 +119,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
                 //Everything is fine
 
                 _locationManager.delegate = self;
-                _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+                _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
                 break;
         }
     }
@@ -208,6 +208,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mapView]|" options:NSLayoutFormatDirectionLeftToRight metrics:nil views:NSDictionaryOfVariableBindings(_mapView)]];
     
     [self.locationManager startUpdatingLocation];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -216,6 +217,10 @@ CLLocationDegrees const Longitude_Default = 51.3;
     if (self.firstLaunch) {
         [self.mapView zoomWithLatitudeLongitudeBoundsSouthWest:CLLocationCoordinate2DMake(35.698025, 51.386077) northEast:CLLocationCoordinate2DMake(35.705901, 51.412213) animated:YES];
         self.firstLaunch = NO;
+        
+        if (self.mapView.isUserLocationVisible) {
+            [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+        }
     }
 }
 
@@ -242,6 +247,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     } else if ([segue.identifier isEqualToString:@"More Places List"]) {
         PlacesListTVC *tvvc = [segue.destinationViewController childViewControllers][0];
         tvvc.annotations = sender;
+        tvvc.userLocation = self.mapView.userLocation.location;
         [segue.destinationViewController setTransitioningDelegate: self];
         [segue.destinationViewController setModalPresentationStyle: UIModalPresentationCustom];
     }
@@ -380,7 +386,22 @@ CLLocationDegrees const Longitude_Default = 51.3;
 }
 
 - (IBAction)showCurrentLocation:(MKButton *)sender {
-    [self.locationManager startUpdatingLocation];
+    
+    switch (self.mapView.userTrackingMode) {
+        case RMUserTrackingModeNone:
+            [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            break;
+            
+        case RMUserTrackingModeFollow:
+            [self.mapView setUserTrackingMode:RMUserTrackingModeFollowWithHeading animated:YES];
+            break;
+        
+        case RMUserTrackingModeFollowWithHeading:
+            [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            break;
+    }
+    
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
 
@@ -413,34 +434,42 @@ CLLocationDegrees const Longitude_Default = 51.3;
             //Everything is fine
             
             self.locationManager.delegate = self;
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-            [self.locationManager startUpdatingLocation];
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+            [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
             break;
     }
 
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    
-    CLLocation *lastLocation = [locations lastObject];
-    
-    CLLocationAccuracy accuracy = [lastLocation horizontalAccuracy];
-    NSLog(@"Received Location %@ with accuracy %f meters", lastLocation, accuracy);
-    
-    if (accuracy < Radius_Accuracy) {
-        //To Implement: Zoom to region
-        
-        [self.mapView setCenterCoordinate:lastLocation.coordinate animated:YES];
-        
-        [manager stopUpdatingLocation];
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"Failed Location with %@", error);
-}
+//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+//    
+//    CLLocation *lastLocation = [locations lastObject];
+//    
+//    CLLocationAccuracy accuracy = [lastLocation horizontalAccuracy];
+//    NSLog(@"Received Location %@ with accuracy %f meters", lastLocation, accuracy);
+//    
+//    if (accuracy < Radius_Accuracy) {
+//        //To Implement: Zoom to region
+//        
+//        [self.mapView setCenterCoordinate:lastLocation.coordinate animated:YES];
+//        
+//        [manager stopUpdatingLocation];
+//    }
+//}
+//
+//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+//    NSLog(@"Failed Location with %@", error);
+//}
 
 #pragma mark MapView Delegate
+
+- (void)mapViewRegionDidChange:(RMMapView *)mapView {
+    if (mapView.zoom > mapView.maxZoom - 1) {
+        mapView.clusteringEnabled = NO;
+    } else {
+        mapView.clusteringEnabled = YES;
+    }
+}
 
 - (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation {
     

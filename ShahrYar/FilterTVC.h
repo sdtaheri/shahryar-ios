@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterTVC : UITableViewController
+@interface FilterTVC : UIViewController
 
 @property (weak, nonatomic) NSManagedObjectContext *context;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ARKit.h"
+#import <MapKit/MapKit.h>
+#import "PRARManager.h"
 
-@interface CameraVC : UIViewController <ARDelegate, ARLocationDelegate, ARMarkerDelegate>
+@interface CameraVC : UIViewController <PRARManagerDelegate>
 
 @property (nonatomic, strong) NSArray *locations;
 @property (nonatomic, strong) MKUserLocation *userLocation;

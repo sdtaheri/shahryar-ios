@@ -7,15 +7,14 @@
 //
 
 #import "CameraVC.h"
-#import "AugmentedRealityController.h"
-#import "MarkerView.h"
-
+#import "AROverlayView.h"
 #import "Place.h"
+#import "DetailTVC.h"
 
 @interface CameraVC ()
 
-@property (nonatomic, strong) AugmentedRealityController *arController;
-@property (nonatomic, strong) NSMutableArray *geoLocations;
+@property (nonatomic, strong) NSMutableArray *arData;
+@property (nonatomic, strong) PRARManager *arManager;
 
 @end
 
@@ -23,20 +22,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    CGFloat minimum = MIN(self.view.frame.size.width, self.view.frame.size.height);
+    CGFloat maximum = MAX(self.view.frame.size.width, self.view.frame.size.height);
+    
+    self.arManager = [[PRARManager alloc] initWithSize:CGSizeMake(minimum,maximum) delegate:self shouldCreateRadar:YES];
+    
+    [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
+}
 
-    if(!self.arController) {
-        self.arController = [[AugmentedRealityController alloc] initWithViewController:self withDelgate:self];
-    }
-    
-    [self.arController setMinimumScaleFactor:0.3];
-    [self.arController setScaleViewsBasedOnDistance:YES];
-    [self.arController setRotateViewsBasedOnPerspective:YES];
-    [self.arController setDebugMode:NO];
-    [self.arController setShowsRadar:YES];
-    [self.arController setRadarRange:30000.0];
-    [self.arController setOnlyShowItemsWithinRadarRange:NO];
-    
-    [self geoLocations];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
@@ -45,88 +41,99 @@
     [self.view addSubview:closeButton];
     
     closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:8.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeftMargin multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
+}
 
+- (void)viewDidDisappear:(BOOL)animated {
+}
+
+- (void)dealloc {
+    [self.arManager stopAR];
+    self.arManager.delegate = nil;
+    self.arManager = nil;
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
 }
 
 - (void)dismiss:(UIButton *)sender {
-    self.arController.delegate = nil;
-    self.arController = nil;
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
 
-//- (void)generateGeoLocations {
-//
-//    [self setGeoLocations:[NSMutableArray arrayWithCapacity:self.locations.count]];
-//    
-//    for(Place *place in self.locations) {
-//
-//        CLLocationCoordinate2D loc = CLLocationCoordinate2DMake(place.latitude.floatValue, place.longitude.floatValue);
-//        CLLocation *location = [[CLLocation alloc] initWithCoordinate:loc altitude:place.elevation.floatValue horizontalAccuracy:5 verticalAccuracy:1 timestamp:[NSDate date]];
-//        ARGeoCoordinate *coordinate = [ARGeoCoordinate coordinateWithLocation:location locationTitle:place.title];
-//
-//        [coordinate calibrateUsingOrigin:self.userLocation.location];
-//        
-//        //more code later
-//        
-//
-//        [self.arController addCoordinate:coordinate];
-//        [self.geoLocations addObject:coordinate];
-//    }
-//}
+#pragma mark AR Delegate
 
-
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
-
-
-- (void)locationClicked:(ARGeoCoordinate *)coordinate{
-    NSLog(@"Location Clicked: %@", coordinate);
-}
-
-- (void)didTapMarker:(ARGeoCoordinate *)coordinate {
-    NSLog(@"Did Tap on Marker: %@", coordinate);
-}
-
-- (void)didUpdateHeading:(CLHeading *)newHeading {
-//    NSLog(@"Updated to heading: %@",newHeading);
-}
-
-- (void)didUpdateLocation:(CLLocation *)newLocation {
-//    NSLog(@"Updated to location: %@",newLocation);
-}
-
-- (void)didUpdateOrientation:(UIDeviceOrientation)orientation {
-    NSLog(@"Updated to orientation: %ld",(long)orientation);
-}
-
-- (void)didFinishSnapshotGeneration:(UIImage *)image error:(NSError *)error {
-
-}
-
-- (NSMutableArray *)geoLocations{
-    if (!_geoLocations) {
-        NSMutableArray *locationArray = [[NSMutableArray alloc] init];
-        ARGeoCoordinate *tempCoordinate;
-        CLLocation *tempLocation;
-        
-        for (Place *place in self.locations) {
-            tempLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(place.latitude.doubleValue, place.longitude.doubleValue) altitude:place.elevation.doubleValue horizontalAccuracy:1 verticalAccuracy:1 timestamp:[NSDate date]];
-            
-            tempCoordinate = [ARGeoCoordinate coordinateWithLocation:tempLocation locationTitle:place.title];
-            [tempCoordinate calibrateUsingOrigin:self.userLocation.location];
-            
-            MarkerView *markerView = [[MarkerView alloc] initForCoordinate:tempCoordinate withDelgate:self allowsCallout:YES];
-            [tempCoordinate setDisplayView:markerView];
-            [self.arController addCoordinate:tempCoordinate];
-            [locationArray addObject:tempCoordinate];
-        }
-        
-        _geoLocations = locationArray;
+- (void)augmentedRealityManagerDidSetup:(PRARManager *)arManager {
+    [self.view.layer addSublayer:(CALayer*)arManager.cameraLayer];
+    [self.view addSubview:arManager.arOverlaysContainerView];
+    
+    [self.view bringSubviewToFront:arManager.arOverlaysContainerView];
+    
+    if (arManager.radarView) {
+        [self.view addSubview:(UIView*)arManager.radarView];
     }
-    return _geoLocations;
 }
+
+- (void)augmentedRealityManager:(PRARManager *)arManager didUpdateARFrame:(CGRect)frame {
+    [arManager.arOverlaysContainerView setFrame:frame];
+}
+
+- (void)augmentedRealityManager:(PRARManager *)arManager didReportError:(NSError *)error {
+    NSLog(@"AR ERROR");
+}
+
+- (NSMutableArray *)arData {
+
+    if (!_arData) {
+        _arData = [NSMutableArray array];
+        for (Place *place in self.locations) {
+            AROverlayView *item = [self createPointAtPlace:place];
+            [_arData addObject:item];
+        }
+    }
+    
+    return _arData;
+}
+
+// Creates the Data for an AR Object at a given location
+- (AROverlayView *)createPointAtPlace:(Place *)place
+{
+    AROverlayView *overlay = [[AROverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 100.0f, 100.0f)];
+    overlay.backgroundColor = [UIColor blueColor];
+    overlay.place = place;
+    
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlayTouchedUpInside:)];
+    [overlay addGestureRecognizer:tgr];
+    
+    overlay.clipsToBounds = YES;
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:overlay.bounds];
+    label.clipsToBounds = YES;
+    label.numberOfLines = 0;
+    label.text = [NSString stringWithFormat:@"%@\n%f متر", place.title, [overlay distanceFromLocation:self.userLocation.coordinate]];
+    [overlay addSubview:label];
+    
+    return overlay;
+}
+
+- (void)overlayTouchedUpInside:(UITapGestureRecognizer *)sender {
+    AROverlayView *view = (AROverlayView *)sender.view;
+    [self performSegueWithIdentifier:@"Show Details From Camera" sender:view.place];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Show Details From Camera"]) {
+        DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
+        dtvc.place = sender;
+    }
+}
+
 
 @end

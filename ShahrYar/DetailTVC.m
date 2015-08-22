@@ -31,6 +31,8 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.placeImageView.clipsToBounds = YES;
     
+    self.navigationController.navigationBar.topItem.title = @"بازگشت";
+    
     [self configureDatasource];
     
     if (self.place.imageID.length > 0 && !self.place.imageLocalPath) {

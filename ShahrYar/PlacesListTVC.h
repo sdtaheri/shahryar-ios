@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 @interface PlacesListTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *annotations;
+@property (nonatomic, strong) CLLocation *userLocation;
 
 @end

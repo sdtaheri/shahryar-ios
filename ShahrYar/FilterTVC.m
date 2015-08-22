@@ -8,18 +8,36 @@
 
 #import "FilterTVC.h"
 #import "Type.h"
-#import <CoreData/CoreData.h>
+#import "NSManagedObjectContext+AsyncFetch.h"
 
-@interface FilterTVC ()
+@interface FilterTVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *categories;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectToggle;
+@property (nonatomic) int selectedRowsCount;
 
 @end
 
 @implementation FilterTVC
 
+- (void)setSelectedRowsCount:(int)selectedRowsCount {
+    _selectedRowsCount = selectedRowsCount;
+    if (self.categories) {
+        if (selectedRowsCount == 0) {
+            [self.selectToggle setTitle:@"انتخاب همه"];
+        } else if (selectedRowsCount == self.categories.count) {
+            [self.selectToggle setTitle:@"لغو انتخاب‌ها"];
+        } else if (selectedRowsCount < (int)(self.categories.count / 2)) {
+            [self.selectToggle setTitle:@"لغو انتخاب‌ها"];
+        } else {
+            [self.selectToggle setTitle:@"انتخاب همه"];
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableView.estimatedRowHeight = 44.f;
     self.tableView.backgroundView = nil;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -28,9 +46,45 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"summary" ascending:YES selector:@selector(localizedStandardCompare:)];
     [request setSortDescriptors:@[sortDescriptor]];
     
-    NSError *error;
-    self.categories = [self.context executeFetchRequest:request error:&error];
+    [self.context executeFetchRequestAsync:request completion:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            self.categories = objects;
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"selected.boolValue = YES"];
+            self.selectedRowsCount = (int)[self.categories filteredArrayUsingPredicate:predicate].count;
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }
+    }];
+}
+- (IBAction)selectToggleTouched:(UIBarButtonItem *)sender {
+    
+    if ([sender.title isEqualToString:@"انتخاب همه"]) {
+        for (Type *category in self.categories) {
+            category.selected = @(YES);
+        }
+        self.selectedRowsCount = (int)self.categories.count;
+    } else {
+        for (Type *category in self.categories) {
+            category.selected = @(NO);
+        }
+        self.selectedRowsCount = 0;
+    }
+    
+    [self.context performBlock:^{
+        NSError *error;
+        [self.context save:&error];
+        if (error) {
+            NSLog(@"Saving Category Selected State Failed");
+        }
+    }];
+
     [self.tableView reloadData];
+}
+
+- (void)dealloc {
+    self.categories = nil;
 }
 
 #pragma mark - Table view data source
@@ -54,7 +108,6 @@
         cell.textLabel.text = [NSString stringWithFormat:@"     %@",[self.categories[indexPath.row] summary]];
     }
 
-    
     return cell;
 }
 
@@ -63,10 +116,12 @@
     
     BOOL selected;
     if (cell.accessoryType == UITableViewCellAccessoryNone) {
+        self.selectedRowsCount++;
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.categories[indexPath.row] summary]];
         selected = YES;
     } else if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        self.selectedRowsCount--;
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.textLabel.text = [NSString stringWithFormat:@"     %@",[self.categories[indexPath.row] summary]];
         selected = NO;
@@ -86,7 +141,7 @@
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
 
     // Remove seperator inset

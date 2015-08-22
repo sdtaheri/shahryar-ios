@@ -18,7 +18,7 @@
         <!--DetailTVC-->
         <scene sceneID="uq5-BP-IGD">
             <objects>
-                <tableViewController id="hcu-ln-Kcw" customClass="DetailTVC" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DetailTVC" title="DetailTVC" id="hcu-ln-Kcw" customClass="DetailTVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="am1-1a-1o7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -51,16 +51,16 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
-                                            <rect key="frame" x="16" y="8" width="568" height="19.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
+                                            <rect key="frame" x="16" y="8" width="568" height="20"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="خیابان شریعتی، نرسیده به پل سیدخندان، دانشگاه صنعتی خواجه نصیرالدین طوسی، دانشکده مهندسی برق و کامپیوتر" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBE-e7-Dla">
-                                            <rect key="frame" x="16" y="35.5" width="568.5" height="0.0"/>
+                                            <rect key="frame" x="16" y="36" width="569" height="0.0"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -105,6 +105,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="2qz-Jm-IqZ">
+                        <barButtonItem key="backBarButtonItem" title="بازگشت" id="QD4-06-N6k"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="uPq-6e-hnI">
                             <connections>
                                 <action selector="dismiss:" destination="hcu-ln-Kcw" id="7W4-pg-4oc"/>
@@ -204,10 +205,10 @@
                         <segue destination="LY1-Ed-xua" kind="popoverPresentation" identifier="Detail Segue" popoverAnchorView="kh9-bI-dsS" id="7S5-qM-Gyh">
                             <popoverArrowDirection key="popoverArrowDirection" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="nJv-3Y-KCi" kind="popoverPresentation" identifier="Filter Segue" popoverAnchorView="kh9-bI-dsS" id="WjJ-pN-Lab">
+                        <segue destination="D6m-34-KtO" kind="presentation" identifier="More Places List" id="pJd-YV-q2j"/>
+                        <segue destination="9F7-ip-1v6" kind="popoverPresentation" identifier="Filter Segue" popoverAnchorView="kh9-bI-dsS" id="RO8-1x-O35">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="D6m-34-KtO" kind="presentation" identifier="More Places List" id="pJd-YV-q2j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -217,7 +218,7 @@
         <!--CameraVC-->
         <scene sceneID="1SR-BQ-w14">
             <objects>
-                <viewController id="pHN-KF-z5Q" customClass="CameraVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pHN-KF-z5Q" customClass="CameraVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Co5-2J-faC"/>
                         <viewControllerLayoutGuide type="bottom" id="Aut-4M-UA5"/>
@@ -227,49 +228,84 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="LY1-Ed-xua" kind="show" identifier="Show Details From Camera" id="Ei3-DD-grv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sU3-DW-Azq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1867" y="327"/>
+            <point key="canvasLocation" x="1908" y="311"/>
         </scene>
         <!--FilterTVC-->
-        <scene sceneID="yQy-cp-DM6">
+        <scene sceneID="3fh-uB-iIj">
             <objects>
-                <tableViewController id="nJv-3Y-KCi" customClass="FilterTVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8Bs-qS-9cq">
+                <viewController id="9F7-ip-1v6" customClass="FilterTVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5Qv-QH-mGc"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Al-bp-xae"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZPR-1W-cqE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Category Cell" textLabel="xKG-ai-eSS" style="IBUITableViewCellStyleDefault" id="Rvr-qy-Lji">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rvr-qy-Lji" id="yTc-6q-pJR">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="صوتی و تصویری" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xKG-ai-eSS">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="GhN-qL-Pfm">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Category Cell" textLabel="N3Y-YB-rEc" style="IBUITableViewCellStyleDefault" id="dJF-YF-SnE">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dJF-YF-SnE" id="rIz-WW-Q6D">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="صوتی و تصویری" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N3Y-YB-rEc">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="nJv-3Y-KCi" id="Up8-Ga-FFx"/>
-                            <outlet property="delegate" destination="nJv-3Y-KCi" id="waE-tH-3CQ"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="nQt-i7-3JA"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="35P-yq-bLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="9F7-ip-1v6" id="XFV-Dj-Ovl"/>
+                                    <outlet property="delegate" destination="9F7-ip-1v6" id="h52-nz-lVn"/>
+                                </connections>
+                            </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v28-3V-2C9">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="xe0-oM-iH9"/>
+                                    <barButtonItem title="انتخاب همه" id="USJ-im-ATY">
+                                        <connections>
+                                            <action selector="selectToggleTouched:" destination="9F7-ip-1v6" id="U0D-i8-7kE"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="GhN-qL-Pfm" firstAttribute="top" secondItem="ZPR-1W-cqE" secondAttribute="top" id="3FB-Ay-XsT"/>
+                            <constraint firstAttribute="centerX" secondItem="v28-3V-2C9" secondAttribute="centerX" id="AP3-CI-3Ms"/>
+                            <constraint firstItem="7Al-bp-xae" firstAttribute="top" secondItem="v28-3V-2C9" secondAttribute="bottom" id="LFw-tN-1P9"/>
+                            <constraint firstItem="v28-3V-2C9" firstAttribute="top" secondItem="GhN-qL-Pfm" secondAttribute="bottom" id="OXQ-uW-Cm0"/>
+                            <constraint firstAttribute="trailing" secondItem="GhN-qL-Pfm" secondAttribute="trailing" id="UY6-RT-NeV"/>
+                            <constraint firstItem="GhN-qL-Pfm" firstAttribute="leading" secondItem="ZPR-1W-cqE" secondAttribute="leading" id="f1K-Wi-rbI"/>
+                            <constraint firstItem="v28-3V-2C9" firstAttribute="width" secondItem="ZPR-1W-cqE" secondAttribute="width" id="zdI-oG-DmC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="selectToggle" destination="USJ-im-ATY" id="VFa-5N-cWq"/>
+                        <outlet property="tableView" destination="GhN-qL-Pfm" id="Zsj-5F-zFB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A9E-vY-K81" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1867" y="1042"/>
+            <point key="canvasLocation" x="1914" y="1007"/>
         </scene>
         <!--Places ListTVC-->
         <scene sceneID="BkJ-dE-2Ym">
@@ -289,7 +325,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eid-hm-5x9">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -305,16 +341,32 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="G3A-bu-JnE">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="TfI-gk-SDu">
                             <connections>
                                 <action selector="dismiss:" destination="sAY-Oy-Cbj" id="UJQ-sP-XrR"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="bar" selectedSegmentIndex="1" id="hqR-d4-fqS">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="الفبا"/>
+                                <segment title="دسته‌بندی"/>
+                                <segment title="فاصله"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentValueChanged:" destination="sAY-Oy-Cbj" eventType="valueChanged" id="7mg-Re-KA2"/>
+                            </connections>
+                        </segmentedControl>
                     </navigationItem>
+                    <connections>
+                        <outlet property="segmentedControl" destination="hqR-d4-fqS" id="KCD-bh-j5s"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l7E-5p-uNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2679" y="1724"/>
+            <point key="canvasLocation" x="2652" y="1724"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QMy-J9-DkP">
@@ -337,7 +389,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Qzo-Ro-MHg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LY1-Ed-xua" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DetailTVCNC" automaticallyAdjustsScrollViewInsets="NO" id="LY1-Ed-xua" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aAv-se-RRi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -376,6 +428,7 @@
         <image name="currentLocation" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="7S5-qM-Gyh"/>
         <segue reference="pgw-e5-9z6"/>
     </inferredMetricsTieBreakers>
 </document>
