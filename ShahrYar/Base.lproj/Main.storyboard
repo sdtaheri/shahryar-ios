@@ -12,6 +12,9 @@
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -51,7 +54,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
                                             <rect key="frame" x="16" y="8" width="568" height="20"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -185,11 +188,22 @@
                                     <action selector="showCurrentLocation:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="1kF-wN-4N8"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TnT-BX-LgC">
+                                <rect key="frame" x="562" y="554" width="22" height="22"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="W2o-mM-Ki6" kind="presentation" modalPresentationStyle="formSheet" id="iU1-ul-cgC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="RJr-zg-9GD" firstAttribute="leading" secondItem="cmH-cx-bvI" secondAttribute="leading" id="8BG-kU-hKz"/>
+                            <constraint firstItem="TnT-BX-LgC" firstAttribute="bottom" secondItem="cmH-cx-bvI" secondAttribute="bottom" id="9iv-Rc-GyC"/>
                             <constraint firstItem="cmH-cx-bvI" firstAttribute="left" secondItem="kh9-bI-dsS" secondAttribute="leftMargin" id="B7F-rR-G3E"/>
+                            <constraint firstItem="TnT-BX-LgC" firstAttribute="right" secondItem="kh9-bI-dsS" secondAttribute="rightMargin" id="FHB-LE-HO8"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cmH-cx-bvI" secondAttribute="bottom" constant="24" id="FRv-BN-vOq"/>
                             <constraint firstItem="RJr-zg-9GD" firstAttribute="trailing" secondItem="cmH-cx-bvI" secondAttribute="trailing" id="IWn-pO-aC3"/>
                             <constraint firstItem="RJr-zg-9GD" firstAttribute="height" secondItem="cmH-cx-bvI" secondAttribute="height" id="iJI-xS-K3A"/>
@@ -214,6 +228,96 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1135" y="327"/>
+        </scene>
+        <!--نوا (نرم‌افزار واقعیت افزودهٔ تهران)-->
+        <scene sceneID="hr2-YH-WUN">
+            <objects>
+                <tableViewController id="uUd-zu-0rO" customClass="AboutTVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="wmM-Yj-9mx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell Text" textLabel="Qwe-hk-1rt" style="IBUITableViewCellStyleDefault" id="ERk-Oe-cFQ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ERk-Oe-cFQ" id="Edl-i9-WhN">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qwe-hk-1rt">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <mutableString key="text">سامانه نوا (نرم افزار واقعیت افزوده تهران) توسط سازمان زیباسازی شهر تهران در مرداد ماه ۱۳۹۴ تولید شده است. این نرم افزار با هدف نمایش اطلاعات اصناف و ساماندهی تابلوهای صنوف شهر تهران تولید شده است. در فاز نخست، اطلاعات کلیه اصناف خیابان انقلاب (از چهارراه جمالزاده تا چهارراه ولیعصر) در این نرم افزار به دو صورت واقعیت افزوده و نمایش بر روی نقشه تهران نشان داده می شود.جهت استفاده از واقعیت افزوده، کاربر باید در محل حضور داشته باشد. در صورتیکه خارج از محل مورد نظر هستید می توانید از طریق نقشه اطلاعات واحد های صنفی را جستجو نمائید.در صورتیکه اطلاعات ذکر شده در نرم افزار ناقص و یا نیاز به اصلاح دارد، لطفا از طریق فرم مورد نظر درخواست خود را ارسال نمائید.اگر مایل به ورود اطلاعات خود در این نرم افزار هستید لطفا با دردست داشتن مجوز فعالیت در ساعات اداری به واحد فناوری اطلاعات سازمان زیباسازی شهر تهران مراجعه کنید.</mutableString>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell Detail" id="kwg-Nd-MhH" customClass="DDetailCell">
+                                <rect key="frame" x="0.0" y="86" width="600" height="94"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kwg-Nd-MhH" id="SQj-5P-J8B">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="93.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dv7-ap-3DH">
+                                            <rect key="frame" x="16" y="1" width="42" height="42"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="42" id="hKg-Km-dWU"/>
+                                                <constraint firstAttribute="width" secondItem="Dv7-ap-3DH" secondAttribute="height" multiplier="1:1" id="zwp-cc-wmA"/>
+                                            </constraints>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezt-fJ-Xym">
+                                            <rect key="frame" x="16" y="8" width="568" height="20"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="خیابان شریعتی، نرسیده به پل سیدخندان، دانشگاه صنعتی خواجه نصیرالدین طوسی، دانشکده مهندسی برق و کامپیوتر" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOK-hR-rl8">
+                                            <rect key="frame" x="16" y="36" width="568" height="0.0"/>
+                                            <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ezt-fJ-Xym" firstAttribute="right" secondItem="qOK-hR-rl8" secondAttribute="right" id="3yn-CX-3Wb"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="qOK-hR-rl8" secondAttribute="bottom" id="7wV-Ra-dBX"/>
+                                        <constraint firstItem="ezt-fJ-Xym" firstAttribute="top" secondItem="SQj-5P-J8B" secondAttribute="topMargin" id="EzO-86-y4N"/>
+                                        <constraint firstItem="Dv7-ap-3DH" firstAttribute="left" secondItem="SQj-5P-J8B" secondAttribute="leftMargin" constant="8" id="K7D-rk-mKE"/>
+                                        <constraint firstAttribute="centerY" secondItem="Dv7-ap-3DH" secondAttribute="centerY" id="Ulg-mF-UWn"/>
+                                        <constraint firstItem="qOK-hR-rl8" firstAttribute="left" secondItem="SQj-5P-J8B" secondAttribute="leftMargin" constant="8" id="deg-er-x4k"/>
+                                        <constraint firstAttribute="rightMargin" secondItem="ezt-fJ-Xym" secondAttribute="right" constant="8" id="iBC-Vk-j2v"/>
+                                        <constraint firstItem="qOK-hR-rl8" firstAttribute="left" secondItem="ezt-fJ-Xym" secondAttribute="left" id="mrk-xB-oOD"/>
+                                        <constraint firstItem="qOK-hR-rl8" firstAttribute="top" secondItem="ezt-fJ-Xym" secondAttribute="bottom" constant="8" symbolic="YES" id="x0i-R5-niu"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="ezt-fJ-Xym" id="oRV-2o-mVw"/>
+                                    <outlet property="labelButton" destination="Dv7-ap-3DH" id="JqH-8M-tOa"/>
+                                    <outlet property="labelDetail" destination="qOK-hR-rl8" id="8IK-Ds-nJB"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="uUd-zu-0rO" id="Rca-L3-CRQ"/>
+                            <outlet property="delegate" destination="uUd-zu-0rO" id="gpW-5l-Fqr"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="نوا (نرم‌افزار واقعیت افزودهٔ تهران)" id="B5Y-u6-QPF">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="16L-EC-Zt5">
+                            <connections>
+                                <action selector="dismiss:" destination="uUd-zu-0rO" id="8Pc-me-1mc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XGn-l7-g0O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1135" y="1921"/>
         </scene>
         <!--CameraVC-->
         <scene sceneID="1SR-BQ-w14">
@@ -305,7 +409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A9E-vY-K81" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1914" y="1007"/>
+            <point key="canvasLocation" x="1908" y="1196"/>
         </scene>
         <!--Places ListTVC-->
         <scene sceneID="BkJ-dE-2Ym">
@@ -366,7 +470,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l7E-5p-uNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2652" y="1724"/>
+            <point key="canvasLocation" x="2668" y="1921"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QMy-J9-DkP">
@@ -420,7 +524,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ECM-HY-AAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1867" y="1724"/>
+            <point key="canvasLocation" x="1908" y="1921"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jJS-WS-Fsc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W2o-mM-Ki6" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="di9-aQ-DaS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="uUd-zu-0rO" kind="relationship" relationship="rootViewController" id="3ET-mu-HX3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gjX-RH-flc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1135" y="1196"/>
         </scene>
     </scenes>
     <resources>

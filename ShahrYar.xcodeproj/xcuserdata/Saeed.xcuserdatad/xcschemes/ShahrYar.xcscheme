@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "30D0FED41B68A75A00F7FD81"
-               BuildableName = "ShahrYar.app"
+               BuildableName = "Nava.app"
                BlueprintName = "ShahrYar"
                ReferencedContainer = "container:ShahrYar.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "30D0FED41B68A75A00F7FD81"
-            BuildableName = "ShahrYar.app"
+            BuildableName = "Nava.app"
             BlueprintName = "ShahrYar"
             ReferencedContainer = "container:ShahrYar.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "30D0FED41B68A75A00F7FD81"
-            BuildableName = "ShahrYar.app"
+            BuildableName = "Nava.app"
             BlueprintName = "ShahrYar"
             ReferencedContainer = "container:ShahrYar.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "30D0FED41B68A75A00F7FD81"
-            BuildableName = "ShahrYar.app"
+            BuildableName = "Nava.app"
             BlueprintName = "ShahrYar"
             ReferencedContainer = "container:ShahrYar.xcodeproj">
          </BuildableReference>

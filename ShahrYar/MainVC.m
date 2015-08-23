@@ -321,7 +321,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     CGPoint midPoint = CGPointMake(self.selectedClusterAnnotationRect.origin.x + (self.selectedClusterAnnotationRect.size.width / 2), self.selectedClusterAnnotationRect.origin.y + (self.selectedClusterAnnotationRect.size.height / 2));
 
     self.transition.startingPoint = midPoint;
-    self.transition.bubbleColor = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular ? [UIColor clearColor] : [UIColor whiteColor];
+    self.transition.bubbleColor = (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular || self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular ) ? [UIColor clearColor] : [UIColor whiteColor];
     
     return self.transition;
 }

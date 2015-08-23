@@ -7,6 +7,7 @@
 //
 
 #import <MessageUI/MessageUI.h>
+#import "GeodeticUTMConverter.h"
 #import "DetailTVC.h"
 #import "DDetailCell.h"
 #import "Type.h"
@@ -337,7 +338,9 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 
 - (void)sharePlace: (UIBarButtonItem *)sender {
     
-    NSString *coordinates = [NSString stringWithFormat:@"http://maps.apple.com/maps?q=%f,%f",  self.place.latitude.floatValue, self.place.longitude.floatValue];
+    UTMCoordinates utmCoordinates = [GeodeticUTMConverter latitudeAndLongitudeToUTMCoordinates:CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue)];
+    
+    NSString *coordinates = [NSString stringWithFormat:@"http://map.tehran.ir/?lat=%f&lon=%f&zoom=6",  utmCoordinates.northing, utmCoordinates.easting];
 
     NSMutableArray *activities = [NSMutableArray array];
     
@@ -416,6 +419,10 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     }
 }
 
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 - (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation {
     if (annotation.isUserLocationAnnotation) {
         return nil;
@@ -437,49 +444,5 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     
     return pin;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

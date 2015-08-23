@@ -38,7 +38,14 @@
             }
         }
     }
-        
+    
+    [self setFonts];
+    
+    return YES;
+}
+
+- (void)setFonts {
+
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.alignment = NSTextAlignmentRight;
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{ NSParagraphStyleAttributeName: paragraphStyle}];
@@ -46,7 +53,9 @@
     UIBarButtonItem *cancelButton = [UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil];
     [cancelButton setTitle:@"انصراف"];
     
-    return YES;
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{
+                                                                                                 NSFontAttributeName: [UIFont fontWithName:@"IRANSans-Light" size:12],
+                                                                                                 }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
