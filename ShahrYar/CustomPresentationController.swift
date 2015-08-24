@@ -54,13 +54,15 @@ public class CustomPresentationController: UIPresentationController {
 
     override public func frameOfPresentedViewInContainerView() -> CGRect {
         // We don't want the presented view to fill the whole container view, so inset it's frame
-        var frame = self.containerView.bounds;
+//        var frame = self.containerView.bounds;
+//        
+//        if traitCollection.horizontalSizeClass == .Regular && traitCollection.verticalSizeClass == .Compact {
+//            frame = CGRectInset(frame, frame.size.width * 0.25, 20.0)
+//        } else if traitCollection.horizontalSizeClass == .Regular && traitCollection.verticalSizeClass == .Regular {
+//            frame = CGRectInset(frame, 0.25 * frame.size.width, 0.25 * frame.size.height)
+//        }
         
-        if traitCollection.horizontalSizeClass == .Regular && traitCollection.verticalSizeClass == .Compact {
-            frame = CGRectInset(frame, frame.size.width * 0.25, 20.0)
-        } else if traitCollection.horizontalSizeClass == .Regular && traitCollection.verticalSizeClass == .Regular {
-            frame = CGRectInset(frame, 0.25 * frame.size.width, 0.25 * frame.size.height)
-        }
+        var frame = CGRect(x: (self.containerView.frame.size.width - 375.0) / 2, y: (self.containerView.frame.size.height - 500.0) / 2, width: 375, height: 500)
 
         return frame
     }

@@ -33,11 +33,17 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     self.placeImageView.clipsToBounds = YES;
     
     self.navigationController.navigationBar.topItem.title = @"بازگشت";
+    self.navigationItem.title = @"";
     
     [self configureDatasource];
     
-    if (self.place.imageID.length > 0 && !self.place.imageLocalPath) {
-        NSString *imageURLString = [NSString stringWithFormat:@"%@%@.jpg",Image_Base_URL,self.place.imageID];
+    NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *imageURLString = [NSString stringWithFormat:@"%@%@.jpg",Image_Base_URL,self.place.imageID];
+    
+    NSString *fileName = [NSString stringWithFormat:@"Image%@.dat",self.place.imageID];
+    NSURL * finalURL = [[NSURL fileURLWithPath:appSupportDir] URLByAppendingPathComponent:fileName];
+
+    if ((self.place.imageID.length > 0 && !self.place.imageLocalPath) || (self.place.imageLocalPath && ![[NSFileManager defaultManager] fileExistsAtPath:finalURL.path])) {
         
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
@@ -46,15 +52,8 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
             if (!error) {
                 NSData *imageData = [NSData dataWithContentsOfURL:location];
                 
-                NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
-
-                NSURL *url = [NSURL fileURLWithPath:appSupportDir];
-                
-                NSString *fileName = [NSString stringWithFormat:@"Image%@.dat",self.place.imageID];
-                NSURL * finalURL = [url URLByAppendingPathComponent:fileName];
-                
                 if ([imageData writeToURL:finalURL atomically:YES]) {
-                    self.place.imageLocalPath = finalURL.path;
+                    self.place.imageLocalPath = fileName;
                     [self.place.managedObjectContext performBlock:^{
                         [self.place.managedObjectContext save:NULL];
                     }];
@@ -79,7 +78,10 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
         }];
         [task resume];
     } else if (self.place.imageLocalPath) {
-        NSData *imageData = [NSData dataWithContentsOfFile:self.place.imageLocalPath];
+        NSString *fileName = self.place.imageLocalPath;
+        NSURL *finalURL = [[NSURL fileURLWithPath:appSupportDir] URLByAppendingPathComponent:fileName];
+
+        NSData *imageData = [NSData dataWithContentsOfFile:finalURL.path];
         UIImage *image = [UIImage imageWithData:imageData];
         
         if (imageData) {
@@ -198,7 +200,13 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                 CGFloat userHeadLineFontSize = [userHeadLineFont pointSize];
                 cell.textLabel.font = [UIFont fontWithName:@"IRANSans-Medium" size:userHeadLineFontSize - 2];
                 
-                if (self.place.logoID.length > 0 && !self.place.logoLocalPath) {
+                NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+                
+                NSString *fileName = [NSString stringWithFormat:@"Logo%@.dat",self.place.logoID];
+                NSURL * finalURL = [[NSURL fileURLWithPath:appSupportDir] URLByAppendingPathComponent:fileName];
+
+                
+                if ((self.place.logoID.length > 0 && !self.place.logoLocalPath) || (self.place.logoLocalPath && ![[NSFileManager defaultManager] fileExistsAtPath:finalURL.path])) {
                     
                     NSString *logoURLString = [NSString stringWithFormat:@"%@%@.jpg",Logo_Base_URL,self.place.logoID];
                     
@@ -207,15 +215,8 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                         if (!error) {
                             NSData *imageData = [NSData dataWithContentsOfURL:location];
                             
-                            NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
-
-                            NSURL *url = [NSURL fileURLWithPath:appSupportDir];
-                            
-                            NSString *fileName = [NSString stringWithFormat:@"Logo%@.dat",self.place.logoID];
-                            NSURL * finalURL = [url URLByAppendingPathComponent:fileName];
-                            
                             if ([imageData writeToURL:finalURL atomically:YES]) {
-                                self.place.logoLocalPath = finalURL.path;
+                                self.place.logoLocalPath = fileName;
                                 [self.place.managedObjectContext performBlock:^{
                                     [self.place.managedObjectContext save:NULL];
                                 }];
@@ -227,12 +228,16 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                             
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 cell.imageView.image = image;
+                                [cell setNeedsLayout];
                             });
                         }
                     }];
                     [task resume];
                 } else if (self.place.logoLocalPath) {
-                    NSData *imageData = [NSData dataWithContentsOfFile: self.place.logoLocalPath];
+                    NSString *fileName = self.place.logoLocalPath;
+                    NSURL *finalURL = [[NSURL fileURLWithPath:appSupportDir] URLByAppendingPathComponent:fileName];
+
+                    NSData *imageData = [NSData dataWithContentsOfFile: finalURL.path];
                     UIImage *image = [UIImage imageWithData:imageData];
                     
                     cell.imageView.image = image;
@@ -350,6 +355,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     [activities addObject:[NSURL URLWithString:coordinates]];
     
     UIActivityViewController *avc = [[UIActivityViewController alloc] initWithActivityItems:activities applicationActivities:nil];
+    avc.popoverPresentationController.barButtonItem = sender;
     
     [self presentViewController:avc animated:YES completion:NULL];
 }

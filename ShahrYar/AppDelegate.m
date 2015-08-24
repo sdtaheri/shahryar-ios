@@ -14,11 +14,12 @@
 
 @implementation AppDelegate
 
+#define ImageCacheLimit 30
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
-    //If there isn't an App Support Directory yet ...
+
     if (![[NSFileManager defaultManager] fileExistsAtPath:appSupportDir isDirectory:NULL]) {
         NSError *error = nil;
         //Create one
@@ -36,6 +37,53 @@
             else {
                 NSLog(@"Yay!");
             }
+        }
+    } else {
+        NSError *error;
+        NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:appSupportDir error:&error];
+        while (contents.count > ImageCacheLimit) {
+
+            // sort by creation date
+            NSMutableArray* filesAndProperties = [NSMutableArray arrayWithCapacity:[contents count]];
+            for(NSString* file in contents) {
+                NSString* filePath = [appSupportDir stringByAppendingPathComponent:file];
+                NSDictionary* properties = [[NSFileManager defaultManager]
+                                            attributesOfItemAtPath:filePath
+                                            error:&error];
+                NSDate* modDate = [properties objectForKey:NSFileModificationDate];
+                
+                if(error == nil)
+                {
+                    [filesAndProperties addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                   file, @"path",
+                                                   modDate, @"lastModDate",
+                                                   nil]];
+                }
+            }
+            
+            // sort using a block
+            // order inverted as we want latest date first
+            NSMutableArray *sortedFiles = [[[filesAndProperties sortedArrayUsingComparator:
+                                    ^(id path1, id path2)
+                                    {
+                                        // compare
+                                        NSComparisonResult comp = [[path1 objectForKey:@"lastModDate"] compare:
+                                                                   [path2 objectForKey:@"lastModDate"]];
+                                        return comp;
+                                    }] valueForKey:@"path"] mutableCopy];
+            if (sortedFiles.count > 0) {
+                NSString *oldestFilePath = sortedFiles.firstObject;
+                
+                NSError *deleteError;
+                [[NSFileManager defaultManager] removeItemAtPath:[appSupportDir stringByAppendingPathComponent:oldestFilePath] error:&deleteError];
+                if (deleteError) {
+                    break;
+                }
+                
+                [sortedFiles removeObjectAtIndex:0];
+            }
+            
+            contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:appSupportDir error:&error];
         }
     }
     

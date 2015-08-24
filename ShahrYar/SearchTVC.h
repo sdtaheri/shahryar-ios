@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchTVC : UITableViewController <UISearchControllerDelegate>
+@interface SearchTVC : UITableViewController <UISearchControllerDelegate, UISearchResultsUpdating>
+
+@property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

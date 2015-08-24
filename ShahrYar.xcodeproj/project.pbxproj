@@ -40,6 +40,7 @@
 		3062E5511B6F70FC001A3E63 /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062E54A1B6F70FC001A3E63 /* MKColor.swift */; };
 		3062E5531B6F70FC001A3E63 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062E54C1B6F70FC001A3E63 /* MKLabel.swift */; };
 		3062E5541B6F70FC001A3E63 /* MKLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062E54D1B6F70FC001A3E63 /* MKLayer.swift */; };
+		306814B81B8BB9B100D3AB6E /* FavoriteTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 306814B71B8BB9B100D3AB6E /* FavoriteTVC.m */; };
 		307C594B1B6A94A00001EC4C /* ShahrYar.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 307C59491B6A94A00001EC4C /* ShahrYar.xcdatamodeld */; };
 		307C6D911B80B588001D173C /* DetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 307C6D901B80B588001D173C /* DetailTVC.m */; };
 		307C6D9B1B80C636001D173C /* DDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 307C6D9A1B80C636001D173C /* DDetailCell.m */; };
@@ -124,6 +125,8 @@
 		3062E54A1B6F70FC001A3E63 /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
 		3062E54C1B6F70FC001A3E63 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
 		3062E54D1B6F70FC001A3E63 /* MKLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLayer.swift; sourceTree = "<group>"; };
+		306814B61B8BB9B100D3AB6E /* FavoriteTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteTVC.h; sourceTree = "<group>"; };
+		306814B71B8BB9B100D3AB6E /* FavoriteTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteTVC.m; sourceTree = "<group>"; };
 		307C594A1B6A94A00001EC4C /* ShahrYar.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShahrYar.xcdatamodel; sourceTree = "<group>"; };
 		307C6D8F1B80B588001D173C /* DetailTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTVC.h; sourceTree = "<group>"; };
 		307C6D901B80B588001D173C /* DetailTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTVC.m; sourceTree = "<group>"; };
@@ -304,6 +307,8 @@
 				304765771B832D1900EAC44B /* FilterTVC.m */,
 				3062E5451B6E513A001A3E63 /* SearchTVC.h */,
 				3062E5461B6E513A001A3E63 /* SearchTVC.m */,
+				306814B61B8BB9B100D3AB6E /* FavoriteTVC.h */,
+				306814B71B8BB9B100D3AB6E /* FavoriteTVC.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -641,6 +646,7 @@
 				30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */,
 				3093DD281B83D72A00E46D7D /* PlacesListTVC.m in Sources */,
 				3025AC3E1B871EE000B7E14A /* ARController.m in Sources */,
+				306814B81B8BB9B100D3AB6E /* FavoriteTVC.m in Sources */,
 				3062E5511B6F70FC001A3E63 /* MKColor.swift in Sources */,
 				307C6D911B80B588001D173C /* DetailTVC.m in Sources */,
 				307C6D9B1B80C636001D173C /* DDetailCell.m in Sources */,

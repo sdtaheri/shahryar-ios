@@ -15,6 +15,7 @@
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
+            <string>IRANSans-Light</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -54,7 +55,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDJ-te-GUA">
                                             <rect key="frame" x="16" y="8" width="568" height="20"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -223,6 +224,7 @@
                         <segue destination="9F7-ip-1v6" kind="popoverPresentation" identifier="Filter Segue" popoverAnchorView="kh9-bI-dsS" id="RO8-1x-O35">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="LY1-Ed-xua" kind="presentation" identifier="Detail Segue From Search" modalPresentationStyle="formSheet" id="s8n-ku-VbN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -245,7 +247,11 @@
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qwe-hk-1rt">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <mutableString key="text">سامانه نوا (نرم افزار واقعیت افزوده تهران) توسط سازمان زیباسازی شهر تهران در مرداد ماه ۱۳۹۴ تولید شده است. این نرم افزار با هدف نمایش اطلاعات اصناف و ساماندهی تابلوهای صنوف شهر تهران تولید شده است. در فاز نخست، اطلاعات کلیه اصناف خیابان انقلاب (از چهارراه جمالزاده تا چهارراه ولیعصر) در این نرم افزار به دو صورت واقعیت افزوده و نمایش بر روی نقشه تهران نشان داده می شود.جهت استفاده از واقعیت افزوده، کاربر باید در محل حضور داشته باشد. در صورتیکه خارج از محل مورد نظر هستید می توانید از طریق نقشه اطلاعات واحد های صنفی را جستجو نمائید.در صورتیکه اطلاعات ذکر شده در نرم افزار ناقص و یا نیاز به اصلاح دارد، لطفا از طریق فرم مورد نظر درخواست خود را ارسال نمائید.اگر مایل به ورود اطلاعات خود در این نرم افزار هستید لطفا با دردست داشتن مجوز فعالیت در ساعات اداری به واحد فناوری اطلاعات سازمان زیباسازی شهر تهران مراجعه کنید.</mutableString>
+                                            <string key="text">سامانه نوا (نرم افزار واقعیت افزوده تهران) توسط سازمان زیباسازی شهر تهران در مرداد ماه ۱۳۹۴ تولید شده است. این نرم افزار با هدف نمایش اطلاعات اصناف و ساماندهی تابلوهای صنوف شهر تهران تولید شده است. 
+در فاز نخست، اطلاعات کلیه اصناف خیابان انقلاب (از چهارراه جمالزاده تا چهارراه ولیعصر) در این نرم افزار به دو صورت واقعیت افزوده و نمایش بر روی نقشه تهران نشان داده می شود.
+جهت استفاده از واقعیت افزوده، کاربر باید در محل حضور داشته باشد. در صورتیکه خارج از محل مورد نظر هستید می توانید از طریق نقشه اطلاعات واحد های صنفی را جستجو نمائید.
+در صورتیکه اطلاعات ذکر شده در نرم افزار ناقص و یا نیاز به اصلاح دارد، لطفا از طریق فرم مورد نظر درخواست خود را ارسال نمائید.
+اگر مایل به ورود اطلاعات خود در این نرم افزار هستید لطفا با دردست داشتن مجوز فعالیت در ساعات اداری به واحد فناوری اطلاعات سازمان زیباسازی شهر تهران مراجعه کنید.</string>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -270,13 +276,13 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezt-fJ-Xym">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="آدرس" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezt-fJ-Xym">
                                             <rect key="frame" x="16" y="8" width="568" height="20"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="خیابان شریعتی، نرسیده به پل سیدخندان، دانشگاه صنعتی خواجه نصیرالدین طوسی، دانشکده مهندسی برق و کامپیوتر" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOK-hR-rl8">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="خیابان شریعتی، نرسیده به پل سیدخندان، دانشگاه صنعتی خواجه نصیرالدین طوسی، دانشکده مهندسی برق و کامپیوتر" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOK-hR-rl8">
                                             <rect key="frame" x="16" y="36" width="568" height="0.0"/>
                                             <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -339,6 +345,91 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sU3-DW-Azq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1908" y="311"/>
+        </scene>
+        <!--FavoriteTVC-->
+        <scene sceneID="2io-zi-Mcz">
+            <objects>
+                <viewController id="fsL-UR-VeR" customClass="FavoriteTVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bOg-3K-ahV"/>
+                        <viewControllerLayoutGuide type="bottom" id="cdN-eO-6W3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gUl-VU-RdL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNu-PL-m7z">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4Cc-eC-zUC"/>
+                                    <barButtonItem style="plain" id="gcf-qn-AXB">
+                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="ayY-3U-MXO">
+                                            <rect key="frame" x="228" y="6.5" width="185" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="جستجوهای اخیر"/>
+                                                <segment title="علاقه‌مندی‌ها"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="selectionToggled:" destination="fsL-UR-VeR" eventType="valueChanged" id="Muj-9F-j9S"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bTz-lB-Xce"/>
+                                </items>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EBY-8f-T3C">
+                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Favorite Cell" textLabel="1FT-oJ-6ma" style="IBUITableViewCellStyleDefault" id="MOb-lX-3GY">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MOb-lX-3GY" id="lFb-2o-eNu">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1FT-oJ-6ma">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="IRANSans-Light" family="IRANSans" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="fsL-UR-VeR" id="Nzm-5k-lx3"/>
+                                    <outlet property="delegate" destination="fsL-UR-VeR" id="eEw-AD-TNP"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EBY-8f-T3C" firstAttribute="trailing" secondItem="HNu-PL-m7z" secondAttribute="trailing" id="9Dk-cy-Gwr"/>
+                            <constraint firstItem="EBY-8f-T3C" firstAttribute="leading" secondItem="HNu-PL-m7z" secondAttribute="leading" id="IpX-T3-1bO"/>
+                            <constraint firstItem="HNu-PL-m7z" firstAttribute="bottom" secondItem="cdN-eO-6W3" secondAttribute="top" id="S1C-nl-aYF"/>
+                            <constraint firstItem="HNu-PL-m7z" firstAttribute="leading" secondItem="gUl-VU-RdL" secondAttribute="leading" id="bhL-Lc-oOZ"/>
+                            <constraint firstItem="EBY-8f-T3C" firstAttribute="top" secondItem="bOg-3K-ahV" secondAttribute="bottom" id="bsh-gZ-zEX"/>
+                            <constraint firstItem="EBY-8f-T3C" firstAttribute="bottom" secondItem="HNu-PL-m7z" secondAttribute="top" id="uEJ-Dd-XIs"/>
+                            <constraint firstAttribute="trailing" secondItem="HNu-PL-m7z" secondAttribute="trailing" id="uu2-Ma-hTa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Qhj-Ze-41d">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="89n-ab-tqy">
+                            <connections>
+                                <action selector="dismiss:" destination="fsL-UR-VeR" id="RN7-26-weu"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="حذف همه" id="f8X-zy-dj6"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="selectionToggle" destination="ayY-3U-MXO" id="o91-ro-rDI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cfw-3n-vbw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3619" y="311"/>
         </scene>
         <!--FilterTVC-->
         <scene sceneID="3fh-uB-iIj">
@@ -544,13 +635,31 @@
             </objects>
             <point key="canvasLocation" x="1135" y="1196"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2FV-hD-Lgd">
+            <objects>
+                <navigationController storyboardIdentifier="FavoriteNC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ppm-sr-tR5" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KXa-kH-RRZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fsL-UR-VeR" kind="relationship" relationship="rootViewController" id="G7g-U1-auu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CAY-2c-hPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2807" y="311"/>
+        </scene>
     </scenes>
     <resources>
         <image name="camera" width="28" height="22"/>
         <image name="currentLocation" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7S5-qM-Gyh"/>
+        <segue reference="s8n-ku-VbN"/>
         <segue reference="pgw-e5-9z6"/>
     </inferredMetricsTieBreakers>
 </document>

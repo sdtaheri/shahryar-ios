@@ -49,6 +49,7 @@ NSString* const APIKey = @"3234D74E-661E";
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPShouldHandleCookies:YES];
+    request.timeoutInterval = 3.0;
     [request setHTTPMethod:@"GET"];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

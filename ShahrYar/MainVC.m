@@ -16,12 +16,13 @@
 #import "CameraVC.h"
 #import "SearchTVC.h"
 #import "FilterTVC.h"
+#import "SearchTVC.h"
 #import "PlacesListTVC.h"
 
 #import "Mapbox.h"
 #import "PlacesLoader.h"
 
-@interface MainVC () <CLLocationManagerDelegate, RMMapViewDelegate, UISearchResultsUpdating, UISearchBarDelegate, UIPopoverPresentationControllerDelegate, UIViewControllerTransitioningDelegate>
+@interface MainVC () <CLLocationManagerDelegate, RMMapViewDelegate, UISearchBarDelegate, UIPopoverPresentationControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @property (weak, nonatomic) IBOutlet MKButton *launchCameraButton;
 @property (weak, nonatomic) IBOutlet MKButton *showCurrentLocationButton;
@@ -195,7 +196,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     self.mapView.maxZoom = 18;
     self.mapView.adjustTilesForRetinaDisplay = YES;
     self.mapView.clusteringEnabled = YES;
-    self.mapView.clusterAreaSize = CGSizeMake(50, 50);
+    self.mapView.clusterAreaSize = CGSizeMake(150, 150);
     
     [self.mapView setConstraintsSouthWest:CLLocationCoordinate2DMake(35.472219, 51.065355)
                                 northEast:CLLocationCoordinate2DMake(35.905874, 51.606794)];
@@ -219,7 +220,9 @@ CLLocationDegrees const Longitude_Default = 51.3;
         self.firstLaunch = NO;
         
         if (self.mapView.isUserLocationVisible) {
-            [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+            if ([self locationCoordinateIsValid:self.mapView.userLocation.coordinate]) {
+                [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+            }
         }
     }
 }
@@ -237,8 +240,16 @@ CLLocationDegrees const Longitude_Default = 51.3;
     } else if ([segue.identifier isEqualToString:@"Detail Segue"]) {
         DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
         dtvc.place = [self.mapView.selectedAnnotation userInfo];
-        
         [(UINavigationController *)segue.destinationViewController popoverPresentationController].sourceRect = CGRectMake(self.mapView.selectedAnnotation.absolutePosition.x, self.mapView.selectedAnnotation.absolutePosition.y, 1, 1);
+        
+    } else if ([segue.identifier isEqualToString:@"Detail Segue From Search"]) {
+        [segue.destinationViewController setPreferredContentSize:CGSizeMake(375.0, 500.0)];
+        DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
+        dtvc.place = sender;
+        [self.searchController dismissViewControllerAnimated:NO completion:^{
+            self.searchController.searchBar.text = @"";
+        }];
+        
     } else if ([segue.identifier isEqualToString:@"Filter Segue"]) {
         FilterTVC *ftvc = segue.destinationViewController;
         ftvc.context = self.managedObjectContext;
@@ -321,7 +332,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     CGPoint midPoint = CGPointMake(self.selectedClusterAnnotationRect.origin.x + (self.selectedClusterAnnotationRect.size.width / 2), self.selectedClusterAnnotationRect.origin.y + (self.selectedClusterAnnotationRect.size.height / 2));
 
     self.transition.startingPoint = midPoint;
-    self.transition.bubbleColor = (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular || self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular ) ? [UIColor clearColor] : [UIColor whiteColor];
+    self.transition.bubbleColor = [UIColor clearColor];
     
     return self.transition;
 }
@@ -356,13 +367,14 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 - (void)initializeSearchBar {
     
-    self.searchTVC = [[SearchTVC alloc] initWithStyle:UITableViewStyleGrouped];
+    self.searchTVC = [[SearchTVC alloc] initWithStyle:UITableViewStylePlain];
     [self.searchTVC.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Search Cell"];
+    self.searchTVC.managedObjectContext = self.managedObjectContext;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchTVC];
-    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchResultsUpdater = self.searchTVC;
     self.searchController.delegate = self.searchTVC;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.dimsBackgroundDuringPresentation = YES;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     UIWindow *window = [(AppDelegate *)[UIApplication sharedApplication].delegate window];
     if (window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && window.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
@@ -372,10 +384,9 @@ CLLocationDegrees const Longitude_Default = 51.3;
     self.definesPresentationContext = YES;
     
     self.navigationItem.titleView = self.searchController.searchBar;
-    
     self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.placeholder = @"جستجو، علاقه‌مندی‌ها";
     [self.searchController.searchBar sizeToFit];
-    self.searchController.searchBar.placeholder = @"جستجو";
     
     self.searchController.searchBar.showsBookmarkButton = YES;
     [self.searchController.searchBar setImage:[UIImage imageNamed:@"filter"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
@@ -401,7 +412,9 @@ CLLocationDegrees const Longitude_Default = 51.3;
             break;
     }
     
-    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    if ([self locationCoordinateIsValid:self.mapView.userLocation.coordinate]) {
+        [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    }
 }
 
 
@@ -435,31 +448,27 @@ CLLocationDegrees const Longitude_Default = 51.3;
             
             self.locationManager.delegate = self;
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-            [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+            if ([self locationCoordinateIsValid:self.mapView.userLocation.coordinate]) {
+                [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+            }
             break;
     }
 
 }
 
-//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-//    
-//    CLLocation *lastLocation = [locations lastObject];
-//    
-//    CLLocationAccuracy accuracy = [lastLocation horizontalAccuracy];
-//    NSLog(@"Received Location %@ with accuracy %f meters", lastLocation, accuracy);
-//    
-//    if (accuracy < Radius_Accuracy) {
-//        //To Implement: Zoom to region
-//        
-//        [self.mapView setCenterCoordinate:lastLocation.coordinate animated:YES];
-//        
-//        [manager stopUpdatingLocation];
-//    }
-//}
-//
-//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-//    NSLog(@"Failed Location with %@", error);
-//}
+- (BOOL)locationCoordinateIsValid: (CLLocationCoordinate2D)coordinate {
+    CGFloat latitude = coordinate.latitude;
+    CGFloat longitude = coordinate.longitude;
+    
+    BOOL result = NO;
+    if (latitude <= 90 && latitude >= -90) {
+        if (longitude <= 180 && longitude >= -180) {
+            result = YES;
+        }
+    }
+    
+    return result;
+}
 
 #pragma mark MapView Delegate
 
@@ -640,11 +649,10 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 #pragma mark - Search View
 
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
-}
-
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar {
+    if (self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
     [self performSegueWithIdentifier:@"Filter Segue" sender:nil];
 }
 

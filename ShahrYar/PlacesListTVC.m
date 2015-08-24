@@ -37,7 +37,6 @@ typedef NS_ENUM(NSInteger, SortType) {
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     self.numberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa_IR"];
     self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-    [self.numberFormatter setMaximumFractionDigits:1];
     
     self.tableView.estimatedRowHeight = 44.f;
     self.navigationController.view.layer.masksToBounds = YES;
@@ -57,12 +56,10 @@ typedef NS_ENUM(NSInteger, SortType) {
     if (self.userLocation) {
         temp = [NSMutableArray arrayWithCapacity:self.places.count];
         for (Place *place in self.places) {
-            [temp addObject:@{@"Place": place, @"Distance": [@([self.userLocation distanceFromLocation:[[CLLocation alloc] initWithLatitude:place.latitude.doubleValue longitude:place.longitude.doubleValue]]) stringValue] }];
+            [temp addObject:@{@"Place": place, @"Distance": @([self.userLocation distanceFromLocation:[[CLLocation alloc] initWithLatitude:place.latitude.doubleValue longitude:place.longitude.doubleValue]]) }];
         }
         descriptor = [NSSortDescriptor sortDescriptorWithKey:@"Distance" ascending:YES];
-        [temp sortUsingDescriptors:@[descriptor]];
-        
-        self.sortedByDistancePlacesDictionary = temp;
+        self.sortedByDistancePlacesDictionary = [temp sortedArrayUsingDescriptors:@[descriptor]];
     } else {
         [self.segmentedControl removeSegmentAtIndex:SortTypeDistance animated:YES];
     }
@@ -180,8 +177,10 @@ typedef NS_ENUM(NSInteger, SortType) {
             NSString *title = [[self.sortedByDistancePlacesDictionary[indexPath.row] objectForKey:@"Place"] title];
             NSString *subtitle = [self.sortedByDistancePlacesDictionary[indexPath.row] objectForKey:@"Distance"];
             if (subtitle.doubleValue >= 1000) {
+                self.numberFormatter.maximumFractionDigits = 1;
                 subtitle = [NSString stringWithFormat:@"%@ کیلومتر", [self.numberFormatter stringFromNumber:@([subtitle doubleValue] / 1000.0)]];
             } else {
+                self.numberFormatter.maximumFractionDigits = 0;
                 subtitle = [NSString stringWithFormat:@"%@ متر", [self.numberFormatter stringFromNumber:@([subtitle doubleValue])]];
             }
             
@@ -262,7 +261,7 @@ typedef NS_ENUM(NSInteger, SortType) {
             
             NSArray *sortedCategoryTitles = [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.summary"] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
             
-            return sortedCategoryTitles[section];
+            return sortedCategoryTitles[MIN(section, sortedCategoryTitles.count - 1)];
             break;
         }
         case SortTypeDistance:
