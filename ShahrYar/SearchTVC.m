@@ -6,63 +6,57 @@
 //  Copyright (c) 2015 Saeed Taheri. All rights reserved.
 //
 
+#import "NSManagedObjectContext+AsyncFetch.h"
 #import "SearchTVC.h"
 #import "AppDelegate.h"
-#import "NSManagedObjectContext+AsyncFetch.h"
 #import "Place.h"
 #import "Type.h"
+#import "FavoriteTVC.h"
 
 @interface SearchTVC () <UIPopoverPresentationControllerDelegate>
 
 @property (weak, nonatomic) UISearchController *searchController;
-@property (strong, nonatomic) NSFetchRequest *searchFetchRequest;
-@property (strong, nonatomic) NSArray *filteredList;
+
+@property (strong, nonatomic) NSArray *allPlaces;
+@property (strong, nonatomic) NSFetchRequest *fetchRequest;
+@property (strong, nonatomic) NSArray *filteredListAfterSearch;
 
 @end
 
 @implementation SearchTVC
 
-- (void)setFilteredList:(NSArray *)filteredList {
+- (NSFetchRequest *)fetchRequest {
+    if (!_fetchRequest) {
+        _fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Place"];
+        _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCompare:)]];
+        _fetchRequest.predicate = nil;
+    }
+    return _fetchRequest;
+}
 
-    _filteredList = filteredList;
+- (void)setFilteredListAfterSearch:(NSArray *)filteredListAfterSearch {
+
+    _filteredListAfterSearch = filteredListAfterSearch;
     [self.tableView reloadData];
     
     self.searchController.preferredContentSize = CGSizeMake(375.0, self.tableView.contentSize.height);
 }
 
-- (NSFetchRequest *)searchFetchRequest
-{
-    if (!_searchFetchRequest) {
-        _searchFetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Place" inManagedObjectContext:self.managedObjectContext];
-        [_searchFetchRequest setEntity:entity];
-        
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-        [_searchFetchRequest setSortDescriptors:sortDescriptors];
-    }
-    
-    return _searchFetchRequest;
-}
-
 - (void)searchForText:(NSString *)searchText
 {
-    if (self.managedObjectContext)
-    {
-        NSString *predicateFormat = @"%K CONTAINS[cd] %@ && category.selected.boolValue = YES";
-        NSString *searchAttribute = @"title";
-        searchText = [searchText stringByReplacingOccurrencesOfString:@"ي" withString:@"ی"];
-        searchText = [searchText stringByReplacingOccurrencesOfString:@"ك" withString:@"ک"];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchAttribute, searchText];
-        [self.searchFetchRequest setPredicate:predicate];
-        
-        [self.managedObjectContext executeFetchRequestAsync:self.searchFetchRequest completion:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                self.filteredList = objects;
-            }
-        }];
-    }
+    NSString *predicateFormat = @"%K CONTAINS[cd] %@";
+    NSString *searchAttribute = @"title";
+    searchText = [searchText stringByReplacingOccurrencesOfString:@"ي" withString:@"ی"];
+    searchText = [searchText stringByReplacingOccurrencesOfString:@"ك" withString:@"ک"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchAttribute, searchText];
+    
+    self.filteredListAfterSearch = [self.places filteredArrayUsingPredicate:predicate];
+}
+
+- (void)setRecentPlaceSearches:(NSArray *)recentPlaceSearches {
+    _recentPlaceSearches = recentPlaceSearches;
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -70,14 +64,34 @@
     
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.estimatedRowHeight = 69.f;
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
     
     UIVisualEffectView *vev = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.tableView.backgroundView = vev;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    NSError *error;
+    self.allPlaces = [self.managedObjectContext executeFetchRequest:self.fetchRequest error:&error];
+
+    self.recentIDSearches = [[NSUserDefaults standardUserDefaults] objectForKey:@"Recent Searches"];
+    NSMutableArray *temp = [NSMutableArray arrayWithCapacity:self.recentIDSearches.count];
+    for (NSString *uniqueID in self.recentIDSearches) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uniqueID = %@",uniqueID];
+        NSArray *results = [self.allPlaces filteredArrayUsingPredicate:predicate];
+        if (results.count == 1) {
+            [temp addObject: results.lastObject];
+        }
+    }
+    self.recentPlaceSearches = temp;
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
-    self.searchFetchRequest = nil;
+    self.fetchRequest = nil;
     [super didReceiveMemoryWarning];
 }
 
@@ -118,10 +132,10 @@
         if (section == 0) {
             return 1;
         } else if (section == 1) {
-            return self.filteredList.count;
+            return self.recentIDSearches.count;
         }
     } else if (tableView.numberOfSections == 1) {
-        return self.filteredList.count;
+        return self.filteredListAfterSearch.count;
     }
     return 0;
 }
@@ -129,15 +143,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Search Cell" forIndexPath:indexPath];
-    
+    cell.textLabel.numberOfLines = 0;
+
     if (tableView.numberOfSections == 2) {
         if (indexPath.section == 0) {
             cell.textLabel.text = @"علاقه‌مندی‌ها";
-            cell.imageView.image = [UIImage imageNamed:@"love"];
-            cell.imageView.tintColor = [UIColor blackColor];
+            cell.imageView.image = [UIImage imageNamed:@"love_selected"];
+            cell.imageView.tintColor = [UIColor darkGrayColor];
         } else if (indexPath.section == 1) {
             
-            Place *place = self.filteredList[indexPath.row];
+            Place *place = self.recentPlaceSearches[self.recentPlaceSearches.count - 1 - indexPath.row];
             
             NSString *title = place.title;
             NSString *subtitle = place.category.summary;
@@ -156,11 +171,12 @@
             NSRange range = NSMakeRange(title.length + 1, subtitle.length);
             [attrStr setAttributes:subAttrs range:range];
             
-            cell.imageView.image = nil;
+            cell.imageView.image = [UIImage imageNamed:@"search"];
+            cell.imageView.tintColor = [UIColor darkGrayColor];
             cell.textLabel.attributedText = attrStr;
         }
     } else if (tableView.numberOfSections == 1) {
-        Place *place = self.filteredList[indexPath.row];
+        Place *place = self.filteredListAfterSearch[indexPath.row];
         
         NSString *title = place.title;
         NSString *subtitle = place.category.summary;
@@ -188,17 +204,56 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (tableView.numberOfSections == 2 && indexPath.section == 0) {
         
         UINavigationController *nc = [self.presentingViewController.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNC"];
         nc.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self.presentingViewController presentViewController:nc animated:YES completion:NULL];
         
+        FavoriteTVC *ftvc = nc.childViewControllers[0];
+        ftvc.allPlaces = self.allPlaces;
+        ftvc.searchTVC = self;
+        
+        if ([self.presentingViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *mainNC = (UINavigationController *)self.presentingViewController;
+            [self.searchController dismissViewControllerAnimated:YES completion:^{
+                [mainNC presentViewController:nc animated:YES completion:NULL];
+            }];
+        } else {
+            [self.presentingViewController presentViewController:nc animated:YES completion:NULL];
+        }
+        
+        
+    } else if (tableView.numberOfSections == 2 && indexPath.section == 1) {
+        if ([self.presentingViewController isKindOfClass:[UINavigationController class]]) {
+            [[self.presentingViewController childViewControllers][0] performSegueWithIdentifier:@"Detail Segue From Search" sender:self.recentPlaceSearches[self.recentPlaceSearches.count - 1 - indexPath.row]];
+        } else {
+            [self.presentingViewController performSegueWithIdentifier:@"Detail Segue From Search" sender:self.recentPlaceSearches[self.recentPlaceSearches.count - 1 - indexPath.row]];
+        }
     } else {
         if ([self.presentingViewController isKindOfClass:[UINavigationController class]]) {
-            [[self.presentingViewController childViewControllers][0] performSegueWithIdentifier:@"Detail Segue From Search" sender:self.filteredList[indexPath.row]];
+            [[self.presentingViewController childViewControllers][0] performSegueWithIdentifier:@"Detail Segue From Search" sender:self.filteredListAfterSearch[indexPath.row]];
         } else {
-            [self.presentingViewController performSegueWithIdentifier:@"Detail Segue From Search" sender:self.filteredList[indexPath.row]];
+            [self.presentingViewController performSegueWithIdentifier:@"Detail Segue From Search" sender:self.filteredListAfterSearch[indexPath.row]];
+        }
+        
+        NSArray *recentSearches = [[NSUserDefaults standardUserDefaults] objectForKey:@"Recent Searches"];
+        if (recentSearches) {
+            NSMutableArray *temp = [recentSearches mutableCopy];
+            while (temp.count >= 20) {
+                [temp removeObjectAtIndex:0];
+            }
+            if (![temp containsObject:[self.filteredListAfterSearch[indexPath.row] uniqueID]]) {
+                [temp addObject:[self.filteredListAfterSearch[indexPath.row] uniqueID]];
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:[temp copy] forKey:@"Recent Searches"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+        } else {
+            NSArray *temp = @[[self.filteredListAfterSearch[indexPath.row] uniqueID]];
+            [[NSUserDefaults standardUserDefaults] setObject:[temp copy] forKey:@"Recent Searches"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
 }
@@ -211,7 +266,6 @@
     
     cell.textLabel.font = [UIFont fontWithName:@"IRANSans-Light" size:14];
     cell.textLabel.textAlignment = NSTextAlignmentRight;
-    cell.textLabel.numberOfLines = 0;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];

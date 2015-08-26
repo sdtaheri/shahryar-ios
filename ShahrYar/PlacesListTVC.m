@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, SortType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"فهرست";
+    
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     self.numberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa_IR"];
     self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;

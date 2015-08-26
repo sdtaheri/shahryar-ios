@@ -10,6 +10,10 @@
 
 @interface SearchTVC : UITableViewController <UISearchControllerDelegate, UISearchResultsUpdating>
 
+@property (strong, nonatomic) NSArray *places;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (strong, nonatomic) NSArray *recentIDSearches; //of Place ID
+@property (strong, nonatomic) NSArray *recentPlaceSearches; // of Place
 
 @end

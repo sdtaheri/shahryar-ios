@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchTVC.h"
 
 @interface FavoriteTVC : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSArray *allPlaces;
+@property (weak, nonatomic) SearchTVC *searchTVC;
 
 @end

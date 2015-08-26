@@ -17,6 +17,9 @@
             <string>IRANSans-Light</string>
             <string>IRANSans-Light</string>
         </mutableArray>
+        <mutableArray key="IRAN Sans Medium.ttf">
+            <string>IRANSans-Medium</string>
+        </mutableArray>
     </customFonts>
     <scenes>
         <!--DetailTVC-->
@@ -145,7 +148,9 @@
                                     <constraint firstAttribute="height" constant="60" id="nb1-3g-GCq"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="camera"/>
+                                <state key="normal" image="camera">
+                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rippleAniDuration">
                                         <real key="value" value="0.0"/>
@@ -169,7 +174,9 @@
                                 <rect key="frame" x="16" y="440" width="60" height="60"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="currentLocation"/>
+                                <state key="normal" image="currentLocation">
+                                    <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rippleAniDuration">
                                         <real key="value" value="0.0"/>
@@ -396,6 +403,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="hcu-ln-Kcw" kind="show" identifier="Detail From Favorites" id="3jG-gO-mG6"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -403,14 +413,22 @@
                                     <outlet property="delegate" destination="fsL-UR-VeR" id="eEw-AD-TNP"/>
                                 </connections>
                             </tableView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="موردی برای نمایش وجود ندارد" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHb-zY-q3i">
+                                <rect key="frame" x="209" y="289.5" width="182" height="22"/>
+                                <fontDescription key="fontDescription" name="IRANSans-Medium" family="IRANSans" pointSize="13"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="EBY-8f-T3C" firstAttribute="trailing" secondItem="HNu-PL-m7z" secondAttribute="trailing" id="9Dk-cy-Gwr"/>
                             <constraint firstItem="EBY-8f-T3C" firstAttribute="leading" secondItem="HNu-PL-m7z" secondAttribute="leading" id="IpX-T3-1bO"/>
+                            <constraint firstAttribute="centerX" secondItem="SHb-zY-q3i" secondAttribute="centerX" id="O0f-ee-jCy"/>
                             <constraint firstItem="HNu-PL-m7z" firstAttribute="bottom" secondItem="cdN-eO-6W3" secondAttribute="top" id="S1C-nl-aYF"/>
                             <constraint firstItem="HNu-PL-m7z" firstAttribute="leading" secondItem="gUl-VU-RdL" secondAttribute="leading" id="bhL-Lc-oOZ"/>
                             <constraint firstItem="EBY-8f-T3C" firstAttribute="top" secondItem="bOg-3K-ahV" secondAttribute="bottom" id="bsh-gZ-zEX"/>
+                            <constraint firstAttribute="centerY" secondItem="SHb-zY-q3i" secondAttribute="centerY" id="jya-1d-6lh"/>
                             <constraint firstItem="EBY-8f-T3C" firstAttribute="bottom" secondItem="HNu-PL-m7z" secondAttribute="top" id="uEJ-Dd-XIs"/>
                             <constraint firstAttribute="trailing" secondItem="HNu-PL-m7z" secondAttribute="trailing" id="uu2-Ma-hTa"/>
                         </constraints>
@@ -421,10 +439,16 @@
                                 <action selector="dismiss:" destination="fsL-UR-VeR" id="RN7-26-weu"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="حذف همه" id="f8X-zy-dj6"/>
+                        <barButtonItem key="rightBarButtonItem" title="حذف همه" id="f8X-zy-dj6">
+                            <connections>
+                                <action selector="deleteAll:" destination="fsL-UR-VeR" id="vof-sl-Mno"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noItemLabel" destination="SHb-zY-q3i" id="VKh-7X-gX7"/>
                         <outlet property="selectionToggle" destination="ayY-3U-MXO" id="o91-ro-rDI"/>
+                        <outlet property="tableView" destination="EBY-8f-T3C" id="q9p-gb-dg1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfw-3n-vbw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -659,7 +683,7 @@
         <image name="currentLocation" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="3jG-gO-mG6"/>
         <segue reference="s8n-ku-VbN"/>
-        <segue reference="pgw-e5-9z6"/>
     </inferredMetricsTieBreakers>
 </document>

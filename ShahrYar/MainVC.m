@@ -63,6 +63,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 - (void)setLocations:(NSArray *)locations {
     _locations = locations;
+    self.searchTVC.places = locations;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.mapView removeAllAnnotations];
@@ -246,9 +247,11 @@ CLLocationDegrees const Longitude_Default = 51.3;
         [segue.destinationViewController setPreferredContentSize:CGSizeMake(375.0, 500.0)];
         DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
         dtvc.place = sender;
-        [self.searchController dismissViewControllerAnimated:NO completion:^{
-            self.searchController.searchBar.text = @"";
-        }];
+        if (self.searchController.popoverPresentationController && self.searchController.popoverPresentationController.permittedArrowDirections != UIPopoverArrowDirectionUnknown) {
+            [self.searchController dismissViewControllerAnimated:YES completion:^{
+                self.searchController.searchBar.text = @"";
+            }];
+        }
         
     } else if ([segue.identifier isEqualToString:@"Filter Segue"]) {
         FilterTVC *ftvc = segue.destinationViewController;
@@ -332,7 +335,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     CGPoint midPoint = CGPointMake(self.selectedClusterAnnotationRect.origin.x + (self.selectedClusterAnnotationRect.size.width / 2), self.selectedClusterAnnotationRect.origin.y + (self.selectedClusterAnnotationRect.size.height / 2));
 
     self.transition.startingPoint = midPoint;
-    self.transition.bubbleColor = [UIColor clearColor];
+    self.transition.bubbleColor = (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular || self.traitCollection.displayScale == 3) ?  [UIColor clearColor] : [UIColor whiteColor];
     
     return self.transition;
 }
@@ -355,14 +358,14 @@ CLLocationDegrees const Longitude_Default = 51.3;
     self.launchCameraButton.layer.shadowOpacity = 0.75;
     self.launchCameraButton.layer.shadowPath = [UIBezierPath bezierPathWithOvalInRect:self.launchCameraButton.bounds].CGPath;
     self.launchCameraButton.layer.shadowRadius = 3.5;
-    self.launchCameraButton.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.launchCameraButton.layer.shadowOffset = CGSizeMake(1.0, 5.5);
+    self.launchCameraButton.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+    self.launchCameraButton.layer.shadowOffset = CGSizeMake(1.0, 2.5);
     
     self.showCurrentLocationButton.layer.shadowOpacity = 0.75;
     self.showCurrentLocationButton.layer.shadowPath = [UIBezierPath bezierPathWithOvalInRect:self.launchCameraButton.bounds].CGPath;
     self.showCurrentLocationButton.layer.shadowRadius = 3.5;
-    self.showCurrentLocationButton.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.showCurrentLocationButton.layer.shadowOffset = CGSizeMake(1.0, 5.5);
+    self.showCurrentLocationButton.layer.shadowColor = [UIColor darkGrayColor].CGColor;
+    self.showCurrentLocationButton.layer.shadowOffset = CGSizeMake(1.0, 2.5);
 }
 
 - (void)initializeSearchBar {
@@ -555,15 +558,6 @@ CLLocationDegrees const Longitude_Default = 51.3;
     return layer;
 }
 
-- (void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {
-    if (annotation.isClusterAnnotation) {
-        
-        self.selectedClusterAnnotationRect = annotation.layer.frame;
-        [self performSegueWithIdentifier:@"More Places List" sender:annotation.clusteredAnnotations];
-        
-    }
-}
-
 - (void)singleTapOnMap:(RMMapView *)map at:(CGPoint)point {
     if (self.shouldToggleStatusBarOnTap) {
         NavigationController *nc = (NavigationController *)self.navigationController;
@@ -592,6 +586,15 @@ CLLocationDegrees const Longitude_Default = 51.3;
         [nc setNavigationBarHidden:!nc.navigationBarHidden animated:YES];
     }
     self.shouldToggleStatusBarOnTap = YES;
+}
+
+- (void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {
+    if (annotation.isClusterAnnotation) {
+        
+        self.selectedClusterAnnotationRect = annotation.layer.frame;
+        [self performSegueWithIdentifier:@"More Places List" sender:annotation.clusteredAnnotations];
+        
+    }
 }
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {

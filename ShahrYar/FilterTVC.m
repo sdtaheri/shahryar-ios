@@ -46,14 +46,15 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"summary" ascending:YES selector:@selector(localizedStandardCompare:)];
     [request setSortDescriptors:@[sortDescriptor]];
     
+    __weak FilterTVC *weakSelf = self;
     [self.context executeFetchRequestAsync:request completion:^(NSArray *objects, NSError *error) {
         if (!error) {
-            self.categories = objects;
+            weakSelf.categories = objects;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"selected.boolValue = YES"];
-            self.selectedRowsCount = (int)[self.categories filteredArrayUsingPredicate:predicate].count;
+            weakSelf.selectedRowsCount = (int)[self.categories filteredArrayUsingPredicate:predicate].count;
 
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
+                [weakSelf.tableView reloadData];
             });
         }
     }];

@@ -12,6 +12,7 @@
 #import "DDetailCell.h"
 #import "Type.h"
 #import "Mapbox.h"
+#import "DeviceInfo.h"
 
 @interface DetailTVC () <MFMailComposeViewControllerDelegate, RMMapViewDelegate>
 
@@ -32,7 +33,6 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.placeImageView.clipsToBounds = YES;
     
-    self.navigationController.navigationBar.topItem.title = @"بازگشت";
     self.navigationItem.title = @"";
     
     [self configureDatasource];
@@ -117,9 +117,16 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     
     UIBarButtonItem *loveButton;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *key = [NSString stringWithFormat:@"Love_%@",self.place.uniqueID];
     
-    if (![userDefaults objectForKey: key]) {
+    NSArray *favorites = [userDefaults objectForKey:@"Favorites"];
+    BOOL selected = NO;
+    if (favorites) {
+        if ([favorites containsObject:self.place.uniqueID]) {
+            selected = YES;
+        }
+    }
+    
+    if (!selected) {
         loveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"love"] landscapeImagePhone:[UIImage imageNamed:@"love_landscape"] style:UIBarButtonItemStylePlain target:self action:@selector(lovePlace:)];
     } else {
         loveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"love_selected"] landscapeImagePhone:[UIImage imageNamed:@"love_selected_landscape"] style:UIBarButtonItemStylePlain target:self action:@selector(lovePlace:)];
@@ -294,6 +301,46 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        if ([MFMailComposeViewController canSendMail]) {
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ارتباط با ما" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+            
+            NSString *deviceModel = [DeviceInfo model];
+            NSString *OSVersion = [[UIDevice currentDevice] systemVersion];
+            
+            void (^alertAction)(UIAlertAction *action);
+            alertAction = ^ (UIAlertAction *action) {
+                MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
+                mail.mailComposeDelegate = self;
+                [mail setSubject:action.title];
+                
+                NSString *messageBody = [NSString stringWithFormat:@"<br><br><br><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",deviceModel,OSVersion] ;
+                if ([action.title isEqualToString:@"گزارش وجود ایراد"]) {
+                    messageBody = [NSString stringWithFormat:@"<br><br><br><p align=\"right\" dir=\"rtl\">نام: <b>%@</b><br>کد محل: <b>%@</b></p><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",self.place.title, self.place.uniqueID, deviceModel,OSVersion];
+                }
+                
+                [mail setMessageBody:messageBody isHTML:YES];
+                [mail setToRecipients:@[@"info@zibasazi.ir"]];
+                
+                [self presentViewController:mail animated:YES completion:NULL];
+            };
+            
+            [alert addAction:[UIAlertAction actionWithTitle:@"گزارش وجود ایراد" style:UIAlertActionStyleDefault handler:alertAction]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"موضوع عمومی" style:UIAlertActionStyleDefault handler:alertAction]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"انصراف" style:UIAlertActionStyleCancel handler:NULL]];
+            
+            [self presentViewController:alert animated:YES completion:NULL];
+            
+        } else {
+            NSLog(@"This device cannot send email");
+        }
+    }
+}
+
 - (void)configureDatasource {
     self.tableDatasource = [NSMutableArray array];
     
@@ -362,22 +409,34 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 
 - (void)lovePlace: (UIBarButtonItem *)sender {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *key = [NSString stringWithFormat:@"Love_%@",self.place.uniqueID];
     
-    if ([userDefaults objectForKey: key]) {
-        [userDefaults removeObjectForKey:key];
-        
-        UIBarButtonItem *loveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"love"] landscapeImagePhone:[UIImage imageNamed:@"love_landscape"] style:UIBarButtonItemStylePlain target:self action:@selector(lovePlace:)];
-        
-        self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItems[0], loveButton];
+    NSMutableArray *favorites = [[userDefaults objectForKey:@"Favorites"] mutableCopy];
+
+    if (favorites) {
+        if ([favorites containsObject:self.place.uniqueID]) {
+            [favorites removeObject:self.place.uniqueID];
+            
+            UIBarButtonItem *loveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"love"] landscapeImagePhone:[UIImage imageNamed:@"love_landscape"] style:UIBarButtonItemStylePlain target:self action:@selector(lovePlace:)];
+            
+            self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItems[0], loveButton];
+        } else {
+            [favorites addObject:self.place.uniqueID];
+            
+            UIBarButtonItem *loveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"love_selected"] landscapeImagePhone:[UIImage imageNamed:@"love_selected_landscape"] style:UIBarButtonItemStylePlain target:self action:@selector(lovePlace:)];
+            
+            self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItems[0], loveButton];
+        }
     } else {
-        [userDefaults setBool:YES forKey:key];
+        favorites = [NSMutableArray array];
+        [favorites addObject:self.place.uniqueID];
         
         UIBarButtonItem *loveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"love_selected"] landscapeImagePhone:[UIImage imageNamed:@"love_selected_landscape"] style:UIBarButtonItemStylePlain target:self action:@selector(lovePlace:)];
-
+        
         self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItems[0], loveButton];
     }
     
+    [userDefaults setObject:[favorites copy] forKey:@"Favorites"];
+    [userDefaults synchronize];
 }
 
 - (void)openWebsite: (UIButton *)sender {

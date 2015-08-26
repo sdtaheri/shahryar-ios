@@ -134,6 +134,10 @@ NSString* const APIKey = @"3234D74E-661E";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.selected.boolValue = YES"];
     request.predicate = predicate;
     
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    
     [context executeFetchRequestAsync:request completion:^(NSArray *objects, NSError *error) {
         completion(objects, error);
     }];
