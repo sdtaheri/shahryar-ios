@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "MainVC.h"
 
 @interface PlacesListTVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *annotations;
 @property (nonatomic, strong) CLLocation *userLocation;
+@property (nonatomic, weak) MainVC *mainVC;
 
 @end

@@ -578,6 +578,11 @@
                                 <action selector="segmentValueChanged:" destination="sAY-Oy-Cbj" eventType="valueChanged" id="7mg-Re-KA2"/>
                             </connections>
                         </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" image="filter" id="uvT-sR-NBy">
+                            <connections>
+                                <action selector="dismissAndFilter:" destination="sAY-Oy-Cbj" id="PWX-Z7-OxR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="segmentedControl" destination="hqR-d4-fqS" id="KCD-bh-j5s"/>
@@ -681,9 +686,10 @@
     <resources>
         <image name="camera" width="28" height="22"/>
         <image name="currentLocation" width="22" height="22"/>
+        <image name="filter" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3jG-gO-mG6"/>
+        <segue reference="pgw-e5-9z6"/>
         <segue reference="s8n-ku-VbN"/>
     </inferredMetricsTieBreakers>
 </document>

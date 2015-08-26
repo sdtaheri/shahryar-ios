@@ -56,7 +56,6 @@
 		30D0FEE11B68A75B00F7FD81 /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEE01B68A75B00F7FD81 /* MainVC.m */; };
 		30D0FEE41B68A75B00F7FD81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30D0FEE21B68A75B00F7FD81 /* Main.storyboard */; };
 		30D0FEE91B68A75B00F7FD81 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30D0FEE71B68A75B00F7FD81 /* LaunchScreen.xib */; };
-		30D0FEF51B68A75B00F7FD81 /* ShahrYarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEF41B68A75B00F7FD81 /* ShahrYarTests.m */; };
 		30D0FEFF1B68A81700F7FD81 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FEFE1B68A81700F7FD81 /* CoreLocation.framework */; };
 		30D0FF401B68AA7B00F7FD81 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FF3F1B68AA7B00F7FD81 /* QuartzCore.framework */; };
 		30D0FF421B68AA9800F7FD81 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FF411B68AA9800F7FD81 /* libsqlite3.dylib */; };
@@ -66,16 +65,6 @@
 		30D946101B69428E00DC19E3 /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D9460E1B69428E00DC19E3 /* libMapbox.a */; };
 		30D946111B69428E00DC19E3 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 30D9460F1B69428E00DC19E3 /* Mapbox.bundle */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		30D0FEEF1B68A75B00F7FD81 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 30D0FECD1B68A75A00F7FD81 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 30D0FED41B68A75A00F7FD81;
-			remoteInfo = ShahrYar;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3005C1481B89D04B00C72A53 /* AboutTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutTVC.h; sourceTree = "<group>"; };
@@ -155,7 +144,6 @@
 		30D0FEE01B68A75B00F7FD81 /* MainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainVC.m; sourceTree = "<group>"; };
 		30D0FEE31B68A75B00F7FD81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		30D0FEE81B68A75B00F7FD81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		30D0FEEE1B68A75B00F7FD81 /* ShahrYarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShahrYarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30D0FEF31B68A75B00F7FD81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30D0FEF41B68A75B00F7FD81 /* ShahrYarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShahrYarTests.m; sourceTree = "<group>"; };
 		30D0FEFE1B68A81700F7FD81 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -242,13 +230,6 @@
 				3015F3FB1B723544005A347D /* MapKit.framework in Frameworks */,
 				30D0FEFF1B68A81700F7FD81 /* CoreLocation.framework in Frameworks */,
 				30D946101B69428E00DC19E3 /* libMapbox.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		30D0FEEB1B68A75B00F7FD81 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +352,6 @@
 			isa = PBXGroup;
 			children = (
 				30D0FED51B68A75B00F7FD81 /* Nava.app */,
-				30D0FEEE1B68A75B00F7FD81 /* ShahrYarTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -554,24 +534,6 @@
 			productReference = 30D0FED51B68A75B00F7FD81 /* Nava.app */;
 			productType = "com.apple.product-type.application";
 		};
-		30D0FEED1B68A75B00F7FD81 /* ShahrYarTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 30D0FEFB1B68A75B00F7FD81 /* Build configuration list for PBXNativeTarget "ShahrYarTests" */;
-			buildPhases = (
-				30D0FEEA1B68A75B00F7FD81 /* Sources */,
-				30D0FEEB1B68A75B00F7FD81 /* Frameworks */,
-				30D0FEEC1B68A75B00F7FD81 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				30D0FEF01B68A75B00F7FD81 /* PBXTargetDependency */,
-			);
-			name = ShahrYarTests;
-			productName = ShahrYarTests;
-			productReference = 30D0FEEE1B68A75B00F7FD81 /* ShahrYarTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -584,10 +546,6 @@
 				TargetAttributes = {
 					30D0FED41B68A75A00F7FD81 = {
 						CreatedOnToolsVersion = 6.4;
-					};
-					30D0FEED1B68A75B00F7FD81 = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = 30D0FED41B68A75A00F7FD81;
 					};
 				};
 			};
@@ -605,7 +563,6 @@
 			projectRoot = "";
 			targets = (
 				30D0FED41B68A75A00F7FD81 /* ShahrYar */,
-				30D0FEED1B68A75B00F7FD81 /* ShahrYarTests */,
 			);
 		};
 /* End PBXProject section */
@@ -628,13 +585,6 @@
 				30D0FEE91B68A75B00F7FD81 /* LaunchScreen.xib in Resources */,
 				3025AC421B871EE000B7E14A /* ar_overlay@2x.png in Resources */,
 				3025AC411B871EE000B7E14A /* ar_overlay.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		30D0FEEC1B68A75B00F7FD81 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,23 +630,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		30D0FEEA1B68A75B00F7FD81 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				30D0FEF51B68A75B00F7FD81 /* ShahrYarTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		30D0FEF01B68A75B00F7FD81 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 30D0FED41B68A75A00F7FD81 /* ShahrYar */;
-			targetProxy = 30D0FEEF1B68A75B00F7FD81 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		30D0FEE21B68A75B00F7FD81 /* Main.storyboard */ = {
@@ -838,40 +772,6 @@
 			};
 			name = Release;
 		};
-		30D0FEFC1B68A75B00F7FD81 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ShahrYarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShahrYar.app/ShahrYar";
-			};
-			name = Debug;
-		};
-		30D0FEFD1B68A75B00F7FD81 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ShahrYarTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShahrYar.app/ShahrYar";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -889,15 +789,6 @@
 			buildConfigurations = (
 				30D0FEF91B68A75B00F7FD81 /* Debug */,
 				30D0FEFA1B68A75B00F7FD81 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		30D0FEFB1B68A75B00F7FD81 /* Build configuration list for PBXNativeTarget "ShahrYarTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				30D0FEFC1B68A75B00F7FD81 /* Debug */,
-				30D0FEFD1B68A75B00F7FD81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

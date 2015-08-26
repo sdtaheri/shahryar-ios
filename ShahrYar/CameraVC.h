@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "PRARManager.h"
+#import "MainVC.h"
 
 @interface CameraVC : UIViewController <PRARManagerDelegate>
 
+@property (nonatomic, weak) MainVC *mainVC;
 @property (nonatomic, strong) NSArray *locations;
 @property (nonatomic, strong) MKUserLocation *userLocation;
 

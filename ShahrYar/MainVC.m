@@ -206,8 +206,9 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view insertSubview:self.mapView atIndex:0];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_mapView]|" options:NSLayoutFormatDirectionLeftToRight metrics:nil views:NSDictionaryOfVariableBindings(_mapView)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mapView]|" options:NSLayoutFormatDirectionLeftToRight metrics:nil views:NSDictionaryOfVariableBindings(_mapView)]];
+
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_mapView]|" options:NSLayoutFormatDirectionRightToLeft metrics:nil views:NSDictionaryOfVariableBindings(_mapView)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mapView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mapView)]];
     
     [self.locationManager startUpdatingLocation];
     
@@ -236,6 +237,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     if ([segue.identifier isEqualToString:@"Launch Camera"]) {
         CameraVC *cvc = segue.destinationViewController;
         cvc.userLocation = (MKUserLocation *)self.mapView.userLocation;
+        cvc.mainVC = self;
         cvc.locations = self.locations;
         
     } else if ([segue.identifier isEqualToString:@"Detail Segue"]) {
@@ -260,6 +262,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
         ftvc.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
     } else if ([segue.identifier isEqualToString:@"More Places List"]) {
         PlacesListTVC *tvvc = [segue.destinationViewController childViewControllers][0];
+        tvvc.mainVC = self;
         tvvc.annotations = sender;
         tvvc.userLocation = self.mapView.userLocation.location;
         [segue.destinationViewController setTransitioningDelegate: self];

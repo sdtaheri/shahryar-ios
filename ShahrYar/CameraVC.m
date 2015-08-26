@@ -27,24 +27,40 @@
     CGFloat maximum = MAX(self.view.frame.size.width, self.view.frame.size.height);
     
     self.arManager = [[PRARManager alloc] initWithSize:CGSizeMake(minimum,maximum) delegate:self shouldCreateRadar:YES];
-    
     [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
+    
+    [self configureUI];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+}
+
+- (void)configureUI {
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-    closeButton.tintColor = [UIColor whiteColor];
+    closeButton.tintColor = [UIColor colorWithWhite:0.1 alpha:0.9];
     [closeButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeButton];
-    
     closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
+    
+    
+    UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [filterButton setImage:[UIImage imageNamed:@"filter_selected"] forState:UIControlStateNormal];
+    filterButton.tintColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    [filterButton addTarget:self action:@selector(dismissAndFilter:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:filterButton];
+    filterButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -66,6 +82,13 @@
 
 - (void)dismiss:(UIButton *)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)dismissAndFilter:(UIButton *)sender {
+    __weak MainVC *weakMainVC = self.mainVC;
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        [weakMainVC performSegueWithIdentifier:@"Filter Segue" sender:nil];
+    }];
 }
 
 #pragma mark AR Delegate
@@ -105,19 +128,23 @@
 // Creates the Data for an AR Object at a given location
 - (AROverlayView *)createPointAtPlace:(Place *)place
 {
-    AROverlayView *overlay = [[AROverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 100.0f, 100.0f)];
-    overlay.backgroundColor = [UIColor blueColor];
+    AROverlayView *overlay = [[AROverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 120.0f, 60.0f)];
+    overlay.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    overlay.layer.cornerRadius = 7.f;
     overlay.place = place;
     
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlayTouchedUpInside:)];
     [overlay addGestureRecognizer:tgr];
     
-    overlay.clipsToBounds = YES;
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:overlay.bounds];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(overlay.bounds, 10, 5)];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentRight;
+    [label setMinimumScaleFactor:0.8];
+    label.adjustsFontSizeToFitWidth = YES;
+    label.font = [UIFont fontWithName:@"IRANSans-Light" size:12.0];
     label.clipsToBounds = YES;
     label.numberOfLines = 0;
-    label.text = [NSString stringWithFormat:@"%@\n%f متر", place.title, [overlay distanceFromLocation:self.userLocation.coordinate]];
+    label.text = [NSString stringWithFormat:@"%@", place.title];
     [overlay addSubview:label];
     
     return overlay;

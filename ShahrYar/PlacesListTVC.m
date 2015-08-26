@@ -318,6 +318,14 @@ typedef NS_ENUM(NSInteger, SortType) {
     }
 }
 
+- (IBAction)dismissAndFilter:(UIBarButtonItem *)sender {
+
+    __weak MainVC *weakMainVC = self.mainVC;
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        [weakMainVC performSegueWithIdentifier:@"Filter Segue" sender:nil];
+    }];
+}
+
 - (IBAction)dismiss:(UIBarButtonItem *)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
