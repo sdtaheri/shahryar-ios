@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSArray *sectionKeys;
 @property (nonatomic, strong) NSDictionary *alphabetizedPlaceTitles;
 
+@property (nonatomic, strong) NSArray *sortedCategoryTitles;
+@property (nonatomic, strong) NSDictionary *sectionedPlacesInCategories;
+
 @end
 
 @implementation PlacesListTVC
@@ -101,6 +104,19 @@ typedef NS_ENUM(NSInteger, SortType) {
     self.sectionKeys = [NSArray arrayWithArray:letters];
     self.alphabetizedPlaceTitles = sectionedWords;
     
+    self.sortedCategoryTitles = [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.summary"] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
+    
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionaryWithCapacity:self.sortedCategoryTitles.count];
+    
+    for (int i = 0; i < self.sortedCategoryTitles.count; i++) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.summary = %@", self.sortedCategoryTitles[i]];
+        NSArray *results = [self.places filteredArrayUsingPredicate:predicate];
+        results = [results valueForKey:@"title"];
+        results = [results sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
+        
+        [tempDic setObject:results forKey:self.sortedCategoryTitles[i]];
+    }
+    self.sectionedPlacesInCategories = tempDic;
 }
 
 - (IBAction)segmentValueChanged:(UISegmentedControl *)sender {
@@ -113,7 +129,7 @@ typedef NS_ENUM(NSInteger, SortType) {
             return self.sectionKeys.count;
             break;
         case SortTypeCategories: {
-            return [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.uniqueID"] count];
+            return self.sortedCategoryTitles.count;
             break;
         }
         case SortTypeDistance:
@@ -137,14 +153,11 @@ typedef NS_ENUM(NSInteger, SortType) {
             break;
         }
         case SortTypeCategories: {
-            
-            NSArray *sortedCategoryTitles = [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.summary"] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
-            
-            for (int i = 0; i < sortedCategoryTitles.count; i++) {
-                if (i == section) {
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.summary = %@", sortedCategoryTitles[i]];
-                    return [self.places filteredArrayUsingPredicate:predicate].count;
-                }
+            NSArray *temp = [self.sectionedPlacesInCategories objectForKey:self.sortedCategoryTitles[section]];
+            if (temp) {
+                return temp.count;
+            } else {
+                return 0;
             }
             break;
         }
@@ -166,13 +179,7 @@ typedef NS_ENUM(NSInteger, SortType) {
             cell.textLabel.text = [self.alphabetizedPlaceTitles objectForKey:self.sectionKeys[indexPath.section]][indexPath.row];
             break;
         case SortTypeCategories: {
-            NSArray *sortedCategoryTitles = [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.summary"] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
-            
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.summary = %@", sortedCategoryTitles[indexPath.section]];
-            NSArray *resultsArray = [self.places filteredArrayUsingPredicate:predicate];
-            resultsArray = [resultsArray valueForKeyPath:@"title"];
-            
-            cell.textLabel.text = [resultsArray sortedArrayUsingSelector:@selector(localizedStandardCompare:)][indexPath.row];
+            cell.textLabel.text = [self.sectionedPlacesInCategories objectForKey:self.sortedCategoryTitles[indexPath.section]][indexPath.row];
             break;
         }
         case SortTypeDistance: {
@@ -261,9 +268,7 @@ typedef NS_ENUM(NSInteger, SortType) {
             break;
         case SortTypeCategories: {
             
-            NSArray *sortedCategoryTitles = [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.summary"] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
-            
-            return sortedCategoryTitles[MIN(section, sortedCategoryTitles.count - 1)];
+            return self.sortedCategoryTitles[MIN(section, self.sortedCategoryTitles.count - 1)];
             break;
         }
         case SortTypeDistance:
@@ -295,9 +300,8 @@ typedef NS_ENUM(NSInteger, SortType) {
             }
             
             case SortTypeCategories: {
-                NSArray *sortedCategoryTitles = [[self.places valueForKeyPath:@"@distinctUnionOfObjects.category.summary"] sortedArrayUsingSelector:@selector(localizedStandardCompare:)];
                 
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.summary = %@", sortedCategoryTitles[indexPath.section]];
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.summary = %@", self.sortedCategoryTitles[indexPath.section]];
                 NSArray *resultsArray = [self.places filteredArrayUsingPredicate:predicate];
                 
                 NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];

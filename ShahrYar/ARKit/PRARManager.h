@@ -26,6 +26,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "ARControllerView.h"
 
 @class ARRadar;
 @class ARController;
@@ -40,7 +41,7 @@
 
 @property (nonatomic) AVCaptureVideoPreviewLayer *cameraLayer;
 @property (nonatomic) ARRadar *radarView;
-@property (nonatomic) UIView *arOverlaysContainerView;
+@property (nonatomic) ARControllerView *arOverlaysContainerView;
 
 @property (weak, nonatomic) id<PRARManagerDelegate> delegate;
 @property (weak, nonatomic) id<PRARManagerDatasource> datasource;

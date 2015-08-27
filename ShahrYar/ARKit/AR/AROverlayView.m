@@ -10,10 +10,10 @@
 
 @implementation AROverlayView
 
--(CLLocationDistance)distanceFromLocation:(CLLocationCoordinate2D)coordinate {
-    CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue);
-    CLLocation *objectLocation = [[CLLocation alloc] initWithLatitude:coordinates.latitude
-                                                             longitude:coordinates.longitude];
+- (CLLocationDistance)distanceFromLocation:(CLLocationCoordinate2D)coordinate {
+    
+    CLLocation *objectLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue) altitude:self.place.elevation.floatValue horizontalAccuracy:1 verticalAccuracy:1 timestamp:[NSDate date]];
+    
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude
                                                       longitude:coordinate.longitude];
     

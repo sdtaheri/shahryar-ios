@@ -159,6 +159,7 @@
 		30D0FF441B68AAA700F7FD81 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FF431B68AAA700F7FD81 /* libz.dylib */; };
 		30D0FF461B68BC6E00F7FD81 /* tehran.mbtiles in Resources */ = {isa = PBXBuildFile; fileRef = 30D0FF451B68BC6E00F7FD81 /* tehran.mbtiles */; };
 		30D0FF4C1B68C61600F7FD81 /* PlacesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FF4B1B68C61600F7FD81 /* PlacesLoader.m */; };
+		30DB835A1B8FA3EF00F6DB00 /* ARControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DB83591B8FA3EF00F6DB00 /* ARControllerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -436,6 +437,8 @@
 		30D0FF451B68BC6E00F7FD81 /* tehran.mbtiles */ = {isa = PBXFileReference; lastKnownFileType = file; path = tehran.mbtiles; sourceTree = "<group>"; };
 		30D0FF4A1B68C61600F7FD81 /* PlacesLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesLoader.h; sourceTree = "<group>"; };
 		30D0FF4B1B68C61600F7FD81 /* PlacesLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesLoader.m; sourceTree = "<group>"; };
+		30DB83581B8FA3EF00F6DB00 /* ARControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARControllerView.h; sourceTree = "<group>"; };
+		30DB83591B8FA3EF00F6DB00 /* ARControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARControllerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,6 +481,8 @@
 		3025AC2A1B871EE000B7E14A /* AR */ = {
 			isa = PBXGroup;
 			children = (
+				30DB83581B8FA3EF00F6DB00 /* ARControllerView.h */,
+				30DB83591B8FA3EF00F6DB00 /* ARControllerView.m */,
 				3025AC2B1B871EE000B7E14A /* ARController.h */,
 				3025AC2C1B871EE000B7E14A /* ARController.m */,
 				3025AC2D1B871EE000B7E14A /* AROverlayView.h */,
@@ -967,6 +972,7 @@
 				TargetAttributes = {
 					30D0FED41B68A75A00F7FD81 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = CS7Q92U9AY;
 					};
 				};
 			};
@@ -1078,6 +1084,7 @@
 				30AB61711B8E77F000C03F94 /* RMFoundation.c in Sources */,
 				30AB61741B8E77F000C03F94 /* RMGreatCircleAnnotation.m in Sources */,
 				3062E5511B6F70FC001A3E63 /* MKColor.swift in Sources */,
+				30DB835A1B8FA3EF00F6DB00 /* ARControllerView.m in Sources */,
 				30AB618A1B8E77F000C03F94 /* RMProjection.m in Sources */,
 				30AB61701B8E77F000C03F94 /* RMDBMapSource.m in Sources */,
 				30AB61901B8E77F000C03F94 /* RMTileCache.m in Sources */,
@@ -1257,6 +1264,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ShahrYar/Mapbox_SDK/MapView_Prefix.pch;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -1269,6 +1278,7 @@
 					"$(PROJECT_DIR)/ShahrYar/Proj4",
 				);
 				PRODUCT_NAME = Nava;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1278,6 +1288,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ShahrYar/Mapbox_SDK/MapView_Prefix.pch;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
@@ -1290,6 +1302,7 @@
 					"$(PROJECT_DIR)/ShahrYar/Proj4",
 				);
 				PRODUCT_NAME = Nava;
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

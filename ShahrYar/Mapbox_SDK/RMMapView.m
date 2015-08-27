@@ -556,9 +556,9 @@
                                                                                                    @"container"      : container }]];
 
 
-            [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[container]-rightSpacing-|"
-                                                                                        options:0
-                                                                                        metrics:@{ @"rightSpacing" : @(5) }
+            [viewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftSpacing-[container]"
+                                                                                        options:NSLayoutFormatDirectionLeftToRight
+                                                                                        metrics:@{ @"leftSpacing" : @(5) }
                                                                                           views:@{ @"container"    : container }]];
         }
     }

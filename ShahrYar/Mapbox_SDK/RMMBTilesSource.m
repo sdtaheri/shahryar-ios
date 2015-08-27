@@ -95,9 +95,9 @@
 
 - (UIImage *)imageForTile:(RMTile)tile inCache:(RMTileCache *)tileCache
 {
-    NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
-			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
-			  self, tile.zoom, self.minZoom, self.maxZoom);
+//    NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
+//			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
+//			  self, tile.zoom, self.minZoom, self.maxZoom);
 
     NSUInteger zoom = tile.zoom;
     NSUInteger x    = tile.x;
@@ -327,7 +327,7 @@
 
 - (void)didReceiveMemoryWarning
 {
-    NSLog(@"*** didReceiveMemoryWarning in %@", [self class]);
+//    NSLog(@"*** didReceiveMemoryWarning in %@", [self class]);
 }
 
 - (NSString *)uniqueTilecacheKey

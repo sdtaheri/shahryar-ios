@@ -62,7 +62,7 @@ static NSString *const PRARMANAGER_ERROR_DOMAIN = @"PRARMANAGER_ERROR_DOMAIN";
         self.arViewSize = size;
         
         CGRect frame = CGRectMake(0, 0, OVERLAY_VIEW_WIDTH, size.height);
-        self.arOverlaysContainerView = [[UIView alloc] initWithFrame:frame];
+        self.arOverlaysContainerView = [[ARControllerView alloc] initWithFrame:frame];
         
         self.arController = [[ARController alloc] init];
         

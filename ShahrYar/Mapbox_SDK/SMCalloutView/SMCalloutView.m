@@ -97,7 +97,7 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
             self.titleLabel.frameHeight = TITLE_HEIGHT;
             self.titleLabel.opaque = NO;
             self.titleLabel.backgroundColor = [UIColor clearColor];
-            self.titleLabel.font = [UIFont systemFontOfSize:17];
+            self.titleLabel.font = [UIFont fontWithName:@"IRANSans-Light" size:13];
             self.titleLabel.textColor = [UIColor blackColor];
         }
         return self.titleLabel;
@@ -799,7 +799,7 @@ static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage =
     SEL selector = NSSelectorFromString(name);
     
     if (![(id)self respondsToSelector:selector]) {
-        NSLog(@"Could not find an embedded image. Ensure that you've added a class-level method named +%@", name);
+//        NSLog(@"Could not find an embedded image. Ensure that you've added a class-level method named +%@", name);
         return nil;
     }
     

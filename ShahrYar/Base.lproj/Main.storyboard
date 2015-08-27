@@ -19,6 +19,7 @@
         </mutableArray>
         <mutableArray key="IRAN Sans Medium.ttf">
             <string>IRANSans-Medium</string>
+            <string>IRANSans-Medium</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -141,11 +142,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmH-cx-bvI" userLabel="camera" customClass="MKButton" customModule="ShahrYar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="516" width="60" height="60"/>
+                                <rect key="frame" x="16" y="510" width="66" height="66"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cmH-cx-bvI" secondAttribute="height" multiplier="1:1" id="RU1-ls-Jyz"/>
-                                    <constraint firstAttribute="height" constant="60" id="nb1-3g-GCq"/>
+                                    <constraint firstAttribute="height" constant="66" id="nb1-3g-GCq"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" image="camera">
@@ -160,7 +161,7 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskEnabled" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="30"/>
+                                        <real key="value" value="33"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="backgroundLayerCornerRadius">
                                         <real key="value" value="30"/>
@@ -171,9 +172,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJr-zg-9GD" userLabel="currentLocation" customClass="MKButton" customModule="ShahrYar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="440" width="60" height="60"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="16" y="428" width="66" height="66"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" image="currentLocation">
                                     <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -186,7 +186,7 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="maskEnabled" value="NO"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="30"/>
+                                        <real key="value" value="33"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="backgroundLayerCornerRadius">
                                         <real key="value" value="30"/>
@@ -343,15 +343,34 @@
                     <view key="view" contentMode="scaleToFill" id="C1O-3h-avs">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="لطفاً چند لحظه صبر کنید ..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PwA-Du-TvQ">
+                                <rect key="frame" x="208" y="310.5" width="185" height="25"/>
+                                <fontDescription key="fontDescription" name="IRANSans-Medium" family="IRANSans" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="iZv-Hh-tlO">
+                                <rect key="frame" x="282" y="265.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="iZv-Hh-tlO" secondAttribute="centerY" constant="16" id="4EF-p2-hUZ"/>
+                            <constraint firstItem="iZv-Hh-tlO" firstAttribute="centerX" secondItem="PwA-Du-TvQ" secondAttribute="centerX" id="6xz-vH-AGB"/>
+                            <constraint firstItem="PwA-Du-TvQ" firstAttribute="top" secondItem="iZv-Hh-tlO" secondAttribute="bottom" constant="8" symbolic="YES" id="UkK-lf-ejH"/>
+                            <constraint firstAttribute="centerX" secondItem="iZv-Hh-tlO" secondAttribute="centerX" id="qbN-0s-5xR"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <segue destination="LY1-Ed-xua" kind="show" identifier="Show Details From Camera" id="Ei3-DD-grv"/>
+                        <outlet property="spinner" destination="iZv-Hh-tlO" id="wSb-Cg-7it"/>
+                        <outlet property="waitLabel" destination="PwA-Du-TvQ" id="AKm-nD-RQ9"/>
+                        <segue destination="LY1-Ed-xua" kind="presentation" identifier="Show Details From Camera" modalPresentationStyle="formSheet" id="Ei3-DD-grv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sU3-DW-Azq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1908" y="311"/>
+            <point key="canvasLocation" x="1908" y="317"/>
         </scene>
         <!--FavoriteTVC-->
         <scene sceneID="2io-zi-Mcz">
@@ -689,7 +708,7 @@
         <image name="filter" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Ei3-DD-grv"/>
         <segue reference="pgw-e5-9z6"/>
-        <segue reference="s8n-ku-VbN"/>
     </inferredMetricsTieBreakers>
 </document>

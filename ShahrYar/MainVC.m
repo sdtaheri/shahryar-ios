@@ -222,7 +222,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
         self.firstLaunch = NO;
         
         if (self.mapView.isUserLocationVisible) {
-            if ([self locationCoordinateIsValid:self.mapView.userLocation.coordinate]) {
+            if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate)) {
                 [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
             }
         }
@@ -418,7 +418,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
             break;
     }
     
-    if ([self locationCoordinateIsValid:self.mapView.userLocation.coordinate]) {
+    if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate)) {
         [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
     }
 }
@@ -454,26 +454,12 @@ CLLocationDegrees const Longitude_Default = 51.3;
             
             self.locationManager.delegate = self;
             self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-            if ([self locationCoordinateIsValid:self.mapView.userLocation.coordinate]) {
+            if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate)) {
                 [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
             }
             break;
     }
 
-}
-
-- (BOOL)locationCoordinateIsValid: (CLLocationCoordinate2D)coordinate {
-    CGFloat latitude = coordinate.latitude;
-    CGFloat longitude = coordinate.longitude;
-    
-    BOOL result = NO;
-    if (latitude <= 90 && latitude >= -90) {
-        if (longitude <= 180 && longitude >= -180) {
-            result = YES;
-        }
-    }
-    
-    return result;
 }
 
 #pragma mark MapView Delegate

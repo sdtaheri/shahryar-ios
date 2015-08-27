@@ -13,34 +13,55 @@
 
 @interface CameraVC ()
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UILabel *waitLabel;
+
 @property (nonatomic, strong) NSMutableArray *arData;
 @property (nonatomic, strong) PRARManager *arManager;
+@property (nonatomic) BOOL firstLaunch;
 
 @end
+
+#define MAX_DISTANCE 10000
+#define MAX_POINTS 50
+
 
 @implementation CameraVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.firstLaunch = YES;
+    
     CGFloat minimum = MIN(self.view.frame.size.width, self.view.frame.size.height);
     CGFloat maximum = MAX(self.view.frame.size.width, self.view.frame.size.height);
     
     self.arManager = [[PRARManager alloc] initWithSize:CGSizeMake(minimum,maximum) delegate:self shouldCreateRadar:YES];
-    [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
-    
-    [self configureUI];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    if (self.firstLaunch) {
+        [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
+        self.firstLaunch = NO;
+        [self configureUI];
+    }
+    
+    self.waitLabel.hidden = YES;
+    [self.spinner stopAnimating];
+    
+    if (self.arData.count == 0) {
+        self.waitLabel.text = @"نقطه‌ای برای نمایش وجود ندارد";
+        self.waitLabel.hidden = NO;
+        [self.view.subviews.lastObject setHidden:YES];
+    }
 }
 
 - (void)configureUI {
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-    closeButton.tintColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    closeButton.tintColor = [UIColor colorWithWhite:1 alpha:0.9];
     [closeButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:closeButton];
     closeButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -52,7 +73,7 @@
     
     UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [filterButton setImage:[UIImage imageNamed:@"filter_selected"] forState:UIControlStateNormal];
-    filterButton.tintColor = [UIColor colorWithWhite:0.1 alpha:0.9];
+    filterButton.tintColor = [UIColor colorWithWhite:1 alpha:0.9];
     [filterButton addTarget:self action:@selector(dismissAndFilter:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:filterButton];
     filterButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -74,6 +95,10 @@
 
 - (BOOL)shouldAutorotate {
     return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
@@ -109,15 +134,30 @@
 }
 
 - (void)augmentedRealityManager:(PRARManager *)arManager didReportError:(NSError *)error {
-    NSLog(@"AR ERROR");
+
 }
 
-- (NSMutableArray *)arData {
+- (NSArray *)arData {
 
     if (!_arData) {
         _arData = [NSMutableArray array];
+        NSMutableArray *temp = [NSMutableArray array];
         for (Place *place in self.locations) {
-            AROverlayView *item = [self createPointAtPlace:place];
+            CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.latitude.floatValue longitude:place.longitude.floatValue];
+            CLLocationDistance distance = [placeLocation distanceFromLocation:self.userLocation.location];
+            
+            if (CLLocationCoordinate2DIsValid(self.userLocation.coordinate) &&  distance < MAX_DISTANCE) {
+                [temp addObject:@{@"Distance": @(distance), @"Place": place}];
+            }
+        }
+        
+        NSArray *distanceArray = [temp sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"Distance" ascending:YES]]];
+
+        if (distanceArray.count > MAX_POINTS) {
+            distanceArray = [distanceArray subarrayWithRange:NSMakeRange(0, MAX_POINTS)];
+        }
+        for (NSDictionary *dic in distanceArray) {
+            AROverlayView *item = [self createPointAtPlace:[dic objectForKey:@"Place"]];
             [_arData addObject:item];
         }
     }
@@ -128,10 +168,12 @@
 // Creates the Data for an AR Object at a given location
 - (AROverlayView *)createPointAtPlace:(Place *)place
 {
+    
     AROverlayView *overlay = [[AROverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 120.0f, 60.0f)];
     overlay.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
     overlay.layer.cornerRadius = 7.f;
     overlay.place = place;
+    overlay.clipsToBounds = YES;
     
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlayTouchedUpInside:)];
     [overlay addGestureRecognizer:tgr];
@@ -145,6 +187,7 @@
     label.clipsToBounds = YES;
     label.numberOfLines = 0;
     label.text = [NSString stringWithFormat:@"%@", place.title];
+
     [overlay addSubview:label];
     
     return overlay;

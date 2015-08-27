@@ -192,7 +192,7 @@
     }
     else if (_projection != newProjection)
     {
-        NSLog(@"The tilesource '%@' has a different projection than the tilesource container", [tileSource shortName]);
+//        NSLog(@"The tilesource '%@' has a different projection than the tilesource container", [tileSource shortName]);
         [_tileSourcesLock unlock];
         return NO;
     }
@@ -211,7 +211,7 @@
     }
     else if (_tileSideLength != [tileSource tileSideLength])
     {
-        NSLog(@"The tilesource '%@' has a different tile side length than the tilesource container", [tileSource shortName]);
+//        NSLog(@"The tilesource '%@' has a different tile side length than the tilesource container", [tileSource shortName]);
         [_tileSourcesLock unlock];
         return NO;
     }
@@ -233,7 +233,7 @@
 
     if ( ! intersects)
     {
-        NSLog(@"The bounding box from tilesource '%@' doesn't intersect with the tilesource containers' bounding box", [tileSource shortName]);
+//        NSLog(@"The bounding box from tilesource '%@' doesn't intersect with the tilesource containers' bounding box", [tileSource shortName]);
         [_tileSourcesLock unlock];
         return NO;
     }

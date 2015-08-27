@@ -44,19 +44,19 @@
 #define CATransform3DPerspective(t, x, y) (CATransform3DConcat(t, CATransform3DMake(1, 0, 0, x, 0, 1, 0, y, 0, 0, 1, 0, 0, 0, 0, 1)))
 #define CATransform3DMakePerspective(x, y) (CATransform3DPerspective(CATransform3DIdentity, x, y))
 
-CG_INLINE CATransform3D
-CATransform3DMake(CGFloat m11, CGFloat m12, CGFloat m13, CGFloat m14,
-				  CGFloat m21, CGFloat m22, CGFloat m23, CGFloat m24,
-				  CGFloat m31, CGFloat m32, CGFloat m33, CGFloat m34,
-				  CGFloat m41, CGFloat m42, CGFloat m43, CGFloat m44)
-{
-	CATransform3D t;
-	t.m11 = m11; t.m12 = m12; t.m13 = m13; t.m14 = m14;
-	t.m21 = m21; t.m22 = m22; t.m23 = m23; t.m24 = m24;
-	t.m31 = m31; t.m32 = m32; t.m33 = m33; t.m34 = m34;
-	t.m41 = m41; t.m42 = m42; t.m43 = m43; t.m44 = m44;
-	return t;
-}
+//CG_INLINE CATransform3D
+//CATransform3DMake(CGFloat m11, CGFloat m12, CGFloat m13, CGFloat m14,
+//				  CGFloat m21, CGFloat m22, CGFloat m23, CGFloat m24,
+//				  CGFloat m31, CGFloat m32, CGFloat m33, CGFloat m34,
+//				  CGFloat m41, CGFloat m42, CGFloat m43, CGFloat m44)
+//{
+//	CATransform3D t;
+//	t.m11 = m11; t.m12 = m12; t.m13 = m13; t.m14 = m14;
+//	t.m21 = m21; t.m22 = m22; t.m23 = m23; t.m24 = m24;
+//	t.m31 = m31; t.m32 = m32; t.m33 = m33; t.m34 = m34;
+//	t.m41 = m41; t.m42 = m42; t.m43 = m43; t.m44 = m44;
+//	return t;
+//}
 
 #pragma mark - AR builders
 
@@ -83,16 +83,16 @@ CATransform3DMake(CGFloat m11, CGFloat m12, CGFloat m13, CGFloat m14,
 // Warps the view into a parrallelogram shape in order to give it a 3D perspective
 -(void)warpView:(AROverlayView*)arView
 {
-    arView.layer.sublayerTransform = CATransform3DMakePerspective(0, arView.vertice*-0.0003);
-    
-    float shrinkLevel = powf(0.95, arView.vertice-1);
-    arView.transform = CGAffineTransformMakeScale(shrinkLevel, shrinkLevel);
+//    arView.layer.sublayerTransform = CATransform3DMakePerspective(0, arView.vertice*-0.0003);
+//    
+//    float shrinkLevel = powf(0.95, arView.vertice-1);
+//    arView.transform = CGAffineTransformMakeScale(shrinkLevel, shrinkLevel);
     
 }
 -(int)setYPosForView:(AROverlayView*)arView
 {
     int pos = Y_CENTER-(int)(arView.frame.size.height*arView.vertice);
-    pos -= (powf(arView.vertice, 2)*4);
+    pos -= (powf(arView.vertice, 2)*1);
     
     return pos-(arView.frame.size.height/2);
 }

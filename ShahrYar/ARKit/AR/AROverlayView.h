@@ -16,6 +16,6 @@
 @property (nonatomic, weak) Place *place;
 @property (nonatomic) int vertice;
 
--(CLLocationDistance)distanceFromLocation:(CLLocationCoordinate2D)coordinate;
+- (CLLocationDistance)distanceFromLocation:(CLLocationCoordinate2D)coordinate;
 
 @end
