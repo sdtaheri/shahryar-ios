@@ -9,6 +9,7 @@
 #import "PlacesListTVC.h"
 #import "DetailTVC.h"
 #import "Mapbox.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface PlacesListTVC ()
 
@@ -121,6 +122,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 
 - (IBAction)segmentValueChanged:(UISegmentedControl *)sender {
     [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -173,6 +175,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Place Cell"];
+    cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
     
     switch (self.segmentedControl.selectedSegmentIndex) {
         case SortTypeAlphabet:
@@ -194,11 +197,11 @@ typedef NS_ENUM(NSInteger, SortType) {
             }
             
             NSDictionary *attrs = @{
-                                    NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:14.0],
+                                    NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0],
                                     NSForegroundColorAttributeName:[UIColor blackColor]
                                     };
             NSDictionary *subAttrs = @{
-                                       NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:13.0],
+                                       NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0],
                                        NSForegroundColorAttributeName:[UIColor lightGrayColor]
                                        };
             
@@ -223,6 +226,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 {
     
     cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textAlignment = NSTextAlignmentRight;
     cell.backgroundView = nil;
 
     // Remove seperator inset
@@ -238,7 +242,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     
     UITableViewHeaderFooterView *headerView = (UITableViewHeaderFooterView *)view;
-    headerView.textLabel.font = [UIFont fontWithName:@"IRANSans-Medium" size:14];
+    headerView.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
     headerView.textLabel.textAlignment = NSTextAlignmentRight;
 }
 

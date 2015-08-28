@@ -6,13 +6,16 @@
 //  Copyright (c) 2015 Saeed Taheri. All rights reserved.
 //
 
-#import <MessageUI/MessageUI.h>
+@import AddressBook;
+@import MessageUI;
+
 #import "GeodeticUTMConverter.h"
 #import "DetailTVC.h"
 #import "DDetailCell.h"
 #import "Type.h"
 #import "Mapbox.h"
 #import "DeviceInfo.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface DetailTVC () <MFMailComposeViewControllerDelegate, RMMapViewDelegate>
 
@@ -185,7 +188,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return section == 0 ? self.tableDatasource.count : 1;
+    return section == 0 ? self.tableDatasource.count : 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -203,9 +206,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                 cell.textLabel.text = self.place.title;
                 cell.textLabel.textColor = [UIColor blackColor];
                 
-                UIFontDescriptor *userHeadLineFont = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleHeadline];
-                CGFloat userHeadLineFontSize = [userHeadLineFont pointSize];
-                cell.textLabel.font = [UIFont fontWithName:@"IRANSans-Medium" size:userHeadLineFontSize - 2];
+                cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleSubheadline] size: 0];
                 
                 NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
                 
@@ -285,12 +286,13 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
         }
     } else if (indexPath.section == 1) {
         cell.textLabel.textColor = self.view.tintColor;
-        UIFontDescriptor *userBodyFont = [UIFontDescriptor preferredFontDescriptorWithTextStyle:UIFontTextStyleBody];
-        CGFloat userBodyFontSize = [userBodyFont pointSize];
-        cell.textLabel.font = [UIFont fontWithName:@"IRANSans-Light" size:userBodyFontSize - 3];
+        cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
 
         switch (indexPath.row) {
             case 0:
+                cell.textLabel.text = @"اضافه کردن به مخاطبین";
+            break;
+            case 1:
                 cell.textLabel.text = @"ارتباط با ما";
             break;
             default:
@@ -304,39 +306,49 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1 && indexPath.row == 0) {
-        if ([MFMailComposeViewController canSendMail]) {
-            
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ارتباط با ما" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-            
-            NSString *deviceModel = [DeviceInfo model];
-            NSString *OSVersion = [[UIDevice currentDevice] systemVersion];
-            
-            void (^alertAction)(UIAlertAction *action);
-            alertAction = ^ (UIAlertAction *action) {
-                MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
-                mail.mailComposeDelegate = self;
-                [mail setSubject:action.title];
-                
-                NSString *messageBody = [NSString stringWithFormat:@"<br><br><br><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",deviceModel,OSVersion] ;
-                if ([action.title isEqualToString:@"گزارش وجود ایراد"]) {
-                    messageBody = [NSString stringWithFormat:@"<br><br><br><p align=\"right\" dir=\"rtl\">نام: <b>%@</b><br>کد محل: <b>%@</b></p><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",self.place.title, self.place.uniqueID, deviceModel,OSVersion];
+    if (indexPath.section == 1) {
+        
+        switch (indexPath.row) {
+            case 0:
+                [self addToAddressBook: self.place];
+                break;
+            case 1:
+                if ([MFMailComposeViewController canSendMail]) {
+                    
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ارتباط با ما" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+                    
+                    NSString *deviceModel = [DeviceInfo model];
+                    NSString *OSVersion = [[UIDevice currentDevice] systemVersion];
+                    
+                    void (^alertAction)(UIAlertAction *action);
+                    alertAction = ^ (UIAlertAction *action) {
+                        MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
+                        mail.mailComposeDelegate = self;
+                        [mail setSubject:action.title];
+                        
+                        NSString *messageBody = [NSString stringWithFormat:@"<br><br><br><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",deviceModel,OSVersion] ;
+                        if ([action.title isEqualToString:@"گزارش وجود ایراد"]) {
+                            messageBody = [NSString stringWithFormat:@"<br><br><br><p align=\"right\" dir=\"rtl\">نام: <b>%@</b><br>کد محل: <b>%@</b></p><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",self.place.title, self.place.uniqueID, deviceModel,OSVersion];
+                        }
+                        
+                        [mail setMessageBody:messageBody isHTML:YES];
+                        [mail setToRecipients:@[@"info@zibasazi.ir"]];
+                        
+                        [self presentViewController:mail animated:YES completion:NULL];
+                    };
+                    
+                    [alert addAction:[UIAlertAction actionWithTitle:@"گزارش وجود ایراد" style:UIAlertActionStyleDefault handler:alertAction]];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"انتقاد و پیشنهاد" style:UIAlertActionStyleDefault handler:alertAction]];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"انصراف" style:UIAlertActionStyleCancel handler:NULL]];
+                    
+                    [self presentViewController:alert animated:YES completion:NULL];
+                    
+                } else {
+                    NSLog(@"This device cannot send email");
                 }
-                
-                [mail setMessageBody:messageBody isHTML:YES];
-                [mail setToRecipients:@[@"info@zibasazi.ir"]];
-                
-                [self presentViewController:mail animated:YES completion:NULL];
-            };
-            
-            [alert addAction:[UIAlertAction actionWithTitle:@"گزارش وجود ایراد" style:UIAlertActionStyleDefault handler:alertAction]];
-            [alert addAction:[UIAlertAction actionWithTitle:@"موضوع عمومی" style:UIAlertActionStyleDefault handler:alertAction]];
-            [alert addAction:[UIAlertAction actionWithTitle:@"انصراف" style:UIAlertActionStyleCancel handler:NULL]];
-            
-            [self presentViewController:alert animated:YES completion:NULL];
-            
-        } else {
-            NSLog(@"This device cannot send email");
+            break;
+            default:
+                break;
         }
     }
 }
@@ -486,6 +498,185 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)addToAddressBook:(Place *)place {
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
+        ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted){
+
+        [self showContactsAccessError];
+        
+    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized){
+
+        [self savePlaceToAddressBook: place];
+    } else { //ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
+        
+        ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
+            if (!granted){
+
+                [self showContactsAccessError];
+                return;
+            }
+
+            [self savePlaceToAddressBook: place];
+        });
+        NSLog(@"Not determined Contacts Access");
+    }
+}
+
+- (void)savePlaceToAddressBook:(Place *)place {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, nil);
+        ABRecordRef contact = ABPersonCreate();
+        
+        ABRecordSetValue(contact, kABPersonOrganizationProperty, (__bridge CFStringRef)place.title, nil);
+        ABRecordSetValue(contact, kABPersonDepartmentProperty, (__bridge CFStringRef)place.category.summary, nil);
+        if (place.activities.length > 0) {
+            ABRecordSetValue(contact, kABPersonNoteProperty, (__bridge CFStringRef)place.activities, nil);
+        }
+        if (place.email.length > 0) {
+            ABRecordSetValue(contact, kABPersonEmailProperty, (__bridge CFStringRef)place.email, nil);
+        }
+        if (place.webSite.length > 0) {
+            ABMutableMultiValueRef multiURL = ABMultiValueCreateMutable(kABPersonURLProperty);
+            ABMultiValueAddValueAndLabel(multiURL, (__bridge CFStringRef)place.webSite, (CFStringRef)@"homepage", NULL);
+            ABRecordSetValue(contact, kABPersonURLProperty, multiURL,nil);
+            CFRelease(multiURL);
+        }
+        if (place.phones.length > 0) {
+            NSMutableArray *phonesArray = [[place.phones componentsSeparatedByString:@"\n"] mutableCopy];
+            NSArray *temp = phonesArray;
+            for (int i = 0; i < temp.count; i++) {
+                NSString *item = temp[i];
+                if ([[item substringToIndex:1] isEqualToString:@"0"]) {
+                    phonesArray[i] = [item stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+98"];
+                } else {
+                    phonesArray[i] = [NSString stringWithFormat:@"+9821%@",item];
+                }
+            }
+            
+            ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+            
+            for (NSString *item in phonesArray) {
+                
+                if ([[item substringToIndex:5] isEqualToString:@"+9821"]) {
+                    ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)item, kABPersonPhoneMainLabel, NULL);
+                } else {
+                    ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)item, kABPersonPhoneMobileLabel, NULL);
+                }
+                
+            }
+            
+            
+            if (place.faxes.length > 0) {
+                NSMutableArray *faxesArray = [[place.faxes componentsSeparatedByString:@"\n"] mutableCopy];
+                NSArray *temp = faxesArray;
+                for (int i = 0; i < temp.count; i++) {
+                    NSString *item = temp[i];
+                    if ([[item substringToIndex:1] isEqualToString:@"0"]) {
+                        faxesArray[i] = [item stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:@"+98"];
+                    } else {
+                        faxesArray[i] = [NSString stringWithFormat:@"+9821%@",item];
+                    }
+                }
+                
+                for (NSString *item in faxesArray) {
+                    
+                    if ([[item substringToIndex:5] isEqualToString:@"+9821"]) {
+                        ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)item, kABPersonPhoneWorkFAXLabel, NULL);
+                    } else {
+                        ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)item, kABPersonPhoneMobileLabel, NULL);
+                    }
+                    
+                }
+            }
+            
+            ABRecordSetValue(contact, kABPersonPhoneProperty, phoneNumbers, nil);
+        }
+        
+        if (self.place.logoLocalPath) {
+            NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+            
+            NSString *fileName = self.place.logoLocalPath;
+            NSURL *finalURL = [[NSURL fileURLWithPath:appSupportDir] URLByAppendingPathComponent:fileName];
+            
+            NSData *imageData = [NSData dataWithContentsOfFile: finalURL.path];
+            
+            ABPersonSetImageData(contact, (__bridge CFDataRef)imageData, nil);
+        } else if (self.place.imageLocalPath) {
+            NSString *appSupportDir = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+            
+            NSString *fileName = self.place.imageLocalPath;
+            NSURL *finalURL = [[NSURL fileURLWithPath:appSupportDir] URLByAppendingPathComponent:fileName];
+            
+            NSData *imageData = [NSData dataWithContentsOfFile:finalURL.path];
+            ABPersonSetImageData(contact, (__bridge CFDataRef)imageData, nil);
+        }
+        
+        
+        NSArray *allContacts = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBookRef);
+        for (id record in allContacts){
+            ABRecordRef thisContact = (__bridge ABRecordRef)record;
+            if (CFStringCompare(ABRecordCopyCompositeName(thisContact),
+                                ABRecordCopyCompositeName(contact), 0) == kCFCompareEqualTo){
+                
+                NSMutableSet *thisContactPhoneNumbers = [[NSMutableSet alloc] init];
+                ABMultiValueRef multiPhones = ABRecordCopyValue(thisContact, kABPersonPhoneProperty);
+                
+                for(CFIndex i=0; i<ABMultiValueGetCount(multiPhones); i++) {
+                    @autoreleasepool {
+                        CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(multiPhones, i);
+                        NSString *phoneNumber = CFBridgingRelease(phoneNumberRef);
+                        if (phoneNumber != nil)[thisContactPhoneNumbers addObject:phoneNumber];
+                    }
+                }
+                
+                if (multiPhones != NULL) {
+                    CFRelease(multiPhones);
+                }
+                
+                
+                NSMutableSet *madeContactPhoneNumbers = [[NSMutableSet alloc] init];
+                ABMultiValueRef madeMultiPhones = ABRecordCopyValue(contact, kABPersonPhoneProperty);
+                
+                for(CFIndex i=0; i<ABMultiValueGetCount(madeMultiPhones); i++) {
+                    @autoreleasepool {
+                        CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(madeMultiPhones, i);
+                        NSString *phoneNumber = CFBridgingRelease(phoneNumberRef);
+                        if (phoneNumber != nil)[madeContactPhoneNumbers addObject:phoneNumber];
+                    }
+                }
+                
+                if (madeMultiPhones != NULL) {
+                    CFRelease(madeMultiPhones);
+                }
+                
+                if ([madeContactPhoneNumbers isEqualToSet:thisContactPhoneNumbers]) {
+                    
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"خطا" message:@"این مخاطب قبلاً اضافه شده است" preferredStyle:UIAlertControllerStyleAlert];
+                    [alert addAction:[UIAlertAction actionWithTitle:@"متوجه شدم" style:UIAlertActionStyleCancel handler:NULL]];
+                    [self presentViewController:alert animated:YES completion:NULL];
+                    
+                    return;
+                }
+            }
+        }
+        
+        ABAddressBookAddRecord(addressBookRef, contact, nil);
+        ABAddressBookSave(addressBookRef, nil);
+    });
+    
+}
+
+- (void)showContactsAccessError {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"خطای دسترسی به مخاطبین" message:@"اجازهٔ دسترسی به مخاطبین صادر نشده است. به تنظیمات مراجعه کنید" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"تنظیمات" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"بعداً" style:UIAlertActionStyleDefault handler:NULL]];
+
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 - (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation {

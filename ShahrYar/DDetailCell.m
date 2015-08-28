@@ -7,11 +7,14 @@
 //
 
 #import "DDetailCell.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @implementation DDetailCell
 
 - (void)awakeFromNib {
-    // Initialization code
+
+    self.labelDetail.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
+    self.label.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

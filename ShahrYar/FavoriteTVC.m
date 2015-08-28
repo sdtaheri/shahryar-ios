@@ -10,6 +10,7 @@
 #import "Place.h"
 #import "Type.h"
 #import "DetailTVC.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface FavoriteTVC ()
 
@@ -40,6 +41,9 @@ typedef NS_ENUM(NSInteger, TableType) {
     self.tableView.estimatedRowHeight = 69.f;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
     self.separatorColor = self.tableView.separatorColor;
+    
+    self.noItemLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle:UIFontTextStyleCaption1] size:0];
+
     
     self.favoritesID = [[NSUserDefaults standardUserDefaults] objectForKey:@"Favorites"];
     self.recentSearchesID = [[NSUserDefaults standardUserDefaults] objectForKey:@"Recent Searches"];
@@ -155,11 +159,11 @@ typedef NS_ENUM(NSInteger, TableType) {
     NSString *subtitle = place.category.summary;
     
     NSDictionary *attrs = @{
-                            NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:14.0],
+                            NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0],
                             NSForegroundColorAttributeName:[UIColor blackColor]
                             };
     NSDictionary *subAttrs = @{
-                               NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:13.0],
+                               NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0],
                                NSForegroundColorAttributeName:[UIColor lightGrayColor]
                                };
     

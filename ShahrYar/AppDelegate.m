@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface AppDelegate ()
 
@@ -102,8 +103,16 @@
     [cancelButton setTitle:@"انصراف"];
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{
-                                                                                                 NSFontAttributeName: [UIFont fontWithName:@"IRANSans-Light" size:12],
+                                                                                                 NSFontAttributeName: [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle:UIFontTextStyleCaption2] size:0],
                                                                                                  }];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{
+                                                           NSFontAttributeName: [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle:UIFontTextStyleSubheadline] size:0]
+                                                           }];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle:UIFontTextStyleCaption1] size:0]} forState:UIControlStateNormal];
+    
+    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName: [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle:UIFontTextStyleFootnote] size:0]} forState:UIControlStateNormal];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

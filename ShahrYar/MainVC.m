@@ -11,6 +11,7 @@
 #import "ShahrYar-Swift.h"
 #import "MainVC.h"
 #import "Place+Create.h"
+#import "UIFontDescriptor+IranSans.h"
 
 #import "DetailTVC.h"
 #import "CameraVC.h"
@@ -521,13 +522,14 @@ CLLocationDegrees const Longitude_Default = 51.3;
         NSString *clusterLabelContent = [formatter stringFromNumber:clusterLabelCount];
         
         // calculate its size
+        UIFont *labelFont = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleSubheadline] size: 0];
+
         CGRect labelSize = [clusterLabelContent boundingRectWithSize:
                             ((RMMarker *)layer).label.frame.size
                                                              options:NSStringDrawingUsesLineFragmentOrigin attributes:@{
-                                                                                                                        NSFontAttributeName:[UIFont systemFontOfSize:15] }
+                                                                                                                        NSFontAttributeName:labelFont }
                                                              context:nil];
         
-        UIFont *labelFont = [UIFont fontWithName:@"IRANSans-Medium" size:14];
         
         [(RMMarker *)layer setTextForegroundColor:[UIColor whiteColor]];
         

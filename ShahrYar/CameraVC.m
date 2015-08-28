@@ -10,6 +10,7 @@
 #import "AROverlayView.h"
 #import "Place.h"
 #import "DetailTVC.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface CameraVC ()
 
@@ -22,7 +23,7 @@
 
 @end
 
-#define MAX_DISTANCE 10000
+#define MAX_DISTANCE 150
 #define MAX_POINTS 50
 
 
@@ -31,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.waitLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0];
+
     self.firstLaunch = YES;
     
     CGFloat minimum = MIN(self.view.frame.size.width, self.view.frame.size.height);
@@ -183,7 +186,7 @@
     label.textAlignment = NSTextAlignmentRight;
     [label setMinimumScaleFactor:0.8];
     label.adjustsFontSizeToFitWidth = YES;
-    label.font = [UIFont fontWithName:@"IRANSans-Light" size:12.0];
+    label.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0];
     label.clipsToBounds = YES;
     label.numberOfLines = 0;
     label.text = [NSString stringWithFormat:@"%@", place.title];

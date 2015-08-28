@@ -1,4 +1,5 @@
 #import "SMCalloutView.h"
+#import "UIFontDescriptor+IranSans.h"
 
 //
 // UIView frame helpers - we do a lot of UIView frame fiddling in this class; these functions help keep things readable.
@@ -97,7 +98,7 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
             self.titleLabel.frameHeight = TITLE_HEIGHT;
             self.titleLabel.opaque = NO;
             self.titleLabel.backgroundColor = [UIColor clearColor];
-            self.titleLabel.font = [UIFont fontWithName:@"IRANSans-Light" size:13];
+            self.titleLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle:UIFontTextStyleCaption1] size:0];
             self.titleLabel.textColor = [UIColor blackColor];
         }
         return self.titleLabel;

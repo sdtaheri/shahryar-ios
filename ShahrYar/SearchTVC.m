@@ -12,6 +12,7 @@
 #import "Place.h"
 #import "Type.h"
 #import "FavoriteTVC.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface SearchTVC () <UIPopoverPresentationControllerDelegate>
 
@@ -149,7 +150,8 @@
         if (indexPath.section == 0) {
             cell.textLabel.text = @"علاقه‌مندی‌ها";
             cell.imageView.image = [UIImage imageNamed:@"love_selected"];
-            cell.imageView.tintColor = [UIColor darkGrayColor];
+            cell.imageView.tintColor = [UIColor blackColor];
+            cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
         } else if (indexPath.section == 1) {
             
             Place *place = self.recentPlaceSearches[self.recentPlaceSearches.count - 1 - indexPath.row];
@@ -158,11 +160,11 @@
             NSString *subtitle = place.category.summary;
             
             NSDictionary *attrs = @{
-                                    NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:14.0],
+                                    NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0],
                                     NSForegroundColorAttributeName:[UIColor blackColor]
                                     };
             NSDictionary *subAttrs = @{
-                                       NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:13.0],
+                                       NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0],
                                        NSForegroundColorAttributeName:[UIColor lightGrayColor]
                                        };
             
@@ -182,11 +184,11 @@
         NSString *subtitle = place.category.summary;
         
         NSDictionary *attrs = @{
-                                NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:14.0],
+                                NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0],
                                 NSForegroundColorAttributeName:[UIColor blackColor]
                                 };
         NSDictionary *subAttrs = @{
-                                   NSFontAttributeName:[UIFont fontWithName:@"IRANSans-Light" size:13.0],
+                                   NSFontAttributeName:[UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0],
                                    NSForegroundColorAttributeName:[UIColor lightGrayColor]
                                    };
         
@@ -264,7 +266,6 @@
     cell.backgroundColor = [UIColor clearColor];
     cell.backgroundView = nil;
     
-    cell.textLabel.font = [UIFont fontWithName:@"IRANSans-Light" size:14];
     cell.textLabel.textAlignment = NSTextAlignmentRight;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

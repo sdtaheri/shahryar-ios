@@ -9,6 +9,7 @@
 #import "FilterTVC.h"
 #import "Type.h"
 #import "NSManagedObjectContext+AsyncFetch.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface FilterTVC () <UITableViewDataSource, UITableViewDelegate>
 
@@ -101,6 +102,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Category Cell" forIndexPath:indexPath];
+
+    cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
 
     cell.accessoryType = [self.categories[indexPath.row] selected].boolValue ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {

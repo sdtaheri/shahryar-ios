@@ -9,6 +9,7 @@
 #import <MessageUI/MessageUI.h>
 #import "AboutTVC.h"
 #import "DDetailCell.h"
+#import "UIFontDescriptor+IranSans.h"
 
 @interface AboutTVC () <MFMailComposeViewControllerDelegate>
 
@@ -59,6 +60,7 @@
     switch (indexPath.section) {
         case 0: {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell Text" forIndexPath:indexPath];
+            cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
             return cell;
             break;
         }
@@ -131,8 +133,8 @@
     
     UITableViewHeaderFooterView *headerView = (UITableViewHeaderFooterView *)view;
     headerView.textLabel.textAlignment = NSTextAlignmentRight;
-    headerView.textLabel.font = [UIFont fontWithName:@"IRANSans-Medium" size:14];
-    
+
+    headerView.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

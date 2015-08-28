@@ -148,6 +148,9 @@
 		30AB61A51B8E79E700C03F94 /* libProj4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AB619E1B8E79E700C03F94 /* libProj4.a */; };
 		30AE6EBE1B8E144500DE6611 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 30AE6EBC1B8E144500DE6611 /* DeviceInfo.m */; };
 		30B4BAB81B6CD19400057851 /* Place+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B4BAB71B6CD19400057851 /* Place+Create.m */; };
+		30BDCA4E1B906D15007358E6 /* UIFontDescriptor+IranSans.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BDCA4D1B906D15007358E6 /* UIFontDescriptor+IranSans.m */; };
+		30BDCA4F1B9078FB007358E6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304765661B826FA800EAC44B /* AddressBook.framework */; };
+		30BDCA501B9078FB007358E6 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304765671B826FA800EAC44B /* AddressBookUI.framework */; };
 		30D0FEDB1B68A75B00F7FD81 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEDA1B68A75B00F7FD81 /* main.m */; };
 		30D0FEDE1B68A75B00F7FD81 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEDD1B68A75B00F7FD81 /* AppDelegate.m */; };
 		30D0FEE11B68A75B00F7FD81 /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FEE01B68A75B00F7FD81 /* MainVC.m */; };
@@ -419,6 +422,8 @@
 		30AE6EBD1B8E144500DE6611 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
 		30B4BAB61B6CD19400057851 /* Place+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Place+Create.h"; sourceTree = "<group>"; };
 		30B4BAB71B6CD19400057851 /* Place+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Place+Create.m"; sourceTree = "<group>"; };
+		30BDCA4C1B906D15007358E6 /* UIFontDescriptor+IranSans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFontDescriptor+IranSans.h"; sourceTree = "<group>"; };
+		30BDCA4D1B906D15007358E6 /* UIFontDescriptor+IranSans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFontDescriptor+IranSans.m"; sourceTree = "<group>"; };
 		30D0FED51B68A75B00F7FD81 /* Nava.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nava.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30D0FED91B68A75B00F7FD81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30D0FEDA1B68A75B00F7FD81 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -446,6 +451,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30BDCA4F1B9078FB007358E6 /* AddressBook.framework in Frameworks */,
+				30BDCA501B9078FB007358E6 /* AddressBookUI.framework in Frameworks */,
 				3025AC061B864D4300B7E14A /* SystemConfiguration.framework in Frameworks */,
 				3025AC041B864D3900B7E14A /* MobileCoreServices.framework in Frameworks */,
 				3025AC021B864D2600B7E14A /* CoreMotion.framework in Frameworks */,
@@ -881,6 +888,8 @@
 		30D0FED81B68A75B00F7FD81 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				30BDCA4C1B906D15007358E6 /* UIFontDescriptor+IranSans.h */,
+				30BDCA4D1B906D15007358E6 /* UIFontDescriptor+IranSans.m */,
 				30D0FF001B68A82700F7FD81 /* Frameworks */,
 				3093DD241B83D21A00E46D7D /* BubbleTransition.swift */,
 				30194F1D1B843EA200B884F9 /* CustomPresentationController.swift */,
@@ -1143,6 +1152,7 @@
 				3062E5471B6E513A001A3E63 /* SearchTVC.m in Sources */,
 				30AB617B1B8E77F000C03F94 /* RMMapQuestOSMSource.m in Sources */,
 				30AB61691B8E77F000C03F94 /* RMCacheObject.m in Sources */,
+				30BDCA4E1B906D15007358E6 /* UIFontDescriptor+IranSans.m in Sources */,
 				30AB61961B8E77F000C03F94 /* RMUserTrackingBarButtonItem.m in Sources */,
 				3056BE4B1B6FBC8C0086416C /* CameraVC.m in Sources */,
 				30AB613B1B8E77F000C03F94 /* FMDatabaseQueue.m in Sources */,
