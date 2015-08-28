@@ -237,7 +237,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Launch Camera"]) {
         CameraVC *cvc = segue.destinationViewController;
-        cvc.userLocation = (MKUserLocation *)self.mapView.userLocation;
+        cvc.userLocation = self.mapView.userLocation.location;
         cvc.mainVC = self;
         cvc.locations = self.locations;
         

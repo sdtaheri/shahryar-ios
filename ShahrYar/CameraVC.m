@@ -40,6 +40,7 @@
     CGFloat maximum = MAX(self.view.frame.size.width, self.view.frame.size.height);
     
     self.arManager = [[PRARManager alloc] initWithSize:CGSizeMake(minimum,maximum) delegate:self shouldCreateRadar:YES];
+    self.arManager.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -93,6 +94,7 @@
 - (void)dealloc {
     [self.arManager stopAR];
     self.arManager.delegate = nil;
+    self.arManager.datasource = nil;
     self.arManager = nil;
 }
 
@@ -147,7 +149,7 @@
         NSMutableArray *temp = [NSMutableArray array];
         for (Place *place in self.locations) {
             CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.latitude.floatValue longitude:place.longitude.floatValue];
-            CLLocationDistance distance = [placeLocation distanceFromLocation:self.userLocation.location];
+            CLLocationDistance distance = [placeLocation distanceFromLocation:self.userLocation];
             
             if (CLLocationCoordinate2DIsValid(self.userLocation.coordinate) &&  distance < MAX_DISTANCE) {
                 [temp addObject:@{@"Distance": @(distance), @"Place": place}];
@@ -207,6 +209,5 @@
         dtvc.place = sender;
     }
 }
-
 
 @end

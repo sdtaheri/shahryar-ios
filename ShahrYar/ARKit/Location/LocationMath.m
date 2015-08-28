@@ -71,7 +71,10 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
 {
-    currentHeading =  fmod(newHeading.trueHeading, 360.0);
+    if (newHeading.headingAccuracy < 0) {
+        return;
+    }
+    currentHeading = (newHeading.trueHeading > 0) ? newHeading.trueHeading : newHeading.magneticHeading;
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
