@@ -33,6 +33,7 @@
     [super viewDidLoad];
     
     self.waitLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0];
+    self.waitLabel.numberOfLines = 0;
 
     self.firstLaunch = YES;
     
@@ -47,7 +48,9 @@
     [super viewDidAppear:animated];
     
     if (self.firstLaunch) {
-        [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
+        if (self.userLocation != nil) {
+            [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
+        }
         self.firstLaunch = NO;
         [self configureUI];
     }
@@ -55,8 +58,11 @@
     self.waitLabel.hidden = YES;
     [self.spinner stopAnimating];
     
-    if (self.arData.count == 0) {
+    if (self.userLocation == nil || self.arData.count == 0) {
         self.waitLabel.text = @"نقطه‌ای برای نمایش وجود ندارد";
+        if (self.userLocation == nil) {
+            self.waitLabel.text = [NSString stringWithFormat:@"%@\n%@",self.waitLabel.text,@"موقعیت مکانی شما در دسترس نیست"];
+        }
         self.waitLabel.hidden = NO;
         [self.view.subviews.lastObject setHidden:YES];
     }

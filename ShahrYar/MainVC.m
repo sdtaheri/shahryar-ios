@@ -361,15 +361,15 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     self.launchCameraButton.layer.shadowOpacity = 0.75;
     self.launchCameraButton.layer.shadowPath = [UIBezierPath bezierPathWithOvalInRect:self.launchCameraButton.bounds].CGPath;
-    self.launchCameraButton.layer.shadowRadius = 3.5;
+    self.launchCameraButton.layer.shadowRadius = 2.5;
     self.launchCameraButton.layer.shadowColor = [UIColor darkGrayColor].CGColor;
-    self.launchCameraButton.layer.shadowOffset = CGSizeMake(1.0, 2.5);
+    self.launchCameraButton.layer.shadowOffset = CGSizeMake(1.0, 2.0);
     
     self.showCurrentLocationButton.layer.shadowOpacity = 0.75;
     self.showCurrentLocationButton.layer.shadowPath = [UIBezierPath bezierPathWithOvalInRect:self.launchCameraButton.bounds].CGPath;
-    self.showCurrentLocationButton.layer.shadowRadius = 3.5;
+    self.showCurrentLocationButton.layer.shadowRadius = 2.5;
     self.showCurrentLocationButton.layer.shadowColor = [UIColor darkGrayColor].CGColor;
-    self.showCurrentLocationButton.layer.shadowOffset = CGSizeMake(1.0, 2.5);
+    self.showCurrentLocationButton.layer.shadowOffset = CGSizeMake(1.0, 2.0);
 }
 
 - (void)initializeSearchBar {
@@ -494,7 +494,8 @@ CLLocationDegrees const Longitude_Default = 51.3;
             [pin setLeftCalloutAccessoryView:imageView];
         }
         
-        [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+        [pin setRightCalloutAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UITableNext"]]];
+        pin.rightCalloutAccessoryView.tintColor = [UIColor lightGrayColor];
         
         layer = pin;
     } else {
@@ -588,11 +589,8 @@ CLLocationDegrees const Longitude_Default = 51.3;
     }
 }
 
-- (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {
-    
-    if ([control isKindOfClass:[UIButton class]]) {
-        [self performSegueWithIdentifier:@"Detail Segue" sender:control];
-    }
+- (void)tapOnCalloutforAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {
+    [self performSegueWithIdentifier:@"Detail Segue" sender:nil];
 }
 
 - (void)mapView:(RMMapView *)mapView didSelectAnnotation:(RMAnnotation *)annotation {

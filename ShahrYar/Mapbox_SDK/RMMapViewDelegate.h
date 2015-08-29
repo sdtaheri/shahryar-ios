@@ -202,6 +202,15 @@ typedef enum : NSUInteger {
 *   @param map The map view containing the specified annotation. */
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map;
 
+/** Tells the delegate that the user tapped the annotaion callout.
+ *
+ *   You can use this method to respond to taps and perform any actions associated with that control. For example, if your control displayed additional information about the annotation, you could use this method to present a modal panel with that information.
+
+ *   @param annotation The annotation whose callout control was tapped.
+ *   @param map The map view containing the specified annotation. */
+- (void)tapOnCalloutforAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map;
+
+
 /** Asks the delegate whether the user should be allowed to drag the layer for an annotation. 
 *   @param mapView The map view.
 *   @param annotation The annotation the user is attempting to drag. 

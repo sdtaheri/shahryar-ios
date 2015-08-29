@@ -146,6 +146,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     
     RMMapView *mapView = self.footerMapView.subviews[0];
     mapView.centerCoordinate = CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue);
+    [mapView setZoom:15 animated:YES];
     
     [mapView removeAllAnnotations];
     [mapView addAnnotation:[RMAnnotation annotationWithMapView:mapView coordinate:mapView.centerCoordinate andTitle:self.place.title]];
