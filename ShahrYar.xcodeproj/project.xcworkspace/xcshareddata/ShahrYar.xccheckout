@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>798AA39F-7F4E-46D3-AD58-4306770B8C3E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ShahrYar</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BDEAD984E91C577F15790098FE6194E551D40B43</key>
+		<string>https://github.com/sdtaheri/ShahrYar.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ShahrYar.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BDEAD984E91C577F15790098FE6194E551D40B43</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/sdtaheri/ShahrYar.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BDEAD984E91C577F15790098FE6194E551D40B43</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BDEAD984E91C577F15790098FE6194E551D40B43</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ShahrYar</string>
+		</dict>
+	</array>
+</dict>
+</plist>
