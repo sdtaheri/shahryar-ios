@@ -160,7 +160,7 @@
 		30D0FF401B68AA7B00F7FD81 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FF3F1B68AA7B00F7FD81 /* QuartzCore.framework */; };
 		30D0FF421B68AA9800F7FD81 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FF411B68AA9800F7FD81 /* libsqlite3.dylib */; };
 		30D0FF441B68AAA700F7FD81 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D0FF431B68AAA700F7FD81 /* libz.dylib */; };
-		30D0FF461B68BC6E00F7FD81 /* tehran.mbtiles in Resources */ = {isa = PBXBuildFile; fileRef = 30D0FF451B68BC6E00F7FD81 /* tehran.mbtiles */; };
+		30D0FF461B68BC6E00F7FD81 /* main.mbtiles in Resources */ = {isa = PBXBuildFile; fileRef = 30D0FF451B68BC6E00F7FD81 /* main.mbtiles */; };
 		30D0FF4C1B68C61600F7FD81 /* PlacesLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 30D0FF4B1B68C61600F7FD81 /* PlacesLoader.m */; };
 		30DB835A1B8FA3EF00F6DB00 /* ARControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DB83591B8FA3EF00F6DB00 /* ARControllerView.m */; };
 /* End PBXBuildFile section */
@@ -439,7 +439,7 @@
 		30D0FF3F1B68AA7B00F7FD81 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		30D0FF411B68AA9800F7FD81 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		30D0FF431B68AAA700F7FD81 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		30D0FF451B68BC6E00F7FD81 /* tehran.mbtiles */ = {isa = PBXFileReference; lastKnownFileType = file; path = tehran.mbtiles; sourceTree = "<group>"; };
+		30D0FF451B68BC6E00F7FD81 /* main.mbtiles */ = {isa = PBXFileReference; lastKnownFileType = file; path = main.mbtiles; sourceTree = "<group>"; };
 		30D0FF4A1B68C61600F7FD81 /* PlacesLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacesLoader.h; sourceTree = "<group>"; };
 		30D0FF4B1B68C61600F7FD81 /* PlacesLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacesLoader.m; sourceTree = "<group>"; };
 		30DB83581B8FA3EF00F6DB00 /* ARControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARControllerView.h; sourceTree = "<group>"; };
@@ -901,7 +901,7 @@
 				3062E5431B6E4143001A3E63 /* NavigationController.m */,
 				30AE6EBC1B8E144500DE6611 /* DeviceInfo.m */,
 				30AE6EBD1B8E144500DE6611 /* DeviceInfo.h */,
-				30D0FF451B68BC6E00F7FD81 /* tehran.mbtiles */,
+				30D0FF451B68BC6E00F7FD81 /* main.mbtiles */,
 				303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */,
 				303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */,
 				30D0FEDA1B68A75B00F7FD81 /* main.m */,
@@ -1034,7 +1034,7 @@
 				303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */,
 				30AB61441B8E77F000C03F94 /* HeadingAngleMaskLarge@2x.png in Resources */,
 				30AB61571B8E77F000C03F94 /* TrackingHeading.png in Resources */,
-				30D0FF461B68BC6E00F7FD81 /* tehran.mbtiles in Resources */,
+				30D0FF461B68BC6E00F7FD81 /* main.mbtiles in Resources */,
 				30AB61421B8E77F000C03F94 /* HeadingAngleLarge@2x.png in Resources */,
 				30AB61521B8E77F000C03F94 /* mapbox@2x.png in Resources */,
 				30AB614C1B8E77F000C03F94 /* HeadingAngleSmall@2x.png in Resources */,

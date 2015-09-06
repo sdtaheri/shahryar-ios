@@ -103,14 +103,14 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
         self.placeImageView.frame = CGRectZero;
     }
     
-    RMMBTilesSource *offlineSource = [[RMMBTilesSource alloc] initWithTileSetResource:@"tehran" ofType:@"mbtiles"];
+    RMMBTilesSource *offlineSource = [[RMMBTilesSource alloc] initWithTileSetResource:@"main" ofType:@"mbtiles"];
     RMMapView *mapView = [[RMMapView alloc] initWithFrame:CGRectZero andTilesource:offlineSource];
     mapView.hideAttribution = YES;
     mapView.showLogoBug = NO;
     mapView.delegate = self;
     
-    mapView.minZoom = 13;
-    mapView.maxZoom = 18;
+    mapView.minZoom = 11;
+    mapView.maxZoom = 19;
     mapView.adjustTilesForRetinaDisplay = YES;
     
     mapView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -146,7 +146,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
     
     RMMapView *mapView = self.footerMapView.subviews[0];
     mapView.centerCoordinate = CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue);
-    [mapView setZoom:15 animated:YES];
+    [mapView setZoom:17 animated:YES];
     
     [mapView removeAllAnnotations];
     [mapView addAnnotation:[RMAnnotation annotationWithMapView:mapView coordinate:mapView.centerCoordinate andTitle:self.place.title]];

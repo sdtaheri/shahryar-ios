@@ -188,20 +188,22 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     [self configureUI];
     
-    RMMBTilesSource *offlineSource = [[RMMBTilesSource alloc] initWithTileSetResource:@"tehran" ofType:@"mbtiles"];
-    self.mapView = [[RMMapView alloc] initWithFrame:CGRectZero andTilesource:offlineSource];
+    RMMBTilesSource *offlineSourceMain = [[RMMBTilesSource alloc] initWithTileSetResource:@"main" ofType:@"mbtiles"];
+    
+    self.mapView = [[RMMapView alloc] initWithFrame:CGRectZero andTilesource:offlineSourceMain];
+
     self.mapView.hideAttribution = YES;
     self.mapView.showLogoBug = NO;
     self.mapView.delegate = self;
 
     self.mapView.minZoom = 11;
-    self.mapView.maxZoom = 18;
+    self.mapView.maxZoom = 19;
     self.mapView.adjustTilesForRetinaDisplay = YES;
     self.mapView.clusteringEnabled = YES;
     self.mapView.clusterAreaSize = CGSizeMake(150, 150);
     
-    [self.mapView setConstraintsSouthWest:CLLocationCoordinate2DMake(35.472219, 51.065355)
-                                northEast:CLLocationCoordinate2DMake(35.905874, 51.606794)];
+    [self.mapView setConstraintsSouthWest:CLLocationCoordinate2DMake(35.682363841599184, 51.37689990336)
+                                northEast:CLLocationCoordinate2DMake(35.71828194736938, 51.421293384466445)];
     
     self.mapView.showsUserLocation = YES;
     
@@ -219,7 +221,8 @@ CLLocationDegrees const Longitude_Default = 51.3;
     [super viewDidAppear:animated];
     
     if (self.firstLaunch) {
-        [self.mapView zoomWithLatitudeLongitudeBoundsSouthWest:CLLocationCoordinate2DMake(35.698025, 51.386077) northEast:CLLocationCoordinate2DMake(35.705901, 51.412213) animated:YES];
+        [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(35.70191216162083, 51.40026917813411) animated:YES];
+        [self.mapView setZoom:14 atCoordinate:CLLocationCoordinate2DMake(35.70191216162083, 51.40026917813411) animated:YES];
         self.firstLaunch = NO;
         
         if (self.mapView.isUserLocationVisible) {
@@ -466,7 +469,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
 #pragma mark MapView Delegate
 
 - (void)mapViewRegionDidChange:(RMMapView *)mapView {
-    if (mapView.zoom > mapView.maxZoom - 1) {
+    if (mapView.zoom > mapView.maxZoom - 2) {
         mapView.clusteringEnabled = NO;
     } else {
         mapView.clusteringEnabled = YES;
