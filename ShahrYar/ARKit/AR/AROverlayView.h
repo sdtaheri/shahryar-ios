@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Place.h"
+#import "Group.h"
 
 #import <CoreLocation/CoreLocation.h>
 
 @interface AROverlayView : UIView
 
-@property (nonatomic, weak) Place *place;
+@property (nonatomic, weak) Group *group;
 @property (nonatomic) int vertice;
 
 - (CLLocationDistance)distanceFromLocation:(CLLocationCoordinate2D)coordinate;

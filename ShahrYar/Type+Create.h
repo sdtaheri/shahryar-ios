@@ -10,6 +10,6 @@
 
 @interface Type (Create)
 
-+ (Type *)categoryWithDescription:(NSString *)summary uniqueID:(NSString *)uniqeID inManagedObjectContext:(NSManagedObjectContext *)context;
++ (Type *)categoryWithDescription:(NSString *)summary uniqueID:(NSString *)uniqueID inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

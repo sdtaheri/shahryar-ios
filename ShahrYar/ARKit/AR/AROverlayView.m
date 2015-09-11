@@ -12,8 +12,9 @@
 
 - (CLLocationDistance)distanceFromLocation:(CLLocationCoordinate2D)coordinate {
     
-    CLLocation *objectLocation = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake(self.place.latitude.floatValue, self.place.longitude.floatValue) altitude:self.place.elevation.floatValue horizontalAccuracy:1 verticalAccuracy:1 timestamp:[NSDate date]];
-    
+    CLLocation *objectLocation = [[CLLocation alloc] initWithLatitude:self.group.latitude.floatValue
+                                                            longitude:self.group.longitude.floatValue];
+        
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude
                                                       longitude:coordinate.longitude];
     

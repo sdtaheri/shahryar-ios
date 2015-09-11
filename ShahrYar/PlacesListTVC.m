@@ -7,6 +7,8 @@
 //
 
 #import "PlacesListTVC.h"
+#import "Group.h"
+#import "Type.h"
 #import "DetailTVC.h"
 #import "Mapbox.h"
 #import "UIFontDescriptor+IranSans.h"
@@ -53,7 +55,16 @@ typedef NS_ENUM(NSInteger, SortType) {
 - (void)initializeData {
     NSMutableArray *temp = [NSMutableArray arrayWithCapacity:self.annotations.count];
     for (RMAnnotation *annotation in self.annotations) {
-        [temp addObject: annotation.userInfo];
+        if ([annotation.userInfo isKindOfClass:[Place class]]) {
+            [temp addObject: annotation.userInfo];
+        } else {
+            Group *group = annotation.userInfo;
+            for (Place *place in group.places) {
+                if (place.category.selected.boolValue) {
+                    [temp addObject:place];
+                }
+            }
+        }
     }
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
@@ -164,7 +175,7 @@ typedef NS_ENUM(NSInteger, SortType) {
             break;
         }
         case SortTypeDistance:
-            return self.annotations.count;
+            return self.sortedByDistancePlacesDictionary.count;
             break;
         default:
             return 0;
@@ -229,14 +240,16 @@ typedef NS_ENUM(NSInteger, SortType) {
     cell.textLabel.textAlignment = NSTextAlignmentRight;
     cell.backgroundView = nil;
 
-    // Remove seperator inset
-    [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
-    
-    // Prevent the cell from inheriting the Table View's margin settings
-    [cell setPreservesSuperviewLayoutMargins:NO];
-    
-    // Explictly set your cell's layout margins
-    [cell setLayoutMargins:UIEdgeInsetsZero];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        // Remove seperator inset
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+        
+        // Prevent the cell from inheriting the Table View's margin settings
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        
+        // Explictly set your cell's layout margins
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {

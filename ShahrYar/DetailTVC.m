@@ -26,7 +26,7 @@
 @end
 
 static const NSString *Image_Base_URL = @"http://31.24.237.18:2243/images/DBPictures/";
-static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos45/";
+static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos60/";
 
 @implementation DetailTVC
 
@@ -55,28 +55,30 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
             if (!error) {
                 NSData *imageData = [NSData dataWithContentsOfURL:location];
                 
-                if ([imageData writeToURL:finalURL atomically:YES]) {
-                    self.place.imageLocalPath = fileName;
-                    [self.place.managedObjectContext performBlock:^{
-                        [self.place.managedObjectContext save:NULL];
-                    }];
-                } else {
-                    NSLog(@"Error Saving Image to Disk");
-                }
-
                 UIImage *image = [UIImage imageWithData:imageData];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.placeImageView.image = image;
-                    self.placeImageView.alpha = 0;
-                    self.placeImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, MIN(image.size.height * self.view.frame.size.width / image.size.width, 210));
-
-                    [UIView animateWithDuration:0.3 animations:^{
-                        self.placeImageView.alpha = 1;
-                    }];
-
-                    [self.tableView reloadData];
-                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                });
+                if (image != nil) {
+                    if ([imageData writeToURL:finalURL atomically:YES]) {
+                        self.place.imageLocalPath = fileName;
+                        [self.place.managedObjectContext performBlock:^{
+                            [self.place.managedObjectContext save:NULL];
+                        }];
+                    } else {
+                        NSLog(@"Error Saving Image to Disk");
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.placeImageView.image = image;
+                        self.placeImageView.alpha = 0;
+                        self.placeImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, MIN(image.size.height * self.view.frame.size.width / image.size.width, 210));
+                        
+                        [UIView animateWithDuration:0.3 animations:^{
+                            self.placeImageView.alpha = 1;
+                        }];
+                        
+                        [self.tableView reloadData];
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    });
+                }
             }
         }];
         [task resume];
@@ -224,21 +226,23 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                         if (!error) {
                             NSData *imageData = [NSData dataWithContentsOfURL:location];
                             
-                            if ([imageData writeToURL:finalURL atomically:YES]) {
-                                self.place.logoLocalPath = fileName;
-                                [self.place.managedObjectContext performBlock:^{
-                                    [self.place.managedObjectContext save:NULL];
-                                }];
-                            } else {
-                                NSLog(@"Error Saving Image to Disk");
-                            }
-
                             UIImage *image = [UIImage imageWithData: imageData];
-                            
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                cell.imageView.image = image;
-                                [cell setNeedsLayout];
-                            });
+                            if (image != nil) {
+                                if ([imageData writeToURL:finalURL atomically:YES]) {
+                                    self.place.logoLocalPath = fileName;
+                                    [self.place.managedObjectContext performBlock:^{
+                                        [self.place.managedObjectContext save:NULL];
+                                    }];
+                                } else {
+                                    NSLog(@"Error Saving Image to Disk");
+                                }
+                                
+                                
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    cell.imageView.image = image;
+                                    [cell setNeedsLayout];
+                                });
+                            }
                         }
                     }];
                     [task resume];
@@ -374,6 +378,10 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
         self.place.faxes = [self.place.faxes stringByReplacingOccurrencesOfString:@"-" withString:@"\n"];
         [self.tableDatasource addObject:@{@"نمابر": self.place.faxes}];
     }
+    
+    if (self.place.address.length > 0) {
+        [self.tableDatasource addObject:@{@"آدرس": self.place.address}];
+    }
 
     if (self.place.webSite.length > 0) {
         [self.tableDatasource addObject:@{@"وب سایت": self.place.webSite}];
@@ -388,14 +396,16 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Remove seperator inset
-    [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        // Remove seperator inset
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
         
-    // Prevent the cell from inheriting the Table View's margin settings
-    [cell setPreservesSuperviewLayoutMargins:NO];
-    
-    // Explictly set your cell's layout margins
-    [cell setLayoutMargins:UIEdgeInsetsZero];
+        // Prevent the cell from inheriting the Table View's margin settings
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        
+        // Explictly set your cell's layout margins
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 
@@ -502,27 +512,34 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 }
 
 - (void)addToAddressBook:(Place *)place {
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
-        ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted){
-
-        [self showContactsAccessError];
-        
-    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized){
-
-        [self savePlaceToAddressBook: place];
-    } else { //ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
-        
-        ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
-            if (!granted){
-
-                [self showContactsAccessError];
-                return;
-            }
-
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ایجاد مخاطب جدید" message:@"آیا می‌خواهید اطلاعات این واحد صنفی را به مخاطبین خود اضافه کنید؟" preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"بله" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
+            ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted){
+            
+            [self showContactsAccessError];
+            
+        } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized){
+            
             [self savePlaceToAddressBook: place];
-        });
-        NSLog(@"Not determined Contacts Access");
-    }
+        } else { //ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
+            
+            ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
+                if (!granted){
+                    
+                    [self showContactsAccessError];
+                    return;
+                }
+                
+                [self savePlaceToAddressBook: place];
+            });
+            NSLog(@"Not determined Contacts Access");
+        }
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"خیر" style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 - (void)savePlaceToAddressBook:(Place *)place {
@@ -534,7 +551,11 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
         ABRecordSetValue(contact, kABPersonOrganizationProperty, (__bridge CFStringRef)place.title, nil);
         ABRecordSetValue(contact, kABPersonDepartmentProperty, (__bridge CFStringRef)place.category.summary, nil);
         if (place.activities.length > 0) {
-            ABRecordSetValue(contact, kABPersonNoteProperty, (__bridge CFStringRef)place.activities, nil);
+            NSString *note = place.activities;
+            if (place.address.length > 0) {
+                note = [NSString stringWithFormat:@"%@\n%@",place.address,place.activities];
+            }
+            ABRecordSetValue(contact, kABPersonNoteProperty, (__bridge CFStringRef)note, nil);
         }
         if (place.email.length > 0) {
             ABRecordSetValue(contact, kABPersonEmailProperty, (__bridge CFStringRef)place.email, nil);

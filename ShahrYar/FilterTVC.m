@@ -109,7 +109,11 @@
     if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.categories[indexPath.row] summary]];
     } else if (cell.accessoryType == UITableViewCellAccessoryNone) {
-        cell.textLabel.text = [NSString stringWithFormat:@"     %@",[self.categories[indexPath.row] summary]];
+        if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+            cell.textLabel.text = [NSString stringWithFormat:@"     %@",[self.categories[indexPath.row] summary]];
+        } else {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.categories[indexPath.row] summary]];
+        }
     }
 
     return cell;
@@ -127,7 +131,12 @@
     } else if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
         self.selectedRowsCount--;
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.textLabel.text = [NSString stringWithFormat:@"     %@",[self.categories[indexPath.row] summary]];
+        if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+            cell.textLabel.text = [NSString stringWithFormat:@"     %@",[self.categories[indexPath.row] summary]];
+        } else {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@",[self.categories[indexPath.row] summary]];
+        }
+
         selected = NO;
     }
     
@@ -148,14 +157,17 @@
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
 
-    // Remove seperator inset
-    [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        // Remove seperator inset
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+        
+        // Prevent the cell from inheriting the Table View's margin settings
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        
+        // Explictly set your cell's layout margins
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
     
-    // Prevent the cell from inheriting the Table View's margin settings
-    [cell setPreservesSuperviewLayoutMargins:NO];
-    
-    // Explictly set your cell's layout margins
-    [cell setLayoutMargins:UIEdgeInsetsZero];
 }
 
 @end

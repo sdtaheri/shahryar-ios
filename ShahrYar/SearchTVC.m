@@ -40,7 +40,7 @@
     _filteredListAfterSearch = filteredListAfterSearch;
     [self.tableView reloadData];
     
-    self.searchController.preferredContentSize = CGSizeMake(375.0, self.tableView.contentSize.height);
+    self.searchController.preferredContentSize = CGSizeMake(375.0, self.tableView.contentSize.height * 2);
 }
 
 - (void)searchForText:(NSString *)searchText
@@ -65,7 +65,9 @@
     
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.estimatedRowHeight = 69.f;
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    }
     
     UIVisualEffectView *vev = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight]];
     self.tableView.backgroundView = vev;
@@ -212,7 +214,8 @@
         
         UINavigationController *nc = [self.presentingViewController.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNC"];
         nc.modalPresentationStyle = UIModalPresentationFormSheet;
-        
+        [nc setPreferredContentSize:CGSizeMake(375.0, 500.0)];
+
         FavoriteTVC *ftvc = nc.childViewControllers[0];
         ftvc.allPlaces = self.allPlaces;
         ftvc.searchTVC = self;
@@ -269,9 +272,16 @@
     cell.textLabel.textAlignment = NSTextAlignmentRight;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
-    [cell setPreservesSuperviewLayoutMargins:NO];
-    [cell setLayoutMargins:UIEdgeInsetsZero];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        // Remove seperator inset
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+        
+        // Prevent the cell from inheriting the Table View's margin settings
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        
+        // Explictly set your cell's layout margins
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 

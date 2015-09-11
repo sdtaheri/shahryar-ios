@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.contentInset = UIEdgeInsetsMake(16, 0, 0, 0);
+    
     self.address = @"تهران، خیابان مفتح جنوبی، نبش خیابان شهید شیرودی، پلاک ۲، سازمان زیباسازی شهر تهران";
     self.email = @"info@zibasazi.ir";
     self.website = @"www.zibasazi.ir";
@@ -45,6 +47,14 @@
         default:
             return 44;
             break;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 16;
+    } else {
+        return 40;
     }
 }
 
@@ -122,11 +132,22 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
-    [cell setPreservesSuperviewLayoutMargins:NO];
-    [cell setLayoutMargins:UIEdgeInsetsZero];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        // Remove seperator inset
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+        
+        // Prevent the cell from inheriting the Table View's margin settings
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        
+        // Explictly set your cell's layout margins
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {

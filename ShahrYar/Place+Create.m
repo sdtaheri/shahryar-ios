@@ -8,6 +8,7 @@
 
 #import "Place+Create.h"
 #import "Type+Create.h"
+#import "Group+Create.h"
 #import "GeodeticUTMConverter.h"
 
 NSString* const Place_Unique_ID = @"Id";
@@ -19,12 +20,15 @@ NSString* const Place_Email = @"Email";
 NSString* const Place_Website = @"Website";
 NSString* const Place_Faxes = @"Faxes";
 NSString* const Place_Phones = @"Phones";
+NSString* const Place_Address = @"Address";
 NSString* const Place_Image_ID = @"PictureCode";
 NSString* const Place_Logo_ID = @"LogoCode";
 NSString* const Place_Easting = @"X";
 NSString* const Place_Northing = @"Y";
 NSString* const Place_Elevation = @"Z";
 NSString* const Place_Last_Version = @"LastVersion";
+NSString* const Place_Group_ID = @"GroupId";
+NSString* const Place_Group_Name = @"GroupName";
 
 @implementation Place (Create)
 
@@ -43,6 +47,7 @@ NSString* const Place_Last_Version = @"LastVersion";
         // Handle Error
     } else if ([matches count]) {
         [context deleteObject:[matches firstObject]];
+        [context save:nil];
     }
     
     place = [NSEntityDescription insertNewObjectForEntityForName:@"Place" inManagedObjectContext:context];
@@ -58,6 +63,7 @@ NSString* const Place_Last_Version = @"LastVersion";
     place.imageID = placeDictionary[Place_Image_ID];
     place.title = placeDictionary[Place_Title];
     place.webSite = placeDictionary[Place_Website];
+    place.address = placeDictionary[Place_Address];
     place.elevation = @([placeDictionary[Place_Elevation] doubleValue]);
     
     UTMCoordinates coordinates;
@@ -69,6 +75,8 @@ NSString* const Place_Last_Version = @"LastVersion";
     CLLocationCoordinate2D location = [GeodeticUTMConverter UTMCoordinatesToLatitudeAndLongitude:coordinates];
     place.latitude = @(location.latitude);
     place.longitude = @(location.longitude);
+    
+    place.group = [Group groupWithUniqueID:placeDictionary[Place_Group_ID] name:placeDictionary[Place_Group_Name] latitude:place.latitude longitude:place.longitude inManagedObjectContext:context];
     
     return place;
 }

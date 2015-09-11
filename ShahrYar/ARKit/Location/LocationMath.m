@@ -128,7 +128,7 @@
 }
 
 - (int)getARObjectXPosition:(AROverlayView*)arObject {
-    CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(arObject.place.latitude.floatValue, arObject.place.longitude.floatValue);
+    CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(arObject.group.latitude.floatValue, arObject.group.longitude.floatValue);
     
     double latitudeDistance = max(coordinates.latitude, location.latitude) - min(coordinates.latitude, location.latitude);
     double longitudeDistance = max(coordinates.longitude, location.longitude) - min(coordinates.longitude, location.longitude);

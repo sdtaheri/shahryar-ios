@@ -17,9 +17,9 @@ public class CustomPresentationController: UIPresentationController {
 
     override public func presentationTransitionWillBegin() {
         // Add the dimming view and the presented view to the heirarchy
-        self.dimmingView.frame = self.containerView.bounds
-        self.containerView.addSubview(self.dimmingView)
-        self.containerView.addSubview(self.presentedView())
+        self.dimmingView.frame = self.containerView!.bounds
+        self.containerView!.addSubview(self.dimmingView)
+        self.containerView!.addSubview(self.presentedView()!)
 
         // Fade in the dimming view alongside the transition
         if let transitionCoordinator = self.presentingViewController.transitionCoordinator() {
@@ -54,29 +54,29 @@ public class CustomPresentationController: UIPresentationController {
 
     override public func frameOfPresentedViewInContainerView() -> CGRect {
         // We don't want the presented view to fill the whole container view, so inset it's frame
-        var frame = self.containerView.bounds;
+        var frame = self.containerView!.bounds;
         
         if traitCollection.horizontalSizeClass == .Regular && traitCollection.verticalSizeClass == .Compact {
-            let height = min(500.0, frame.height)
-            frame = CGRect(x: (self.containerView.frame.size.width - 375.0) / 2, y: (self.containerView.frame.size.height - height) / 2, width: 375, height: height)
+            let height: CGFloat = 500.0
+            frame = CGRect(x: (self.containerView!.frame.size.width - 375.0) / 2, y: (self.containerView!.frame.size.height - height) / 2, width: 375, height: height)
         } else if traitCollection.horizontalSizeClass == .Regular && traitCollection.verticalSizeClass == .Regular {
-            let height = min(500.0, frame.height);
-            frame = CGRect(x: (self.containerView.frame.size.width - 375.0) / 2, y: (self.containerView.frame.size.height - height) / 2, width: 375, height: height)
+            let height: CGFloat = 500.0
+            frame = CGRect(x: (self.containerView!.frame.size.width - 375.0) / 2, y: (self.containerView!.frame.size.height - height) / 2, width: 375, height: height)
         }
         
         return frame
     }
 
     override public func containerViewWillLayoutSubviews() {
-        dimmingView.frame = containerView.bounds
-        presentedView().frame = frameOfPresentedViewInContainerView()
+        dimmingView.frame = containerView!.bounds
+        presentedView()!.frame = frameOfPresentedViewInContainerView()
     }
     
     override public func containerViewDidLayoutSubviews() {
         if traitCollection.horizontalSizeClass == .Regular {
-            presentedView().layer.cornerRadius = 15
+            presentedView()!.layer.cornerRadius = 15
         } else {
-            presentedView().layer.cornerRadius = 0
+            presentedView()!.layer.cornerRadius = 0
         }
     }
 

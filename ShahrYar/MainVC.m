@@ -11,6 +11,8 @@
 #import "ShahrYar-Swift.h"
 #import "MainVC.h"
 #import "Place+Create.h"
+#import "Type.h"
+#import "Group.h"
 #import "UIFontDescriptor+IranSans.h"
 
 #import "DetailTVC.h"
@@ -38,6 +40,7 @@
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 
 @property (strong, nonatomic) NSArray *locations;
+@property (strong, nonatomic) NSArray *groups;
 
 @property (strong, nonatomic) RMMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -66,11 +69,22 @@ CLLocationDegrees const Longitude_Default = 51.3;
     _locations = locations;
     self.searchTVC.places = locations;
     
+    self.groups = [self.locations valueForKeyPath:@"@distinctUnionOfObjects.group"];
+}
+
+- (void)setGroups:(NSArray *)groups {
+    _groups = groups;
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.mapView removeAllAnnotations];
-        for (Place *place in _locations) {
-            RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapView coordinate:CLLocationCoordinate2DMake(place.latitude.doubleValue, place.longitude.doubleValue) andTitle:place.title];
-            annotation.userInfo = place;
+        for (Group *group in _groups) {
+            RMAnnotation *annotation = [[RMAnnotation alloc] initWithMapView:self.mapView coordinate:CLLocationCoordinate2DMake(group.latitude.doubleValue, group.longitude.doubleValue) andTitle:group.title];
+            if (group.places.count > 1) {
+                annotation.userInfo = group;
+            } else {
+                annotation.userInfo = group.places.anyObject;
+                annotation.title = [group.places.anyObject title];
+            }
             [self.mapView addAnnotation:annotation];
         }
     });
@@ -242,7 +256,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
         CameraVC *cvc = segue.destinationViewController;
         cvc.userLocation = self.mapView.userLocation.location;
         cvc.mainVC = self;
-        cvc.locations = self.locations;
+        cvc.groups = self.groups;
         
     } else if ([segue.identifier isEqualToString:@"Detail Segue"]) {
         DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
@@ -263,14 +277,28 @@ CLLocationDegrees const Longitude_Default = 51.3;
         FilterTVC *ftvc = segue.destinationViewController;
         ftvc.context = self.managedObjectContext;
         ftvc.popoverPresentationController.delegate = self;
-        ftvc.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
+        if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+            ftvc.popoverPresentationController.sourceRect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
+        } else {
+            ftvc.popoverPresentationController.sourceRect = CGRectMake(20, 10, 40, 40);
+        }
     } else if ([segue.identifier isEqualToString:@"More Places List"]) {
         PlacesListTVC *tvvc = [segue.destinationViewController childViewControllers][0];
         tvvc.mainVC = self;
         tvvc.annotations = sender;
         tvvc.userLocation = self.mapView.userLocation.location;
-        [segue.destinationViewController setTransitioningDelegate: self];
-        [segue.destinationViewController setModalPresentationStyle: UIModalPresentationCustom];
+        
+        if ([sender isKindOfClass:[Group class]]) {
+            [segue.destinationViewController setModalPresentationStyle: UIModalPresentationFormSheet];
+            segue.destinationViewController.preferredContentSize = CGSizeMake(375.0, 500.0);
+            RMAnnotation *annotation = [RMAnnotation annotationWithMapView:nil coordinate:CLLocationCoordinate2DMake(0, 0) andTitle:nil];
+            annotation.userInfo = sender;
+            tvvc.annotations = @[annotation];
+        } else {
+            tvvc.annotations = sender;
+            [segue.destinationViewController setTransitioningDelegate: self];
+            [segue.destinationViewController setModalPresentationStyle: UIModalPresentationCustom];
+        }
     }
 }
 
@@ -314,7 +342,11 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 - (void)popoverPresentationController:(UIPopoverPresentationController *)popoverPresentationController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView *__autoreleasing *)view {
     if ([popoverPresentationController.presentedViewController isKindOfClass:[FilterTVC class]]) {
-        *rect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
+        if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+            *rect = CGRectMake(self.view.frame.size.width - 60, 10, 40, 40);
+        } else {
+            *rect = CGRectMake(20, 10, 40, 40);
+        }
     }
 }
 
@@ -491,14 +523,44 @@ CLLocationDegrees const Longitude_Default = 51.3;
         pin.canShowCallout = YES;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];
         
-        if ([annotation.userInfo logoID].length > 0) {
-            [pin setLeftCalloutAccessoryView:imageView];
-        } else if ([annotation.userInfo imageID].length > 0) {
-            [pin setLeftCalloutAccessoryView:imageView];
+        if ([annotation.userInfo isKindOfClass:[Place class]]) {
+            if ([annotation.userInfo logoID].length > 0) {
+                [pin setRightCalloutAccessoryView:imageView];
+            } else if ([annotation.userInfo imageID].length > 0) {
+                [pin setRightCalloutAccessoryView:imageView];
+            }
+        } else if ([annotation.userInfo isKindOfClass:[Group class]]) {
+            annotation.title = [annotation.userInfo title];
+            if (!(annotation.title.length > 0)) {
+                NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+                formatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa_IR"];
+                
+                NSInteger count = 0;
+                Place *containingPlace;
+                for (Place *place in [annotation.userInfo places]) {
+                    if (place.category.selected.boolValue) {
+                        count++;
+                        containingPlace = place;
+                    }
+                }
+                
+                if (count == 0) {
+                    return nil;
+                } else if (count == 1) {
+                    annotation.userInfo = containingPlace;
+                    annotation.title = containingPlace.title;
+                } else {
+                    pin = [[RMMarker alloc] initWithUIImage:[UIImage imageNamed:@"groupPin"] anchorPoint:CGPointMake(0.25, 0.897)];
+                    pin.canShowCallout = YES;
+                    NSString *clusterLabelContent = [formatter stringFromNumber:@(count)];
+                    annotation.title = [NSString stringWithFormat:@"%@ واحد صنفی",clusterLabelContent];
+                }
+                
+            }
         }
         
-        [pin setRightCalloutAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UITableNext"]]];
-        pin.rightCalloutAccessoryView.tintColor = [UIColor lightGrayColor];
+        [pin setLeftCalloutAccessoryView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UITableNext"]]];
+        pin.leftCalloutAccessoryView.tintColor = [UIColor lightGrayColor];
         
         layer = pin;
     } else {
@@ -593,7 +655,11 @@ CLLocationDegrees const Longitude_Default = 51.3;
 }
 
 - (void)tapOnCalloutforAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map {
-    [self performSegueWithIdentifier:@"Detail Segue" sender:nil];
+    if ([annotation.userInfo isKindOfClass:[Place class]]) {
+        [self performSegueWithIdentifier:@"Detail Segue" sender:nil];
+    } else if ([annotation.userInfo isKindOfClass:[Group class]]) {
+        [self performSegueWithIdentifier:@"More Places List" sender:annotation.userInfo];
+    }
 }
 
 - (void)mapView:(RMMapView *)mapView didSelectAnnotation:(RMAnnotation *)annotation {
@@ -604,33 +670,49 @@ CLLocationDegrees const Longitude_Default = 51.3;
     RMMarker *pin = (RMMarker *)annotation.layer;
 
     if (!annotation.isClusterAnnotation) {
-        if ([(UIImageView *)pin.leftCalloutAccessoryView image] == nil) {
-            if ([annotation.userInfo logoID].length > 0) {
-                baseURL = @"http://31.24.237.18:2243/images/DBLogos";
-                imageId = [annotation.userInfo logoID];
-            } else if ([annotation.userInfo imageID].length > 0) {
-                baseURL = @"http://31.24.237.18:2243/images/DBPictures";
-                imageId = [annotation.userInfo imageID];
-            }
-            
-            if (baseURL != nil) {
-                NSString *imageURLString = [NSString stringWithFormat:@"%@%@/%@.jpg",baseURL,screenScale == 3 ? @"45" : @"35",imageId];
+        if ([annotation.userInfo isKindOfClass:[Place class]]) {
+            if ([(UIImageView *)pin.rightCalloutAccessoryView image] == nil) {
+                if ([annotation.userInfo logoID].length > 0) {
+                    baseURL = @"http://31.24.237.18:2243/images/DBLogos";
+                    imageId = [annotation.userInfo logoID];
+                } else if ([annotation.userInfo imageID].length > 0) {
+                    baseURL = @"http://31.24.237.18:2243/images/DBPictures";
+                    imageId = [annotation.userInfo imageID];
+                }
                 
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-                
-                NSURLSession *session = [NSURLSession sharedSession];
-                NSURLSessionDownloadTask *task = [session downloadTaskWithURL:[NSURL URLWithString:imageURLString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                    if (!error) {
-                        NSData *imageData = [NSData dataWithContentsOfURL:location];
-                        
-                        UIImage *image = [UIImage imageWithData:imageData];
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [(UIImageView *)pin.leftCalloutAccessoryView setImage:image];
-                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                        });
-                    }
-                }];
-                [task resume];
+                if (baseURL != nil) {
+                    NSString *imageURLString = [NSString stringWithFormat:@"%@%d/%@.jpg",baseURL,(int)(screenScale * 30),imageId];
+                    
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                    
+                    NSURLSession *session = [NSURLSession sharedSession];
+                    NSURLSessionDownloadTask *task = [session downloadTaskWithURL:[NSURL URLWithString:imageURLString] completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                        if (!error) {
+                            NSData *imageData = [NSData dataWithContentsOfURL:location];
+                            
+                            UIImage *image = [UIImage imageWithData:imageData];
+                            if (image == nil) {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    pin.rightCalloutAccessoryView.frame = CGRectZero;
+                                    pin.rightCalloutAccessoryView = nil;
+                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                });
+                            } else {
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [(UIImageView *)pin.rightCalloutAccessoryView setImage:image];
+                                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                                });
+                            }
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                pin.rightCalloutAccessoryView.frame = CGRectZero;
+                                pin.rightCalloutAccessoryView = nil;
+                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                            });
+                        }
+                    }];
+                    [task resume];
+                }
             }
         }
     }

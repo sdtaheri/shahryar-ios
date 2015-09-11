@@ -7,9 +7,11 @@
 //
 
 #import "CameraVC.h"
+#import "RMAnnotation.h"
 #import "AROverlayView.h"
-#import "Place.h"
+#import "Group.h"
 #import "DetailTVC.h"
+#import "PlacesListTVC.h"
 #import "UIFontDescriptor+IranSans.h"
 
 @interface CameraVC ()
@@ -23,7 +25,7 @@
 
 @end
 
-#define MAX_DISTANCE 150
+#define MAX_DISTANCE 150000
 #define MAX_POINTS 50
 
 
@@ -76,7 +78,7 @@
     [self.view addSubview:closeButton];
     closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
     
@@ -88,7 +90,7 @@
     [self.view addSubview:filterButton];
     filterButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-8.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:filterButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:44.0]];
 
@@ -153,12 +155,14 @@
     if (!_arData) {
         _arData = [NSMutableArray array];
         NSMutableArray *temp = [NSMutableArray array];
-        for (Place *place in self.locations) {
-            CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:place.latitude.floatValue longitude:place.longitude.floatValue];
-            CLLocationDistance distance = [placeLocation distanceFromLocation:self.userLocation];
+        
+        for (Group *group in self.groups) {
+        
+            CLLocation *groupLocation = [[CLLocation alloc] initWithLatitude:group.latitude.floatValue longitude:group.longitude.floatValue];
+            CLLocationDistance distance = [groupLocation distanceFromLocation:self.userLocation];
             
             if (CLLocationCoordinate2DIsValid(self.userLocation.coordinate) &&  distance < MAX_DISTANCE) {
-                [temp addObject:@{@"Distance": @(distance), @"Place": place}];
+                [temp addObject:@{@"Distance": @(distance), @"Group": group}];
             }
         }
         
@@ -168,7 +172,7 @@
             distanceArray = [distanceArray subarrayWithRange:NSMakeRange(0, MAX_POINTS)];
         }
         for (NSDictionary *dic in distanceArray) {
-            AROverlayView *item = [self createPointAtPlace:[dic objectForKey:@"Place"]];
+            AROverlayView *item = [self createPointAtGroup:[dic objectForKey:@"Group"]];
             [_arData addObject:item];
         }
     }
@@ -177,13 +181,13 @@
 }
 
 // Creates the Data for an AR Object at a given location
-- (AROverlayView *)createPointAtPlace:(Place *)place
+- (AROverlayView *)createPointAtGroup:(Group *)group
 {
     
     AROverlayView *overlay = [[AROverlayView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 120.0f, 60.0f)];
     overlay.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.9];
     overlay.layer.cornerRadius = 7.f;
-    overlay.place = place;
+    overlay.group = group;
     overlay.clipsToBounds = YES;
     
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlayTouchedUpInside:)];
@@ -197,7 +201,16 @@
     label.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0];
     label.clipsToBounds = YES;
     label.numberOfLines = 0;
-    label.text = [NSString stringWithFormat:@"%@", place.title];
+    if (group.places.count == 1) {
+        label.text = [NSString stringWithFormat:@"%@", [group.places.anyObject title]];
+    } else {
+        NSString *title = group.title;
+        if (!(title.length > 0)) {
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            formatter.locale = [NSLocale localeWithLocaleIdentifier:@"fa_IR"];
+            label.text = [NSString stringWithFormat:@"%@ واحد صنفی",[formatter stringFromNumber:@(group.places.count)]];
+        }
+    }
 
     [overlay addSubview:label];
     
@@ -206,13 +219,27 @@
 
 - (void)overlayTouchedUpInside:(UITapGestureRecognizer *)sender {
     AROverlayView *view = (AROverlayView *)sender.view;
-    [self performSegueWithIdentifier:@"Show Details From Camera" sender:view.place];
+    Group *group = view.group;
+    if (group.places.count == 1) {
+        [self performSegueWithIdentifier:@"Show Details From Camera" sender:group.places.anyObject];
+    } else if (group.places.count > 1) {
+        [self performSegueWithIdentifier:@"Show List From Camera" sender:group];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    segue.destinationViewController.preferredContentSize = CGSizeMake(375.0, 500.0);
+    
     if ([segue.identifier isEqualToString:@"Show Details From Camera"]) {
         DetailTVC *dtvc = [segue.destinationViewController childViewControllers][0];
         dtvc.place = sender;
+    } else if ([segue.identifier isEqualToString:@"Show List From Camera"]) {
+        PlacesListTVC *pltvc = [segue.destinationViewController childViewControllers][0];
+        
+        RMAnnotation *annotation = [RMAnnotation annotationWithMapView:nil coordinate:CLLocationCoordinate2DMake(0, 0) andTitle:nil];
+        
+        annotation.userInfo = sender;
+        pltvc.annotations = @[annotation];
     }
 }
 

@@ -14,6 +14,7 @@
 
 @interface FavoriteTVC ()
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteAllButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *selectionToggle;
 @property (strong, nonatomic) NSArray *favoritesID;
 @property (strong, nonatomic) NSArray *recentSearchesID;
@@ -39,7 +40,9 @@ typedef NS_ENUM(NSInteger, TableType) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView:) name:NSUserDefaultsDidChangeNotification object:nil];
     
     self.tableView.estimatedRowHeight = 69.f;
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    }
     self.separatorColor = self.tableView.separatorColor;
     
     self.noItemLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle:UIFontTextStyleCaption1] size:0];
@@ -112,24 +115,33 @@ typedef NS_ENUM(NSInteger, TableType) {
 
 - (IBAction)deleteAll:(UIBarButtonItem *)sender {
     
-    if (self.selectionToggle.selectedSegmentIndex == TableTypeFavorites) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Favorites"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        self.favoritesID = nil;
-        self.favoritesPlaces = nil;
-        
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Recent Searches"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        self.recentSearchesID = nil;
-        self.recentSearchesPlaces = nil;
-        
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"حذف همه" message:@"آیا مایل به حذف همهٔ اطلاعات این جدول هستید؟" preferredStyle:UIAlertControllerStyleActionSheet];
     
+    __weak FavoriteTVC *weakSelf = self;
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"بله" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        if (self.selectionToggle.selectedSegmentIndex == TableTypeFavorites) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Favorites"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            weakSelf.favoritesID = nil;
+            weakSelf.favoritesPlaces = nil;
+            
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        } else {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"Recent Searches"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            weakSelf.recentSearchesID = nil;
+            weakSelf.recentSearchesPlaces = nil;
+            
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"خیر" style:UIAlertActionStyleCancel handler:NULL]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -142,9 +154,11 @@ typedef NS_ENUM(NSInteger, TableType) {
     if (result == 0) {
         self.noItemLabel.hidden = NO;
         self.tableView.separatorColor = [UIColor clearColor];
+        self.deleteAllButton.enabled = NO;
     } else {
         self.noItemLabel.hidden = YES;
         self.tableView.separatorColor = self.separatorColor;
+        self.deleteAllButton.enabled = YES;
     }
     return result;
 }
@@ -181,9 +195,16 @@ typedef NS_ENUM(NSInteger, TableType) {
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
-    [cell setPreservesSuperviewLayoutMargins:NO];
-    [cell setLayoutMargins:UIEdgeInsetsZero];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
+        // Remove seperator inset
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 0, 0, 15)];
+        
+        // Prevent the cell from inheriting the Table View's margin settings
+        [cell setPreservesSuperviewLayoutMargins:NO];
+        
+        // Explictly set your cell's layout margins
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 
 }
 

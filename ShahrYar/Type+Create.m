@@ -13,13 +13,13 @@ NSString* const Category_Description = @"CategoryDescription";
 
 @implementation Type (Create)
 
-+ (Type *)categoryWithDescription:(NSString *)summary uniqueID:(NSString *)uniqeID inManagedObjectContext:(NSManagedObjectContext *)context {
++ (Type *)categoryWithDescription:(NSString *)summary uniqueID:(NSString *)uniqueID inManagedObjectContext:(NSManagedObjectContext *)context {
 
     Type *category = nil;
     
-    if (uniqeID.length) {
+    if (uniqueID.length) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Category"];
-        request.predicate = [NSPredicate predicateWithFormat:@"uniqueID = %@", uniqeID];
+        request.predicate = [NSPredicate predicateWithFormat:@"uniqueID = %@", uniqueID];
         
         NSError *error;
         NSArray *matches = [context executeFetchRequest:request error:&error];
@@ -29,7 +29,8 @@ NSString* const Category_Description = @"CategoryDescription";
         } else if (matches.count == 0) {
             category = [NSEntityDescription insertNewObjectForEntityForName:@"Category" inManagedObjectContext:context];
             category.summary = summary;
-            category.uniqueID = uniqeID;
+            category.uniqueID = uniqueID;
+            category.selected = @(YES);
         } else {
             category = matches.lastObject;
         }

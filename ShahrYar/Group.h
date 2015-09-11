@@ -1,5 +1,5 @@
 //
-//  Type.h
+//  Group.h
 //  ShahrYar
 //
 //  Created by Saeed Taheri on 2015/9/9.
@@ -11,15 +11,17 @@
 
 @class Place;
 
-@interface Type : NSManagedObject
+@interface Group : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * selected;
-@property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSString * uniqueID;
+@property (nonatomic, retain) NSString * lastVersion;
+@property (nonatomic, retain) NSNumber * latitude;
+@property (nonatomic, retain) NSNumber * longitude;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSSet *places;
 @end
 
-@interface Type (CoreDataGeneratedAccessors)
+@interface Group (CoreDataGeneratedAccessors)
 
 - (void)addPlacesObject:(Place *)value;
 - (void)removePlacesObject:(Place *)value;
