@@ -263,10 +263,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="municipalityLogo" id="cF0-v5-1WH">
+                        <imageView key="tableHeaderView" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="municipalityLogo" id="cF0-v5-1WH">
                             <rect key="frame" x="0.0" y="44" width="600" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="UKb-cQ-bQH" appends="YES" id="wAW-8B-sne"/>
+                            </connections>
                         </imageView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell Text" textLabel="Qwe-hk-1rt" style="IBUITableViewCellStyleDefault" id="ERk-Oe-cFQ">
@@ -362,6 +366,11 @@
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XGn-l7-g0O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="7" id="UKb-cQ-bQH">
+                    <connections>
+                        <action selector="easterEgg:" destination="uUd-zu-0rO" id="AQN-HK-WBK"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1135" y="1921"/>
         </scene>
@@ -377,7 +386,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="لطفاً چند لحظه صبر کنید ..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PwA-Du-TvQ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="لطفاً چند لحظه صبر کنید ..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PwA-Du-TvQ">
                                 <rect key="frame" x="208" y="310.5" width="185" height="25"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="IRANSans-Medium" family="IRANSans" pointSize="15"/>
@@ -392,9 +401,11 @@
                         <animations/>
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="PwA-Du-TvQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="C1O-3h-avs" secondAttribute="leadingMargin" id="1WR-ZF-qm2"/>
                             <constraint firstAttribute="centerY" secondItem="iZv-Hh-tlO" secondAttribute="centerY" constant="16" id="4EF-p2-hUZ"/>
                             <constraint firstItem="iZv-Hh-tlO" firstAttribute="centerX" secondItem="PwA-Du-TvQ" secondAttribute="centerX" id="6xz-vH-AGB"/>
                             <constraint firstItem="PwA-Du-TvQ" firstAttribute="top" secondItem="iZv-Hh-tlO" secondAttribute="bottom" constant="8" symbolic="YES" id="UkK-lf-ejH"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="PwA-Du-TvQ" secondAttribute="trailing" id="e1b-UY-QW3"/>
                             <constraint firstAttribute="centerX" secondItem="iZv-Hh-tlO" secondAttribute="centerX" id="qbN-0s-5xR"/>
                         </constraints>
                     </view>

@@ -38,6 +38,18 @@
 - (IBAction)dismiss:(UIBarButtonItem *)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
 }
+- (IBAction)easterEgg:(UITapGestureRecognizer *)sender {
+    
+    UITextView *label = [[UITextView alloc] initWithFrame:self.tableView.tableHeaderView.frame];
+    label.text = @"Developed By Saeed Taheri\nwww.saeedtaheri.com \nSummer 2015";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.dataDetectorTypes = UIDataDetectorTypeLink;
+    label.editable = NO;
+    label.selectable = YES;
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    self.tableView.tableHeaderView = label;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {

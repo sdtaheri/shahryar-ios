@@ -492,20 +492,30 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     switch (self.mapView.userTrackingMode) {
         case RMUserTrackingModeNone:
-            [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            if (self.mapView.isUserLocationVisible) {
+                [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            }
             break;
             
         case RMUserTrackingModeFollow:
-            [self.mapView setUserTrackingMode:RMUserTrackingModeFollowWithHeading animated:YES];
+            if (self.mapView.isUserLocationVisible) {
+                [self.mapView setUserTrackingMode:RMUserTrackingModeFollowWithHeading animated:YES];
+            }
             break;
         
         case RMUserTrackingModeFollowWithHeading:
-            [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            if (self.mapView.isUserLocationVisible) {
+                [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            }
             break;
     }
     
-    if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate)) {
+    if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate) && self.mapView.isUserLocationVisible) {
         [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    } else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"خطا" message:@"موقعیت فعلی شما در محدودهٔ نرم‌افزار نیست" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"متوجه شدم" style:UIAlertActionStyleCancel handler:NULL]];
+        [self presentViewController:alert animated:YES completion:NULL];
     }
 }
 

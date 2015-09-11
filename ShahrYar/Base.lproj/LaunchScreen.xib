@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -12,75 +13,42 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="curvedIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Ecq-gU-cAQ">
-                    <rect key="frame" x="177" y="137" width="125" height="125"/>
+                    <rect key="frame" x="185" y="145" width="110" height="110"/>
+                    <animations/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="125" id="0sY-Qg-FNk"/>
+                        <constraint firstAttribute="width" constant="110" id="0sY-Qg-FNk"/>
                         <constraint firstAttribute="width" secondItem="Ecq-gU-cAQ" secondAttribute="height" multiplier="1:1" id="Hbr-bK-igi"/>
-                        <constraint firstAttribute="width" constant="125" id="Qn4-3U-fbU">
-                            <variation key="heightClass=regular-widthClass=regular" constant="160"/>
-                        </constraint>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Qn4-3U-fbU"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=regular">
-                        <mask key="constraints">
-                            <exclude reference="0sY-Qg-FNk"/>
-                            <include reference="Qn4-3U-fbU"/>
-                        </mask>
-                    </variation>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashLabel" translatesAutoresizingMaskIntoConstraints="NO" id="NBW-Bm-p9f">
-                    <rect key="frame" x="89.5" y="278" width="300" height="60"/>
+                    <rect key="frame" x="155" y="255" width="170" height="66"/>
+                    <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="efE-yK-8rl"/>
-                        <constraint firstAttribute="height" constant="60" id="m9m-GB-Ydz">
-                            <variation key="heightClass=regular-widthClass=regular" constant="80"/>
+                        <constraint firstAttribute="width" constant="170" id="GMB-V7-Qn9">
+                            <variation key="heightClass=regular-widthClass=regular" constant="200"/>
                         </constraint>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="m9m-GB-Ydz"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=regular">
-                        <mask key="constraints">
-                            <exclude reference="efE-yK-8rl"/>
-                            <include reference="m9m-GB-Ydz"/>
-                        </mask>
-                    </variation>
                 </imageView>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="Ecq-gU-cAQ" secondAttribute="centerY" constant="40" id="0rj-li-3hc"/>
-                <constraint firstItem="NBW-Bm-p9f" firstAttribute="top" secondItem="Ecq-gU-cAQ" secondAttribute="bottom" constant="16" id="Tds-8I-6Yx"/>
-                <constraint firstItem="Ecq-gU-cAQ" firstAttribute="centerX" secondItem="NBW-Bm-p9f" secondAttribute="centerX" id="Yf5-Sr-cCs"/>
-                <constraint firstAttribute="centerY" secondItem="Ecq-gU-cAQ" secondAttribute="centerY" constant="40" id="cjG-Pk-eKG">
-                    <variation key="heightClass=regular-widthClass=regular" constant="70"/>
+                <constraint firstItem="NBW-Bm-p9f" firstAttribute="top" secondItem="Ecq-gU-cAQ" secondAttribute="bottom" id="Tds-8I-6Yx">
+                    <variation key="heightClass=regular-widthClass=regular" constant="8"/>
                 </constraint>
+                <constraint firstItem="Ecq-gU-cAQ" firstAttribute="centerX" secondItem="NBW-Bm-p9f" secondAttribute="centerX" id="Yf5-Sr-cCs"/>
                 <constraint firstAttribute="centerX" secondItem="Ecq-gU-cAQ" secondAttribute="centerX" id="mUo-Le-K4E"/>
+                <constraint firstItem="Ecq-gU-cAQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-40" id="pai-MW-WA8">
+                    <variation key="heightClass=regular-widthClass=regular" constant="-80"/>
+                </constraint>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="cjG-Pk-eKG"/>
-                </mask>
-            </variation>
-            <variation key="heightClass=regular-widthClass=regular">
-                <mask key="constraints">
-                    <exclude reference="0rj-li-3hc"/>
-                    <include reference="cjG-Pk-eKG"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
     <resources>
-        <image name="curvedIcon" width="1024" height="1024"/>
-        <image name="splashLabel" width="300" height="85"/>
+        <image name="curvedIcon" width="160" height="160"/>
+        <image name="splashLabel" width="200" height="66"/>
     </resources>
 </document>
