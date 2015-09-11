@@ -22,6 +22,8 @@
 #import "SearchTVC.h"
 #import "PlacesListTVC.h"
 
+#import "MBProgressHUD.h"
+
 #import "Mapbox.h"
 #import "PlacesLoader.h"
 
@@ -66,6 +68,12 @@ CLLocationDegrees const Longitude_Default = 51.3;
 #pragma mark Properties
 
 - (void)setLocations:(NSArray *)locations {
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"در حال بارگذاری";
+    hud.labelFont = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0];
+    
     _locations = locations;
     self.searchTVC.places = locations;
     
@@ -87,6 +95,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
             }
             [self.mapView addAnnotation:annotation];
         }
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     });
 }
 
@@ -192,9 +201,37 @@ CLLocationDegrees const Longitude_Default = 51.3;
     } errorHandler:^(NSError *error) {
         NSLog(@"Error In Checking Latest Version Number: %@", error);
         
-        [[PlacesLoader sharedInstance] placesInDatabase:self.managedObjectContext completion:^(NSArray *output, NSError *error) {
-            self.locations = output;
-        }];
+        if ([self.userDefaults objectForKey:Saved_Version] == nil) {
+            __weak MainVC *weakSelf = self;
+            [self.managedObjectContext performBlock:^{
+                
+                NSString *filePath = [[NSBundle mainBundle] pathForResource:@"DataV1" ofType:@"json"];
+                
+                NSError *error;
+                NSDictionary *object = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:NSJSONReadingAllowFragments error:&error];
+                NSArray *array = [object objectForKey:@"Data"];
+                
+                [Place loadPlacesFromArray:array intoManagedObjectContext:weakSelf.managedObjectContext];
+                NSError *saveError;
+                [weakSelf.managedObjectContext save:&saveError];
+                if (saveError) {
+                    NSLog(@"Saving Local Database Failed with Error: %@", saveError);
+                } else {
+                    NSLog(@"Saving Local Database Successful");
+                }
+                
+                [[PlacesLoader sharedInstance] placesInDatabase:weakSelf.managedObjectContext completion:^(NSArray *output, NSError *error) {
+                    weakSelf.locations = output;
+                }];
+                
+                [weakSelf.userDefaults setObject:@"0.5" forKey:Saved_Version];
+                [weakSelf.userDefaults synchronize];
+            }];
+        } else {
+            [[PlacesLoader sharedInstance] placesInDatabase:self.managedObjectContext completion:^(NSArray *output, NSError *error) {
+                self.locations = output;
+            }];
+        }
     }];
 
     
@@ -249,6 +286,19 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [self.searchController.searchBar sizeToFit];
+
+
+    switch (self.mapView.userTrackingMode) {
+        case RMUserTrackingModeFollowWithHeading:
+            [self.mapView setUserTrackingMode:RMUserTrackingModeFollow animated:YES];
+            break;
+        default:
+            break;
+    }
+    
+    if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate)) {
+        [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -28,6 +28,8 @@
 		3025AC481B871EE000B7E14A /* PRARManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3D1B871EE000B7E14A /* PRARManager.m */; };
 		303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */; };
 		303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */; };
+		3040CAC21BA35DD400A2F52F /* DataV1.json in Resources */ = {isa = PBXBuildFile; fileRef = 3040CAC11BA35DD300A2F52F /* DataV1.json */; settings = {ASSET_TAGS = (); }; };
+		3044B18C1BA324AB00C1005C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3044B18B1BA324AB00C1005C /* MBProgressHUD.m */; settings = {ASSET_TAGS = (); }; };
 		3047655D1B822E5B00EAC44B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3047655C1B822E5B00EAC44B /* MessageUI.framework */; };
 		304765651B8249F700EAC44B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304765641B8249F700EAC44B /* Images.xcassets */; };
 		304765781B832D1900EAC44B /* FilterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304765771B832D1900EAC44B /* FilterTVC.m */; };
@@ -160,6 +162,9 @@
 		3025AC3D1B871EE000B7E14A /* PRARManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRARManager.m; sourceTree = "<group>"; };
 		303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Light.ttf"; sourceTree = "<group>"; };
 		303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Medium.ttf"; sourceTree = "<group>"; };
+		3040CAC11BA35DD300A2F52F /* DataV1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DataV1.json; sourceTree = "<group>"; };
+		3044B18A1BA324AB00C1005C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		3044B18B1BA324AB00C1005C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		3047655C1B822E5B00EAC44B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		304765641B8249F700EAC44B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		304765661B826FA800EAC44B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -795,10 +800,13 @@
 				3062E5431B6E4143001A3E63 /* NavigationController.m */,
 				30AE6EBC1B8E144500DE6611 /* DeviceInfo.m */,
 				30AE6EBD1B8E144500DE6611 /* DeviceInfo.h */,
-				30D0FF451B68BC6E00F7FD81 /* main.mbtiles */,
+				3044B18A1BA324AB00C1005C /* MBProgressHUD.h */,
+				3044B18B1BA324AB00C1005C /* MBProgressHUD.m */,
 				303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */,
 				303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */,
 				30D0FEDA1B68A75B00F7FD81 /* main.m */,
+				3040CAC11BA35DD300A2F52F /* DataV1.json */,
+				30D0FF451B68BC6E00F7FD81 /* main.mbtiles */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -904,6 +912,7 @@
 			files = (
 				30D0FEE41B68A75B00F7FD81 /* Main.storyboard in Resources */,
 				3088C7231B9C190400ABD701 /* Mapbox.bundle in Resources */,
+				3040CAC21BA35DD400A2F52F /* DataV1.json in Resources */,
 				3025AC461B871EE000B7E14A /* ARRadar.xib in Resources */,
 				3025AC401B871EE000B7E14A /* ar_icon.png in Resources */,
 				3025AC431B871EE000B7E14A /* Radar.png in Resources */,
@@ -932,6 +941,7 @@
 				30AB61771B8E77F000C03F94 /* RMMapboxSource.m in Sources */,
 				30AB617C1B8E77F000C03F94 /* RMMapScrollView.m in Sources */,
 				30AB61761B8E77F000C03F94 /* RMLoadingTileView.m in Sources */,
+				3044B18C1BA324AB00C1005C /* MBProgressHUD.m in Sources */,
 				30AB61931B8E77F000C03F94 /* RMTileMillSource.m in Sources */,
 				3005C14A1B89D04B00C72A53 /* AboutTVC.m in Sources */,
 				30AB61671B8E77F000C03F94 /* RMAttributionViewController.m in Sources */,

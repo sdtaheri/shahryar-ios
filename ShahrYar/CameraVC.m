@@ -25,7 +25,7 @@
 
 @end
 
-#define MAX_DISTANCE 150000
+#define MAX_DISTANCE 170
 #define MAX_POINTS 50
 
 
@@ -61,9 +61,9 @@
     [self.spinner stopAnimating];
     
     if (self.userLocation == nil || self.arData.count == 0) {
-        self.waitLabel.text = @"نقطه‌ای برای نمایش وجود ندارد";
+        self.waitLabel.text = @"شما در محدوده نیستید یا نقطه‌ای برای نمایش وجود ندارد";
         if (self.userLocation == nil) {
-            self.waitLabel.text = [NSString stringWithFormat:@"%@\n%@",self.waitLabel.text,@"موقعیت مکانی شما در دسترس نیست"];
+            self.waitLabel.text = @"دستگاه قادر به یافتن موقعیت شما نیست";
         }
         self.waitLabel.hidden = NO;
         [self.view.subviews.lastObject setHidden:YES];

@@ -125,7 +125,7 @@ NSString* const APIKey = @"3234D74E-661E";
     }];
     
     [task resume];
-    
+
 }
 
 - (void)placesInDatabase: (NSManagedObjectContext *)context completion:(void (^)(NSArray *output, NSError *error))completion {
