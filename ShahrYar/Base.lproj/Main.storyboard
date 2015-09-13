@@ -34,10 +34,14 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
-                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="m1B-xK-n62">
+                        <imageView key="tableHeaderView" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="m1B-xK-n62">
                             <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="GLY-Th-Zfp" appends="YES" id="j2j-5E-yzL"/>
+                            </connections>
                         </imageView>
                         <view key="tableFooterView" contentMode="scaleToFill" id="CN1-dw-lRv">
                             <rect key="frame" x="0.0" y="174" width="600" height="210"/>
@@ -138,6 +142,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AS9-ca-Cbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="GLY-Th-Zfp">
+                    <connections>
+                        <action selector="tapOnImage:" destination="hcu-ln-Kcw" id="hxJ-EX-hiq"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1908" y="-421"/>
         </scene>

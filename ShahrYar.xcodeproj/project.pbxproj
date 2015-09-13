@@ -26,6 +26,12 @@
 		3025AC461B871EE000B7E14A /* ARRadar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC391B871EE000B7E14A /* ARRadar.xib */; };
 		3025AC471B871EE000B7E14A /* LocationMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3B1B871EE000B7E14A /* LocationMath.m */; };
 		3025AC481B871EE000B7E14A /* PRARManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3D1B871EE000B7E14A /* PRARManager.m */; };
+		303330EF1BA626D60083522C /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E41BA626D60083522C /* JTSAnimatedGIFUtility.m */; settings = {ASSET_TAGS = (); }; };
+		303330F01BA626D60083522C /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E61BA626D60083522C /* JTSImageInfo.m */; settings = {ASSET_TAGS = (); }; };
+		303330F11BA626D60083522C /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E81BA626D60083522C /* JTSImageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		303330F21BA626D60083522C /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EA1BA626D60083522C /* JTSSimpleImageDownloader.m */; settings = {ASSET_TAGS = (); }; };
+		303330F31BA626D60083522C /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EC1BA626D60083522C /* UIApplication+JTSImageViewController.m */; settings = {ASSET_TAGS = (); }; };
+		303330F41BA626D60083522C /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EE1BA626D60083522C /* UIImage+JTSImageEffects.m */; settings = {ASSET_TAGS = (); }; };
 		303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */; };
 		303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */; };
 		3040CAC21BA35DD400A2F52F /* DataV1.json in Resources */ = {isa = PBXBuildFile; fileRef = 3040CAC11BA35DD300A2F52F /* DataV1.json */; settings = {ASSET_TAGS = (); }; };
@@ -160,6 +166,18 @@
 		3025AC3B1B871EE000B7E14A /* LocationMath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMath.m; sourceTree = "<group>"; };
 		3025AC3C1B871EE000B7E14A /* PRARManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRARManager.h; sourceTree = "<group>"; };
 		3025AC3D1B871EE000B7E14A /* PRARManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRARManager.m; sourceTree = "<group>"; };
+		303330E31BA626D60083522C /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
+		303330E41BA626D60083522C /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
+		303330E51BA626D60083522C /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
+		303330E61BA626D60083522C /* JTSImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageInfo.m; sourceTree = "<group>"; };
+		303330E71BA626D60083522C /* JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageViewController.h; sourceTree = "<group>"; };
+		303330E81BA626D60083522C /* JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageViewController.m; sourceTree = "<group>"; };
+		303330E91BA626D60083522C /* JTSSimpleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSSimpleImageDownloader.h; sourceTree = "<group>"; };
+		303330EA1BA626D60083522C /* JTSSimpleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSSimpleImageDownloader.m; sourceTree = "<group>"; };
+		303330EB1BA626D60083522C /* UIApplication+JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JTSImageViewController.h"; sourceTree = "<group>"; };
+		303330EC1BA626D60083522C /* UIApplication+JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JTSImageViewController.m"; sourceTree = "<group>"; };
+		303330ED1BA626D60083522C /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
+		303330EE1BA626D60083522C /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
 		303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Light.ttf"; sourceTree = "<group>"; };
 		303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IRAN Sans Medium.ttf"; sourceTree = "<group>"; };
 		3040CAC11BA35DD300A2F52F /* DataV1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DataV1.json; sourceTree = "<group>"; };
@@ -459,6 +477,25 @@
 				3025AC3B1B871EE000B7E14A /* LocationMath.m */,
 			);
 			path = Location;
+			sourceTree = "<group>";
+		};
+		303330E21BA626D60083522C /* ImageViewer */ = {
+			isa = PBXGroup;
+			children = (
+				303330E31BA626D60083522C /* JTSAnimatedGIFUtility.h */,
+				303330E41BA626D60083522C /* JTSAnimatedGIFUtility.m */,
+				303330E51BA626D60083522C /* JTSImageInfo.h */,
+				303330E61BA626D60083522C /* JTSImageInfo.m */,
+				303330E71BA626D60083522C /* JTSImageViewController.h */,
+				303330E81BA626D60083522C /* JTSImageViewController.m */,
+				303330E91BA626D60083522C /* JTSSimpleImageDownloader.h */,
+				303330EA1BA626D60083522C /* JTSSimpleImageDownloader.m */,
+				303330EB1BA626D60083522C /* UIApplication+JTSImageViewController.h */,
+				303330EC1BA626D60083522C /* UIApplication+JTSImageViewController.m */,
+				303330ED1BA626D60083522C /* UIImage+JTSImageEffects.h */,
+				303330EE1BA626D60083522C /* UIImage+JTSImageEffects.m */,
+			);
+			path = ImageViewer;
 			sourceTree = "<group>";
 		};
 		304765791B832D2000EAC44B /* Search */ = {
@@ -788,6 +825,7 @@
 			isa = PBXGroup;
 			children = (
 				30D0FF001B68A82700F7FD81 /* Frameworks */,
+				303330E21BA626D60083522C /* ImageViewer */,
 				30BDCA4C1B906D15007358E6 /* UIFontDescriptor+IranSans.h */,
 				30BDCA4D1B906D15007358E6 /* UIFontDescriptor+IranSans.m */,
 				3093DD241B83D21A00E46D7D /* BubbleTransition.swift */,
@@ -945,6 +983,7 @@
 				30AB61931B8E77F000C03F94 /* RMTileMillSource.m in Sources */,
 				3005C14A1B89D04B00C72A53 /* AboutTVC.m in Sources */,
 				30AB61671B8E77F000C03F94 /* RMAttributionViewController.m in Sources */,
+				303330F01BA626D60083522C /* JTSImageInfo.m in Sources */,
 				30AB61971B8E77F000C03F94 /* SMCalloutView.m in Sources */,
 				3025AC481B871EE000B7E14A /* PRARManager.m in Sources */,
 				30AE6EBE1B8E144500DE6611 /* DeviceInfo.m in Sources */,
@@ -965,6 +1004,7 @@
 				30AB618A1B8E77F000C03F94 /* RMProjection.m in Sources */,
 				30AB61701B8E77F000C03F94 /* RMDBMapSource.m in Sources */,
 				30AB61901B8E77F000C03F94 /* RMTileCache.m in Sources */,
+				303330F21BA626D60083522C /* JTSSimpleImageDownloader.m in Sources */,
 				30AB61941B8E77F000C03F94 /* RMTileSourcesContainer.m in Sources */,
 				307C6D911B80B588001D173C /* DetailTVC.m in Sources */,
 				30AB61811B8E77F000C03F94 /* RMMemoryCache.m in Sources */,
@@ -985,6 +1025,7 @@
 				30AB61781B8E77F000C03F94 /* RMMapLayer.m in Sources */,
 				3062E5531B6F70FC001A3E63 /* MKLabel.swift in Sources */,
 				3093DD231B83864E00E46D7D /* NSManagedObjectContext+AsyncFetch.m in Sources */,
+				303330F31BA626D60083522C /* UIApplication+JTSImageViewController.m in Sources */,
 				30AB618C1B8E77F000C03F94 /* RMShape.m in Sources */,
 				3025AC3F1B871EE000B7E14A /* AROverlayView.m in Sources */,
 				3062E5441B6E4143001A3E63 /* NavigationController.m in Sources */,
@@ -995,6 +1036,7 @@
 				30AB616F1B8E77F000C03F94 /* RMDatabaseCache.m in Sources */,
 				30AB618B1B8E77F000C03F94 /* RMQuadTree.m in Sources */,
 				30AB61651B8E77F000C03F94 /* RMAbstractWebMapSource.m in Sources */,
+				303330F11BA626D60083522C /* JTSImageViewController.m in Sources */,
 				3062E5501B6F70FC001A3E63 /* MKButton.swift in Sources */,
 				30AB61981B8E77F000C03F94 /* SMClassicCalloutView.m in Sources */,
 				30AB617A1B8E77F000C03F94 /* RMMapQuestOpenAerialSource.m in Sources */,
@@ -1014,6 +1056,8 @@
 				30DB21651BA0245600F846EE /* Group+Create.m in Sources */,
 				30AB61801B8E77F000C03F94 /* RMMBTilesSource.m in Sources */,
 				30AB61911B8E77F000C03F94 /* RMTileCacheDownloadOperation.m in Sources */,
+				303330EF1BA626D60083522C /* JTSAnimatedGIFUtility.m in Sources */,
+				303330F41BA626D60083522C /* UIImage+JTSImageEffects.m in Sources */,
 				30AB617E1B8E77F000C03F94 /* RMMapView.m in Sources */,
 				30AB617F1B8E77F000C03F94 /* RMMarker.m in Sources */,
 				30AB61681B8E77F000C03F94 /* RMBingSource.m in Sources */,

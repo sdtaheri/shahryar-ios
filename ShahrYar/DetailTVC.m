@@ -16,6 +16,8 @@
 #import "Mapbox.h"
 #import "DeviceInfo.h"
 #import "UIFontDescriptor+IranSans.h"
+#import "JTSImageInfo.h"
+#import "JTSImageViewController.h"
 
 @interface DetailTVC () <MFMailComposeViewControllerDelegate, RMMapViewDelegate>
 
@@ -164,6 +166,28 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 - (IBAction)dismiss:(UIBarButtonItem *)sender {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)tapOnImage:(UITapGestureRecognizer *)sender {
+    
+    // Create image info
+    UIImage *image = [(UIImageView *)sender.view image];
+
+    if (image) {
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        imageInfo.image = image;
+        imageInfo.referenceRect = sender.view.frame;
+        imageInfo.referenceView = self.tableView;
+        
+        // Setup view controller
+        JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
+                                               initWithImageInfo:imageInfo
+                                               mode:JTSImageViewControllerMode_Image
+                                               backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+        
+        // Present the view controller.
+        [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+    }
 }
 
 #pragma mark - Table view data source
