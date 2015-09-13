@@ -335,7 +335,18 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
+        DDetailCell *detailCell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        if ([detailCell.label.text isEqualToString:@"شمارهٔ تماس"]) {
+            [self callNumber:detailCell.labelButton];
+        } else if ([detailCell.label.text isEqualToString:@"وب سایت"]) {
+            [self openWebsite:detailCell.labelButton];
+        } else if ([detailCell.label.text isEqualToString:@"ایمیل"]) {
+            [self sendEmail:detailCell.labelButton];
+        }
+        
+    } else if (indexPath.section == 1) {
         
         switch (indexPath.row) {
             case 0:

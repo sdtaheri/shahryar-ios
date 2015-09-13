@@ -146,6 +146,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 1) {
+        DDetailCell *detailCell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        if ([detailCell.label.text isEqualToString:@"شمارهٔ تماس"]) {
+            [self callNumber:detailCell.labelButton];
+        } else if ([detailCell.label.text isEqualToString:@"وب سایت"]) {
+            [self openWebsite:detailCell.labelButton];
+        } else if ([detailCell.label.text isEqualToString:@"ایمیل"]) {
+            [self sendEmail:detailCell.labelButton];
+        }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
