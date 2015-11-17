@@ -61,7 +61,7 @@ static NSString *const PRARMANAGER_ERROR_DOMAIN = @"PRARMANAGER_ERROR_DOMAIN";
         self.delegate = delegate;
         self.arViewSize = size;
         
-        CGRect frame = CGRectMake(0, 0, OVERLAY_VIEW_WIDTH, size.height);
+        CGRect frame = CGRectMake(0, 0, size.width, size.height);
         self.arOverlaysContainerView = [[ARControllerView alloc] initWithFrame:frame];
         
         self.arController = [[ARController alloc] init];
@@ -119,6 +119,7 @@ static NSString *const PRARMANAGER_ERROR_DOMAIN = @"PRARMANAGER_ERROR_DOMAIN";
     
     self.cameraLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.cameraSession];
     [self.cameraLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    self.cameraLayer.connection.videoOrientation = (AVCaptureVideoOrientation)[UIDevice currentDevice].orientation;
     
     CGRect layerRect = CGRectMake(0, 0, self.arViewSize.width, self.arViewSize.height);
 	[self.cameraLayer setBounds:layerRect];
@@ -154,7 +155,7 @@ static NSString *const PRARMANAGER_ERROR_DOMAIN = @"PRARMANAGER_ERROR_DOMAIN";
     
     CGRect newFrame = CGRectMake(newPos.origin.x,
                                  newPos.origin.y,
-                                 OVERLAY_VIEW_WIDTH,
+                                 self.arViewSize.width,
                                  self.arViewSize.height);
     
     [self.delegate augmentedRealityManager:self didUpdateARFrame:newFrame];

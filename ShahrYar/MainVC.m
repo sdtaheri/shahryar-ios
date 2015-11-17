@@ -296,9 +296,28 @@ CLLocationDegrees const Longitude_Default = 51.3;
             break;
     }
     
-    if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate)) {
-        [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+    CLLocationCoordinate2D location = self.mapView.centerCoordinate;
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self.mapView setCenterCoordinate:location animated:YES];
+    } completion:NULL];
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+
+    if ([identifier isEqualToString:@"Launch Camera"]) {
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        BOOL multitaskingMode = screenSize.width != self.view.frame.size.width || screenSize.height != self.view.frame.size.height;
+        if (multitaskingMode) {
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"توجه" message:@"برای عملکرد دوربین از حالت مولتی تسکینگ خارج شوید" preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"متوجه شدم" style:UIAlertActionStyleCancel handler:NULL]];
+            [self presentViewController:alert animated:YES completion:NULL];
+            
+            return NO;
+        }
     }
+    
+    return YES;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -513,7 +532,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     if (CLLocationCoordinate2DIsValid(self.mapView.userLocation.coordinate) && self.mapView.isUserLocationVisible) {
         [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
     } else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"خطا" message:@"موقعیت فعلی شما در محدودهٔ نرم‌افزار نیست" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"توجه" message:@"موقعیت فعلی شما در محدودهٔ نرم‌افزار نیست" preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"متوجه شدم" style:UIAlertActionStyleCancel handler:NULL]];
         [self presentViewController:alert animated:YES completion:NULL];
     }

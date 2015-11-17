@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UILabel *waitLabel;
+@property (weak, nonatomic) UIVisualEffectView *errorLayer;
 
 @property (nonatomic, strong) NSMutableArray *arData;
 @property (nonatomic, strong) PRARManager *arManager;
@@ -39,10 +40,7 @@
 
     self.firstLaunch = YES;
     
-    CGFloat minimum = MIN(self.view.frame.size.width, self.view.frame.size.height);
-    CGFloat maximum = MAX(self.view.frame.size.width, self.view.frame.size.height);
-    
-    self.arManager = [[PRARManager alloc] initWithSize:CGSizeMake(minimum,maximum) delegate:self shouldCreateRadar:YES];
+    self.arManager = [[PRARManager alloc] initWithSize:[UIScreen mainScreen].bounds.size delegate:self shouldCreateRadar:YES];
     self.arManager.delegate = self;
 }
 
@@ -68,10 +66,101 @@
         self.waitLabel.hidden = NO;
         [self.view.subviews.lastObject setHidden:YES];
     }
+    
+    UIVisualEffectView *vev = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    vev.frame = self.view.bounds;
+    vev.hidden = YES;
+    [self.view addSubview:vev];
+    vev.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansBoldFontDescriptorWithTextStyle: UIFontTextStyleCaption1] size: 0];
+    label.numberOfLines = 0;
+    label.text = @"دستگاه را به حالت عمودی بچرخانید";
+    label.textColor = [UIColor whiteColor];
+    
+    [vev.contentView addSubview:label];
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    [vev.contentView addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:vev.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+
+    UIImageView *rotate = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rotateDevice"]];
+    rotate.translatesAutoresizingMaskIntoConstraints = NO;
+    [vev.contentView addSubview:rotate];
+    [vev.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rotate attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:vev.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    [vev.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rotate attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:vev.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+
+    [vev.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rotate attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:label attribute:NSLayoutAttributeTop multiplier:1.0 constant:-16.0]];
+    
+    self.errorLayer = vev;
+    
+    UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+    if (UIDeviceOrientationIsLandscape(orientation) || orientation == UIDeviceOrientationPortraitUpsideDown) {
+        self.errorLayer.hidden = NO;
+        [self.view bringSubviewToFront:self.errorLayer];
+        [self.view bringSubviewToFront:[self.view viewWithTag:150]];
+        [self.view bringSubviewToFront:[self.view viewWithTag:151]];
+    }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    BOOL multitaskingMode = screenSize.width != size.width || screenSize.height != size.height;
+    
+    if (multitaskingMode && UIUserInterfaceIdiomPad == UI_USER_INTERFACE_IDIOM()) {
+        self.errorLayer.hidden = YES;
+        [self.arManager stopAR];
+        [(CALayer*)(self.arManager.cameraLayer) removeFromSuperlayer];
+        [self.arManager.arOverlaysContainerView removeFromSuperview];
+        [(UIView *)self.arManager.radarView removeFromSuperview];
+        self.arManager.delegate = nil;
+        self.arManager.datasource = nil;
+        self.arManager = nil;
+        self.waitLabel.text = @"برای عملکرد دوربین از حالت مولتی تسکینگ خارج شوید";
+        self.waitLabel.hidden = NO;
+    } else {
+        if (self.userLocation != nil) {
+            
+            [self.arManager stopAR];
+            [(CALayer*)(self.arManager.cameraLayer) removeFromSuperlayer];
+            [self.arManager.arOverlaysContainerView removeFromSuperview];
+            [(UIView *)self.arManager.radarView removeFromSuperview];
+            self.arManager.delegate = nil;
+            self.arManager.datasource = nil;
+            
+            self.arManager = [[PRARManager alloc] initWithSize:size delegate:self shouldCreateRadar:YES];
+            self.arManager.delegate = self;
+            [self.arManager startARWithData:self.arData forLocation:self.userLocation.coordinate];
+            
+            [self.view bringSubviewToFront:[self.view viewWithTag:150]];
+            [self.view bringSubviewToFront:[self.view viewWithTag:151]];
+        }
+        if (self.userLocation == nil || self.arData.count == 0) {
+            self.waitLabel.text = @"شما در محدوده نیستید یا نقطه‌ای برای نمایش وجود ندارد";
+            if (self.userLocation == nil) {
+                self.waitLabel.text = @"دستگاه قادر به یافتن موقعیت شما نیست";
+            }
+            self.waitLabel.hidden = NO;
+        } else {
+            self.waitLabel.hidden = YES;
+        }
+        
+        [self.view bringSubviewToFront:self.errorLayer];
+        [self.view bringSubviewToFront:[self.view viewWithTag:150]];
+        [self.view bringSubviewToFront:[self.view viewWithTag:151]];
+        
+        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+        if (UIDeviceOrientationIsLandscape(orientation) || orientation == UIDeviceOrientationPortraitUpsideDown) {
+            self.errorLayer.hidden = NO;
+        } else {
+            self.errorLayer.hidden = YES;
+        }
+    }
 }
 
 - (void)configureUI {
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    closeButton.tag = 150;
     [closeButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
     closeButton.tintColor = [UIColor colorWithWhite:1 alpha:0.9];
     [closeButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
@@ -84,6 +173,7 @@
     
     
     UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    filterButton.tag = 151;
     [filterButton setImage:[UIImage imageNamed:@"filter_selected"] forState:UIControlStateNormal];
     filterButton.tintColor = [UIColor colorWithWhite:1 alpha:0.9];
     [filterButton addTarget:self action:@selector(dismissAndFilter:) forControlEvents:UIControlEventTouchUpInside];
@@ -96,9 +186,6 @@
 
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-}
-
 - (void)dealloc {
     [self.arManager stopAR];
     self.arManager.delegate = nil;
@@ -106,16 +193,8 @@
     self.arManager = nil;
 }
 
-- (BOOL)shouldAutorotate {
-    return NO;
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
 }
 
 - (void)dismiss:(UIButton *)sender {

@@ -14,7 +14,7 @@
 #import "FavoriteTVC.h"
 #import "UIFontDescriptor+IranSans.h"
 
-@interface SearchTVC () <UIPopoverPresentationControllerDelegate>
+@interface SearchTVC ()
 
 @property (weak, nonatomic) UISearchController *searchController;
 
@@ -102,7 +102,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         searchController.searchResultsController.view.hidden = NO;
         self.searchController = searchController;
-        self.searchController.popoverPresentationController.delegate = self;
         self.searchController.searchBar.placeholder = @"جستجو";
     });
 }

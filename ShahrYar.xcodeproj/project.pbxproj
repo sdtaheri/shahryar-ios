@@ -26,16 +26,16 @@
 		3025AC461B871EE000B7E14A /* ARRadar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3025AC391B871EE000B7E14A /* ARRadar.xib */; };
 		3025AC471B871EE000B7E14A /* LocationMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3B1B871EE000B7E14A /* LocationMath.m */; };
 		3025AC481B871EE000B7E14A /* PRARManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3025AC3D1B871EE000B7E14A /* PRARManager.m */; };
-		303330EF1BA626D60083522C /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E41BA626D60083522C /* JTSAnimatedGIFUtility.m */; settings = {ASSET_TAGS = (); }; };
-		303330F01BA626D60083522C /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E61BA626D60083522C /* JTSImageInfo.m */; settings = {ASSET_TAGS = (); }; };
-		303330F11BA626D60083522C /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E81BA626D60083522C /* JTSImageViewController.m */; settings = {ASSET_TAGS = (); }; };
-		303330F21BA626D60083522C /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EA1BA626D60083522C /* JTSSimpleImageDownloader.m */; settings = {ASSET_TAGS = (); }; };
-		303330F31BA626D60083522C /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EC1BA626D60083522C /* UIApplication+JTSImageViewController.m */; settings = {ASSET_TAGS = (); }; };
-		303330F41BA626D60083522C /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EE1BA626D60083522C /* UIImage+JTSImageEffects.m */; settings = {ASSET_TAGS = (); }; };
+		303330EF1BA626D60083522C /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E41BA626D60083522C /* JTSAnimatedGIFUtility.m */; };
+		303330F01BA626D60083522C /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E61BA626D60083522C /* JTSImageInfo.m */; };
+		303330F11BA626D60083522C /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330E81BA626D60083522C /* JTSImageViewController.m */; };
+		303330F21BA626D60083522C /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EA1BA626D60083522C /* JTSSimpleImageDownloader.m */; };
+		303330F31BA626D60083522C /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EC1BA626D60083522C /* UIApplication+JTSImageViewController.m */; };
+		303330F41BA626D60083522C /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 303330EE1BA626D60083522C /* UIImage+JTSImageEffects.m */; };
 		303A42001B81289E0012DD3D /* IRAN Sans Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FE1B81289E0012DD3D /* IRAN Sans Light.ttf */; };
 		303A42011B81289E0012DD3D /* IRAN Sans Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 303A41FF1B81289E0012DD3D /* IRAN Sans Medium.ttf */; };
-		3040CAC21BA35DD400A2F52F /* DataV1.json in Resources */ = {isa = PBXBuildFile; fileRef = 3040CAC11BA35DD300A2F52F /* DataV1.json */; settings = {ASSET_TAGS = (); }; };
-		3044B18C1BA324AB00C1005C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3044B18B1BA324AB00C1005C /* MBProgressHUD.m */; settings = {ASSET_TAGS = (); }; };
+		3040CAC21BA35DD400A2F52F /* DataV1.json in Resources */ = {isa = PBXBuildFile; fileRef = 3040CAC11BA35DD300A2F52F /* DataV1.json */; };
+		3044B18C1BA324AB00C1005C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3044B18B1BA324AB00C1005C /* MBProgressHUD.m */; };
 		3047655D1B822E5B00EAC44B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3047655C1B822E5B00EAC44B /* MessageUI.framework */; };
 		304765651B8249F700EAC44B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304765641B8249F700EAC44B /* Images.xcassets */; };
 		304765781B832D1900EAC44B /* FilterTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 304765771B832D1900EAC44B /* FilterTVC.m */; };
@@ -927,10 +927,10 @@
 			};
 			buildConfigurationList = 30D0FED01B68A75A00F7FD81 /* Build configuration list for PBXProject "ShahrYar" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = fa;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				fa,
 				Base,
 			);
 			mainGroup = 30D0FECC1B68A75A00F7FD81;
