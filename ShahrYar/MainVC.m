@@ -234,9 +234,6 @@ CLLocationDegrees const Longitude_Default = 51.3;
         }
     }];
 
-    
-    [self initializeSearchBar];
-    
     [self configureUI];
     
     RMMBTilesSource *offlineSourceMain = [[RMMBTilesSource alloc] initWithTileSetResource:@"main" ofType:@"mbtiles"];
@@ -266,6 +263,10 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     [self.locationManager startUpdatingLocation];
     
+}
+
+- (void)viewWillLayoutSubviews {
+    [self.searchController.searchBar sizeToFit];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -300,6 +301,12 @@ CLLocationDegrees const Longitude_Default = 51.3;
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         [self.mapView setCenterCoordinate:location animated:YES];
     } completion:NULL];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [self.searchController dismissViewControllerAnimated:NO completion:NULL];
+    [self initializeSearchBar];
+    self.searchTVC.places = self.locations;
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
@@ -487,14 +494,21 @@ CLLocationDegrees const Longitude_Default = 51.3;
     self.searchController.delegate = self.searchTVC;
     self.searchController.dimsBackgroundDuringPresentation = YES;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    UIWindow *window = [(AppDelegate *)[UIApplication sharedApplication].delegate window];
-    if (window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && window.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
-        self.searchController.modalPresentationStyle = UIModalPresentationPopover;
-    }
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.definesPresentationContext = YES;
     
-    self.navigationItem.titleView = self.searchController.searchBar;
+    UIWindow *window = [(AppDelegate *)[UIApplication sharedApplication].delegate window];
+    
+    if (window.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular && window.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
+        self.searchController.modalPresentationStyle = UIModalPresentationPopover;
+    }
+    
+    [self.searchController.searchBar sizeToFit];
+    UIView *barWrapper = [[UIView alloc]initWithFrame:self.searchController.searchBar.bounds];
+    self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [barWrapper addSubview:self.searchController.searchBar];
+    self.navigationItem.titleView = barWrapper;
+    
     self.searchController.searchBar.delegate = self;
     self.searchController.searchBar.placeholder = @"جستجو، علاقه‌مندی‌ها";
     [self.searchController.searchBar sizeToFit];

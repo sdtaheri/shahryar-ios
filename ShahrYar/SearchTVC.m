@@ -40,7 +40,7 @@
     _filteredListAfterSearch = filteredListAfterSearch;
     [self.tableView reloadData];
     
-    self.searchController.preferredContentSize = CGSizeMake(375.0, self.tableView.contentSize.height * 2);
+    self.searchController.preferredContentSize = CGSizeMake(375.0, self.tableView.contentSize.height);
 }
 
 - (void)searchForText:(NSString *)searchText
@@ -90,6 +90,7 @@
     }
     self.recentPlaceSearches = temp;
     
+    self.searchController.preferredContentSize = CGSizeMake(375.0, self.tableView.contentSize.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,7 +103,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         searchController.searchResultsController.view.hidden = NO;
         self.searchController = searchController;
-        self.searchController.searchBar.placeholder = @"جستجو";
+        self.searchController.searchBar.placeholder = @"جستجو، علاقه‌مندی‌ها";
     });
 }
 
@@ -120,6 +121,10 @@
     NSString *searchString = searchController.searchBar.text;
     [self searchForText:searchString];
     searchController.searchResultsController.view.hidden = NO;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.searchController.searchBar resignFirstResponder];
 }
 
 #pragma mark - Table view data source
