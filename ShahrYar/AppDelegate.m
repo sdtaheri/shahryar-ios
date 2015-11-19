@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "MainVC.h"
+#import "FavoriteTVC.h"
 #import "UIFontDescriptor+IranSans.h"
 
 @interface AppDelegate ()
@@ -138,6 +140,79 @@
     
     [self saveContext];
 }
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    
+    MainVC *viewController = self.window.rootViewController.childViewControllers[0];
+    [viewController dismissViewControllerAnimated:NO completion:^{
+    }];
+    
+    if ([shortcutItem.type containsString:@"AR"]) {
+        [viewController performSegueWithIdentifier:@"Launch Camera" sender:nil];
+    } else if ([shortcutItem.type containsString:@"Search"]) {
+        
+        if (viewController.searchController == nil) {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(receiveLocationsSetSearchNotification:)
+                                                         name:@"LocationsSet"
+                                                       object:nil];
+        } else {
+            [viewController.searchController.searchBar becomeFirstResponder];
+        }
+        
+    } else if ([shortcutItem.type containsString:@"Favorites"]) {
+
+        if (viewController.searchController == nil) {
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(receiveLocationsSetFavNotification:)
+                                                         name:@"LocationsSet"
+                                                       object:nil];
+        } else {
+            UINavigationController *nc = [viewController.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNC"];
+            nc.modalPresentationStyle = UIModalPresentationFormSheet;
+            [nc setPreferredContentSize:CGSizeMake(375.0, 500.0)];
+            
+            FavoriteTVC *ftvc = nc.childViewControllers[0];
+
+            [viewController.searchTVC viewWillAppear:NO];
+            
+            ftvc.allPlaces = viewController.searchTVC.allPlaces;
+            ftvc.searchTVC = viewController.searchTVC;
+            
+            [viewController presentViewController:nc animated:YES completion:NULL];
+        }
+    }
+    
+    completionHandler(YES);
+}
+
+- (void)receiveLocationsSetSearchNotification: (NSNotification *)note {
+    if ([note.name isEqualToString:@"LocationsSet"]) {
+        MainVC *viewController = self.window.rootViewController.childViewControllers[0];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LocationsSet" object:nil];
+        [viewController.searchController.searchBar becomeFirstResponder];
+    }
+}
+
+- (void)receiveLocationsSetFavNotification: (NSNotification *)note {
+    if ([note.name isEqualToString:@"LocationsSet"]) {
+        MainVC *viewController = self.window.rootViewController.childViewControllers[0];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LocationsSet" object:nil];
+
+        UINavigationController *nc = [viewController.storyboard instantiateViewControllerWithIdentifier:@"FavoriteNC"];
+        nc.modalPresentationStyle = UIModalPresentationFormSheet;
+        [nc setPreferredContentSize:CGSizeMake(375.0, 500.0)];
+        
+        FavoriteTVC *ftvc = nc.childViewControllers[0];
+        [viewController.searchTVC viewWillAppear:NO];
+        
+        ftvc.allPlaces = viewController.searchTVC.allPlaces;
+        ftvc.searchTVC = viewController.searchTVC;
+        
+        [viewController presentViewController:nc animated:YES completion:NULL];
+    }
+}
+
 
 #pragma mark - Core Data stack
 

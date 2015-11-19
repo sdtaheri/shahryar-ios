@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSArray *places;
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSArray *allPlaces;
 
 @property (strong, nonatomic) NSArray *recentIDSearches; //of Place ID
 @property (strong, nonatomic) NSArray *recentPlaceSearches; // of Place

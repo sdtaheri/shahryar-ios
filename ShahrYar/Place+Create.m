@@ -28,7 +28,7 @@ NSString* const Place_Northing = @"Y";
 NSString* const Place_Elevation = @"Z";
 NSString* const Place_Last_Version = @"LastVersion";
 NSString* const Place_Group_ID = @"GroupId";
-NSString* const Place_Group_Name = @"GroupName";
+NSString* const Place_Group_Name = @"Groupname";
 
 @implementation Place (Create)
 

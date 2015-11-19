@@ -18,7 +18,6 @@
 
 @property (weak, nonatomic) UISearchController *searchController;
 
-@property (strong, nonatomic) NSArray *allPlaces;
 @property (strong, nonatomic) NSFetchRequest *fetchRequest;
 @property (strong, nonatomic) NSArray *filteredListAfterSearch;
 

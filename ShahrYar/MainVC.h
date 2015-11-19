@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SearchTVC.h"
 
 @interface MainVC : UIViewController
 
+@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) SearchTVC *searchTVC;
 
 @end
 

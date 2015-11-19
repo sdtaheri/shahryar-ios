@@ -19,7 +19,6 @@
 #import "CameraVC.h"
 #import "SearchTVC.h"
 #import "FilterTVC.h"
-#import "SearchTVC.h"
 #import "PlacesListTVC.h"
 
 #import "MBProgressHUD.h"
@@ -33,9 +32,6 @@
 @property (weak, nonatomic) IBOutlet MKButton *showCurrentLocationButton;
 
 @property (nonatomic) BOOL firstLaunch;
-
-@property (strong, nonatomic) UISearchController *searchController;
-@property (strong, nonatomic) SearchTVC *searchTVC;
 
 @property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -76,6 +72,8 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     _locations = locations;
     self.searchTVC.places = locations;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationsSet" object:@(YES)];
     
     self.groups = [self.locations valueForKeyPath:@"@distinctUnionOfObjects.group"];
 }

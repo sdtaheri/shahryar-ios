@@ -2,6 +2,33 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>camera</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>واقعیت افزوده</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.saeedtaheri.Nava.AR</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>love_selected</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>علاقه‌مندی‌ها</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.saeedtaheri.Nava.Favorites</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeSearch</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>جستجو</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.saeedtaheri.Nava.Search</string>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>fa</string>
 	<key>CFBundleDisplayName</key>
