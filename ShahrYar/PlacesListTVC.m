@@ -13,7 +13,7 @@
 #import "Mapbox.h"
 #import "UIFontDescriptor+IranSans.h"
 
-@interface PlacesListTVC ()
+@interface PlacesListTVC () <UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) NSArray *places;
 @property (nonatomic, strong) NSArray *sortedByDistancePlacesDictionary;
@@ -50,6 +50,14 @@ typedef NS_ENUM(NSInteger, SortType) {
     self.navigationController.view.layer.masksToBounds = YES;
     
     [self initializeData];
+    
+    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)]) {
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        if (window.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)
+        {
+            [self registerForPreviewingWithDelegate:self sourceView:self.navigationController.view];
+        }
+    }
 }
 
 - (void)initializeData {
@@ -296,6 +304,66 @@ typedef NS_ENUM(NSInteger, SortType) {
             break;
     }
 }
+
+#pragma mark - 3D Touch methods
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[self.tableView convertPoint:location fromView:self.navigationController.view] ];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    if (cell) {
+        
+        previewingContext.sourceRect = cell.frame;
+        DetailTVC *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailTVC"];
+        
+        switch (self.segmentedControl.selectedSegmentIndex) {
+                
+            case SortTypeAlphabet: {
+                NSInteger rowNumber = 0;
+                for (NSInteger i = 0; i < indexPath.section; i++) {
+                    rowNumber += [self.tableView numberOfRowsInSection:i];
+                }
+                rowNumber += indexPath.row;
+                dtvc.place = self.places[rowNumber];
+                break;
+            }
+                
+            case SortTypeCategories: {
+                
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"category.summary = %@", self.sortedCategoryTitles[indexPath.section]];
+                NSArray *resultsArray = [self.places filteredArrayUsingPredicate:predicate];
+                
+                NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedStandardCompare:)];
+                resultsArray = [resultsArray sortedArrayUsingDescriptors:@[descriptor]];
+                
+                dtvc.place = resultsArray[indexPath.row];
+                
+                break;
+            }
+                
+            case SortTypeDistance: {
+                dtvc.place = [self.sortedByDistancePlacesDictionary[indexPath.row] objectForKey:@"Place"];
+                break;
+            }
+            default:
+                break;
+        }
+        return dtvc;
+    }
+    
+    return nil;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    
+    NSIndexPath *indexPath = [[self.tableView indexPathsForRowsInRect:previewingContext.sourceRect] lastObject];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"Show Detail From List" sender:cell];
+}
+
+#pragma mark - Navigation & others
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Show Detail From List"]) {

@@ -12,7 +12,7 @@
 #import "DetailTVC.h"
 #import "UIFontDescriptor+IranSans.h"
 
-@interface FavoriteTVC ()
+@interface FavoriteTVC () <UIViewControllerPreviewingDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteAllButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *selectionToggle;
@@ -38,6 +38,14 @@ typedef NS_ENUM(NSInteger, TableType) {
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView:) name:NSUserDefaultsDidChangeNotification object:nil];
+    
+    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)]) {
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        if (window.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable)
+        {
+            [self registerForPreviewingWithDelegate:self sourceView:self.navigationController.view];
+        }
+    }
     
     self.tableView.estimatedRowHeight = 69.f;
     if ([UIDevice currentDevice].systemVersion.floatValue < 9.0) {
@@ -258,5 +266,31 @@ typedef NS_ENUM(NSInteger, TableType) {
         dtvc.place = self.selectionToggle.selectedSegmentIndex == TableTypeFavorites ? self.favoritesPlaces[indexPath.row] : self.recentSearchesPlaces[indexPath.row];
     }
 }
+
+#pragma mark - 3D Touch methods
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:[self.tableView convertPoint:location fromView:self.navigationController.view] ];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    if (cell) {
+        previewingContext.sourceRect = cell.frame;
+        DetailTVC *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailTVC"];
+        dtvc.place = self.selectionToggle.selectedSegmentIndex == TableTypeFavorites ? self.favoritesPlaces[indexPath.row] : self.recentSearchesPlaces[indexPath.row];
+
+        return dtvc;
+    }
+
+    return nil;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    
+    NSIndexPath *indexPath = [[self.tableView indexPathsForRowsInRect:previewingContext.sourceRect] lastObject];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"Detail From Favorites" sender:cell];
+}
+
 
 @end

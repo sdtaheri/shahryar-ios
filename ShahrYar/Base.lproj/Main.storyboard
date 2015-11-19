@@ -40,7 +40,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
                         <imageView key="tableHeaderView" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="m1B-xK-n62">
-                            <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
+                            <rect key="frame" x="0.0" y="44" width="600" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <gestureRecognizers/>
@@ -49,14 +49,14 @@
                             </connections>
                         </imageView>
                         <view key="tableFooterView" contentMode="scaleToFill" id="CN1-dw-lRv">
-                            <rect key="frame" x="0.0" y="174" width="600" height="210"/>
+                            <rect key="frame" x="0.0" y="154" width="600" height="210"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell Detail" id="3nx-0q-XJK" customClass="DDetailCell">
-                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="66" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3nx-0q-XJK" id="HEa-Mc-Jhx">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -109,7 +109,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell Normal" textLabel="nwv-vy-syd" style="IBUITableViewCellStyleDefault" id="CE2-eE-2NI">
-                                <rect key="frame" x="0.0" y="130" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="110" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CE2-eE-2NI" id="eMf-n9-cCg">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -969,9 +969,9 @@
         <image name="municipalityLogo" width="774" height="1027"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3jG-gO-mG6"/>
-        <segue reference="HCd-GM-Oex"/>
         <segue reference="pJd-YV-q2j"/>
         <segue reference="s8n-ku-VbN"/>
+        <segue reference="08x-K2-Xag"/>
+        <segue reference="HCd-GM-Oex"/>
     </inferredMetricsTieBreakers>
 </document>
