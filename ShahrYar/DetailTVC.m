@@ -14,10 +14,10 @@
 #import "DDetailCell.h"
 #import "Type.h"
 #import "Mapbox.h"
-#import "DeviceInfo.h"
 #import "UIFontDescriptor+IranSans.h"
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
+#import "ReportVC.h"
 
 @interface DetailTVC () <MFMailComposeViewControllerDelegate, RMMapViewDelegate>
 
@@ -322,7 +322,7 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                 cell.textLabel.text = @"اضافه کردن به مخاطبین";
             break;
             case 1:
-                cell.textLabel.text = @"ارتباط با ما";
+                cell.textLabel.text = @"گزارش خطا";
             break;
             default:
                 break;
@@ -353,43 +353,20 @@ static const NSString *Logo_Base_URL = @"http://31.24.237.18:2243/images/DBLogos
                 [self addToAddressBook: self.place];
                 break;
             case 1:
-                if ([MFMailComposeViewController canSendMail]) {
-                    
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ارتباط با ما" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-                    
-                    NSString *deviceModel = [DeviceInfo model];
-                    NSString *OSVersion = [[UIDevice currentDevice] systemVersion];
-                    
-                    void (^alertAction)(UIAlertAction *action);
-                    alertAction = ^ (UIAlertAction *action) {
-                        MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
-                        mail.mailComposeDelegate = self;
-                        [mail setSubject:action.title];
-                        
-                        NSString *messageBody = [NSString stringWithFormat:@"<br><br><br><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",deviceModel,OSVersion] ;
-                        if ([action.title isEqualToString:@"گزارش وجود ایراد"]) {
-                            messageBody = [NSString stringWithFormat:@"<br><br><br><p align=\"right\" dir=\"rtl\">نام: <b>%@</b><br>کد محل: <b>%@</b></p><p>Device: <b>%@</b><br>iOS Version: <b>%@</b></p>",self.place.title, self.place.uniqueID, deviceModel,OSVersion];
-                        }
-                        
-                        [mail setMessageBody:messageBody isHTML:YES];
-                        [mail setToRecipients:@[@"info@zibasazi.ir"]];
-                        
-                        [self presentViewController:mail animated:YES completion:NULL];
-                    };
-                    
-                    [alert addAction:[UIAlertAction actionWithTitle:@"گزارش وجود ایراد" style:UIAlertActionStyleDefault handler:alertAction]];
-                    [alert addAction:[UIAlertAction actionWithTitle:@"انتقاد و پیشنهاد" style:UIAlertActionStyleDefault handler:alertAction]];
-                    [alert addAction:[UIAlertAction actionWithTitle:@"انصراف" style:UIAlertActionStyleCancel handler:NULL]];
-                    
-                    [self presentViewController:alert animated:YES completion:NULL];
-                    
-                } else {
-                    NSLog(@"This device cannot send email");
-                }
+                [self performSegueWithIdentifier:@"Report Error" sender:self];
             break;
             default:
                 break;
         }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Report Error"]) {
+        ReportVC *rvc = segue.destinationViewController;
+        rvc.reportType = @"Error";
+        rvc.placeName = self.place.title;
+        rvc.placeID = self.place.uniqueID;
     }
 }
 

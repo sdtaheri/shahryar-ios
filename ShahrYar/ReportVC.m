@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"ارتباط";
+    
     self.textView.layer.cornerRadius = 10.0;
     self.textView.clipsToBounds = YES;
     self.textView.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
@@ -59,6 +61,15 @@
         self.locationTopConstraint.constant = 0;
         
         self.locationHeader.text = @"";
+    } else if ([self.reportType isEqualToString:@"Error"]) {
+        self.subject.text = @"گزارش خطا";
+        self.locationName.text = self.placeName;
+        self.locationID.text = self.placeID;
+        self.locationID.hidden = YES;
+        self.device.text = @"";
+        self.textView.text = @"";
+        self.deviceHeader.text = @"";
+        self.locationBottomConstraint.constant = 0;
     }
 }
 

@@ -11,5 +11,7 @@
 @interface ReportVC : UIViewController
 
 @property (nonatomic, strong) NSString *reportType; //Error or General
+@property (nonatomic, strong) NSString *placeName;
+@property (nonatomic, strong) NSString *placeID;
 
 @end

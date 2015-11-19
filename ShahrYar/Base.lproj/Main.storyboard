@@ -144,6 +144,7 @@
                     <connections>
                         <outlet property="footerMapView" destination="CN1-dw-lRv" id="BwW-xz-Qay"/>
                         <outlet property="placeImageView" destination="m1B-xK-n62" id="hC3-4t-x1L"/>
+                        <segue destination="I5z-Ho-voZ" kind="show" identifier="Report Error" id="HCd-GM-Oex"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AS9-ca-Cbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -969,7 +970,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="3jG-gO-mG6"/>
-        <segue reference="s8n-ku-VbN"/>
+        <segue reference="HCd-GM-Oex"/>
         <segue reference="pJd-YV-q2j"/>
+        <segue reference="s8n-ku-VbN"/>
     </inferredMetricsTieBreakers>
 </document>
