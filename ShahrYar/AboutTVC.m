@@ -10,11 +10,11 @@
 #import "AboutTVC.h"
 #import "DDetailCell.h"
 #import "UIFontDescriptor+IranSans.h"
+#import "ReportVC.h"
 
-@interface AboutTVC () <MFMailComposeViewControllerDelegate>
+@interface AboutTVC ()
 
 @property (nonatomic, strong) NSString *website;
-@property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *phoneNumber;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSString *postalCode;
@@ -26,10 +26,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"بازگشت" style:UIBarButtonItemStyleDone target:nil action:NULL];
+    
     self.tableView.contentInset = UIEdgeInsetsMake(16, 0, 0, 0);
     
     self.address = @"تهران، خیابان مفتح جنوبی، نبش خیابان شهید شیرودی، پلاک ۲، سازمان زیباسازی شهر تهران";
-    self.email = @"info@zibasazi.ir";
     self.website = @"www.zibasazi.ir";
     self.phoneNumber = @"89357000";
     self.postalCode = @"۱۵۸۴۹۱۷۴۱۱";
@@ -71,11 +72,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0 ? 1 : 5;
+    return section == 0 ? 1 : (section == 1 ? 4 : 1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -114,14 +115,6 @@
                     break;
                 }
                 case 3: {
-                    cell.label.text = @"ایمیل";
-                    cell.labelDetail.text = self.email;
-                    [cell.labelButton setImage:[UIImage imageNamed:@"email"] forState:UIControlStateNormal];
-                    [cell.labelButton removeTarget:self action:NULL forControlEvents:UIControlEventAllEvents];
-                    [cell.labelButton addTarget:self action:@selector(sendEmail:) forControlEvents:UIControlEventTouchUpInside];
-                    break;
-                }
-                case 4: {
                     cell.label.text = @"وب سایت";
                     cell.labelDetail.text = self.website;
                     [cell.labelButton setImage:[UIImage imageNamed:@"safari"] forState:UIControlStateNormal];
@@ -136,6 +129,14 @@
 ;
             }
             return cell;
+        }
+            
+        case 2: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell Normal" forIndexPath:indexPath];
+            
+            cell.textLabel.font = [UIFont fontWithDescriptor:[UIFontDescriptor preferredIranSansFontDescriptorWithTextStyle: UIFontTextStyleBody] size: 0];
+            return cell;
+            break;
         }
             
         default:
@@ -154,9 +155,9 @@
             [self callNumber:detailCell.labelButton];
         } else if ([detailCell.label.text isEqualToString:@"وب سایت"]) {
             [self openWebsite:detailCell.labelButton];
-        } else if ([detailCell.label.text isEqualToString:@"ایمیل"]) {
-            [self sendEmail:detailCell.labelButton];
         }
+    } else if (indexPath.section == 2) {
+        [self performSegueWithIdentifier:@"Contact Us" sender:self];
     }
 }
 
@@ -197,6 +198,12 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Contact Us"]) {
+        ReportVC *rvc = segue.destinationViewController;
+        rvc.reportType = @"General";
+    }
+}
 
 - (void)openWebsite: (UIButton *)sender {
     
@@ -216,25 +223,6 @@
     [ac addAction:[UIAlertAction actionWithTitle:@"انصراف" style:UIAlertActionStyleCancel handler:NULL]];
     
     [self presentViewController:ac animated:YES completion:NULL];
-}
-
-- (void)sendEmail:(UIButton *)sender {
-    
-    if ([MFMailComposeViewController canSendMail]) {
-        
-        MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
-        [mail setToRecipients:@[self.email]];
-        mail.mailComposeDelegate = self;
-        
-        [self presentViewController:mail animated:YES completion:NULL];
-        
-    } else {
-        NSLog(@"This device cannot send email");
-    }
-}
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

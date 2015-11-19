@@ -137,6 +137,7 @@
 		30DB216B1BA0838F00F846EE /* Type.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DB216A1BA0838F00F846EE /* Type.m */; };
 		30DB216E1BA0838F00F846EE /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DB216D1BA0838F00F846EE /* Group.m */; };
 		30DB835A1B8FA3EF00F6DB00 /* ARControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DB83591B8FA3EF00F6DB00 /* ARControllerView.m */; };
+		30F7DD2C1BFDB4A50011EDBA /* ReportVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F7DD2B1BFDB4A50011EDBA /* ReportVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -401,6 +402,8 @@
 		30DB216D1BA0838F00F846EE /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
 		30DB83581B8FA3EF00F6DB00 /* ARControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARControllerView.h; sourceTree = "<group>"; };
 		30DB83591B8FA3EF00F6DB00 /* ARControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARControllerView.m; sourceTree = "<group>"; };
+		30F7DD2A1BFDB4A50011EDBA /* ReportVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportVC.h; sourceTree = "<group>"; };
+		30F7DD2B1BFDB4A50011EDBA /* ReportVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -813,6 +816,8 @@
 				3093DD271B83D72A00E46D7D /* PlacesListTVC.m */,
 				3005C1481B89D04B00C72A53 /* AboutTVC.h */,
 				3005C1491B89D04B00C72A53 /* AboutTVC.m */,
+				30F7DD2A1BFDB4A50011EDBA /* ReportVC.h */,
+				30F7DD2B1BFDB4A50011EDBA /* ReportVC.m */,
 				304765791B832D2000EAC44B /* Search */,
 				307C6D951B80C431001D173C /* Detail VC */,
 				308C4CF21B7E2E8E00B48944 /* Database */,
@@ -986,6 +991,7 @@
 				303330F01BA626D60083522C /* JTSImageInfo.m in Sources */,
 				30AB61971B8E77F000C03F94 /* SMCalloutView.m in Sources */,
 				3025AC481B871EE000B7E14A /* PRARManager.m in Sources */,
+				30F7DD2C1BFDB4A50011EDBA /* ReportVC.m in Sources */,
 				30AE6EBE1B8E144500DE6611 /* DeviceInfo.m in Sources */,
 				30194F1E1B843EA200B884F9 /* CustomPresentationController.swift in Sources */,
 				3093DD281B83D72A00E46D7D /* PlacesListTVC.m in Sources */,
