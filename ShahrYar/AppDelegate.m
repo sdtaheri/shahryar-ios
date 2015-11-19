@@ -157,7 +157,9 @@
                                                          name:@"LocationsSet"
                                                        object:nil];
         } else {
-            [viewController.searchController.searchBar becomeFirstResponder];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [viewController.searchController.searchBar becomeFirstResponder];
+            });
         }
         
     } else if ([shortcutItem.type containsString:@"Favorites"]) {
@@ -190,7 +192,9 @@
     if ([note.name isEqualToString:@"LocationsSet"]) {
         MainVC *viewController = self.window.rootViewController.childViewControllers[0];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"LocationsSet" object:nil];
-        [viewController.searchController.searchBar becomeFirstResponder];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [viewController.searchController.searchBar becomeFirstResponder];
+        });
     }
 }
 

@@ -272,7 +272,7 @@ CLLocationDegrees const Longitude_Default = 51.3;
     
     if (self.firstLaunch) {
         [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(35.70191216162083, 51.40026917813411) animated:YES];
-        [self.mapView setZoom:14 atCoordinate:CLLocationCoordinate2DMake(35.70191216162083, 51.40026917813411) animated:YES];
+        [self.mapView setZoom:15 atCoordinate:CLLocationCoordinate2DMake(35.70191216162083, 51.40026917813411) animated:YES];
         self.firstLaunch = NO;
         
         if (self.mapView.isUserLocationVisible) {
