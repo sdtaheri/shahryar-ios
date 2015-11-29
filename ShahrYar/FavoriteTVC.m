@@ -275,7 +275,11 @@ typedef NS_ENUM(NSInteger, TableType) {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
     if (cell) {
-        previewingContext.sourceRect = cell.frame;
+        
+        CGRect rectInTableView = [self.tableView rectForRowAtIndexPath:indexPath];
+        CGRect rectInSuperview = [self.tableView convertRect:rectInTableView toView:[self.tableView superview]];
+
+        previewingContext.sourceRect = rectInSuperview;
         DetailTVC *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailTVC"];
         dtvc.place = self.selectionToggle.selectedSegmentIndex == TableTypeFavorites ? self.favoritesPlaces[indexPath.row] : self.recentSearchesPlaces[indexPath.row];
 
@@ -287,7 +291,7 @@ typedef NS_ENUM(NSInteger, TableType) {
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     
-    NSIndexPath *indexPath = [[self.tableView indexPathsForRowsInRect:previewingContext.sourceRect] lastObject];
+    NSIndexPath *indexPath = [[self.tableView indexPathsForRowsInRect:[self.tableView convertRect:previewingContext.sourceRect fromView:self.tableView.superview]] lastObject];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"Detail From Favorites" sender:cell];
 }

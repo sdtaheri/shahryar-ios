@@ -314,7 +314,10 @@ typedef NS_ENUM(NSInteger, SortType) {
     
     if (cell) {
         
-        previewingContext.sourceRect = cell.frame;
+        CGRect rectInTableView = [self.tableView rectForRowAtIndexPath:indexPath];
+        CGRect rectInSuperview = [self.tableView convertRect:rectInTableView toView:[self.tableView superview]];
+
+        previewingContext.sourceRect = rectInSuperview;
         DetailTVC *dtvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailTVC"];
         
         switch (self.segmentedControl.selectedSegmentIndex) {
@@ -357,7 +360,7 @@ typedef NS_ENUM(NSInteger, SortType) {
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     
-    NSIndexPath *indexPath = [[self.tableView indexPathsForRowsInRect:previewingContext.sourceRect] lastObject];
+    NSIndexPath *indexPath = [[self.tableView indexPathsForRowsInRect: [self.tableView convertRect:previewingContext.sourceRect fromView:self.tableView.superview]] lastObject];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"Show Detail From List" sender:cell];
 }
