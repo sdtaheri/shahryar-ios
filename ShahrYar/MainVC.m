@@ -449,6 +449,9 @@ CLLocationDegrees const Longitude_Default = 51.3;
 
     self.transition.startingPoint = midPoint;
     self.transition.bubbleColor = (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular || self.traitCollection.displayScale == 3) ?  [UIColor clearColor] : [UIColor whiteColor];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.transition.bubbleColor = [UIColor whiteColor];
+    }
     
     return self.transition;
 }
